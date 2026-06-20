@@ -142,6 +142,8 @@ def track():
     body = {
         "visitor_id": data.get("visitor_id", ""),
         "page": data.get("page", ""),
+        "page_name": data.get("page_name", ""),
+        "duration_seconds": data.get("duration_seconds", 0),
         "referrer": data.get("referrer", ""),
         "screen": data.get("screen", ""),
         "user_agent": request.headers.get("User-Agent", ""),

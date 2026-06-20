@@ -2844,6 +2844,19 @@ cookieRefuse.addEventListener("click", () => {
 
 /* ── Tracking ── */
 
+let trackingStart = Date.now();
+let trackingPage = location.hash || "/";
+
+function getPageName(hash) {
+  if (!hash || hash === "#accueil" || hash === "/") return "Accueil";
+  if (hash === "#explorer") return "Explorer les langages";
+  if (hash.startsWith("#langage/")) {
+    const lang = findLanguageFromHash();
+    return lang ? lang.name : hash.replace("#langage/", "");
+  }
+  return hash;
+}
+
 function getVisitorId() {
   if (getCookieConsent() !== "accepted") return null;
   let id = document.cookie.replace(/(?:(?:^|.*;\s*)visitor_id\s*=\s*([^;]*).*$)|^.*$/, "$1");
@@ -2857,12 +2870,19 @@ function getVisitorId() {
 function sendTrack() {
   const visitorId = getVisitorId();
   if (!visitorId) return;
+  const now = Date.now();
+  const newPage = location.hash || "/";
+  const duration = newPage !== trackingPage ? Math.round((now - trackingStart) / 1000) : 0;
   const data = {
     visitor_id: visitorId,
-    page: location.hash || "/",
+    page: newPage,
+    page_name: getPageName(newPage),
     referrer: document.referrer || "",
     screen: `${window.innerWidth}x${window.innerHeight}`,
+    duration_seconds: duration,
   };
+  trackingStart = now;
+  trackingPage = newPage;
   fetch("/api/track", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -2870,7 +2890,24 @@ function sendTrack() {
   }).catch(() => {});
 }
 
+function sendFinalTrack() {
+  const visitorId = getVisitorId();
+  if (!visitorId) return;
+  const duration = Math.round((Date.now() - trackingStart) / 1000);
+  if (duration < 2) return;
+  const data = {
+    visitor_id: visitorId,
+    page: trackingPage,
+    page_name: getPageName(trackingPage),
+    referrer: "",
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+    duration_seconds: duration,
+  };
+  navigator.sendBeacon("/api/track", JSON.stringify(data));
+}
+
 window.addEventListener("hashchange", sendTrack);
+window.addEventListener("beforeunload", sendFinalTrack);
 
 const hamburger = document.querySelector("#hamburger");
 const overlay = document.querySelector("#mobileOverlay");
