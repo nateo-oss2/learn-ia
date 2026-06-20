@@ -152,8 +152,17 @@ def track():
     return jsonify({"ok": True})
 
 
+def require_auth():
+    if "user" not in session:
+        return jsonify({"error": "Authentification requise"}), 401
+    return None
+
+
 @app.route("/api/visits")
 def list_visits():
+    err = require_auth()
+    if err:
+        return err
     res = supabase_request("GET", "visits?order=visited_at.desc&limit=100")
     if isinstance(res, list):
         return jsonify(res)
@@ -175,6 +184,9 @@ def me():
 
 @app.route("/api/users")
 def list_users():
+    err = require_auth()
+    if err:
+        return err
     res = supabase_request("GET", "users?select=username,created_at,ip,user_agent,history")
     if isinstance(res, list):
         out = {}
