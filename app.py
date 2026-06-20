@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, send_file
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import json
@@ -7,7 +7,7 @@ import ssl
 import urllib.request
 import urllib.error
 
-app = Flask(__name__, static_url_path="", static_folder=".")
+app = Flask(__name__)
 app.secret_key = "codelab-secret-key-change-me"
 
 SUPABASE_URL = "https://ezrhgpqehlheyppggnjf.supabase.co"
@@ -72,9 +72,18 @@ def add_login_history(username, ip):
     supabase_request("PATCH", f"users?username=eq.{username}", {"history": history})
 
 
+BASE = os.path.dirname(os.path.abspath(__file__))
+
+def serve_file(path):
+    full = os.path.join(BASE, path)
+    if os.path.exists(full) and os.path.isfile(full):
+        return send_file(full)
+    return ("", 404)
+
+
 @app.route("/")
 def index():
-    return app.send_static_file("index.html")
+    return serve_file("index.html")
 
 
 @app.route("/api/register", methods=["POST"])
@@ -152,6 +161,11 @@ def list_users():
             }
         return jsonify(out)
     return jsonify({"error": "Impossible de récupérer les utilisateurs"}), 500
+
+
+@app.route("/<path:filename>")
+def static_files(filename):
+    return serve_file(filename)
 
 
 if __name__ == "__main__":
