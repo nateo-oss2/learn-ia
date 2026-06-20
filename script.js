@@ -2911,6 +2911,23 @@ function sendFinalTrack() {
 window.addEventListener("hashchange", sendTrack);
 window.addEventListener("beforeunload", sendFinalTrack);
 
+setInterval(() => {
+  const visitorId = getVisitorId();
+  if (!visitorId) return;
+  const duration = Math.round((Date.now() - trackingStart) / 1000);
+  if (duration < 5) return;
+  const data = {
+    visitor_id: visitorId,
+    page: trackingPage,
+    page_name: getPageName(trackingPage),
+    referrer: "",
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+    duration_seconds: duration,
+    action: "heartbeat",
+  };
+  navigator.sendBeacon("/api/track", JSON.stringify(data));
+}, 15000);
+
 const hamburger = document.querySelector("#hamburger");
 const overlay = document.querySelector("#mobileOverlay");
 
