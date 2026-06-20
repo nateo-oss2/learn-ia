@@ -207,10 +207,6 @@ a {
   min-height: 70vh;
 }
 
-.is-hidden {
-  display: none;
-}
-
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.8fr);
@@ -947,42 +943,13 @@ pre {
   background: var(--wash);
 }
 
-.auth-tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 24px;
-  padding: 4px;
-  border-radius: 10px;
-  background: var(--wash);
-}
-
-.auth-tab {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  font: inherit;
-  font-weight: 800;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  color: var(--muted);
-}
-
-.auth-tab.is-active {
-  background: #fff;
-  color: var(--ink);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
 .auth-form {
   display: grid;
   gap: 14px;
 }
 
 .auth-form h3 {
-  margin: 0;
+  margin: 0 0 4px;
   font-size: 1.2rem;
 }
 
@@ -1017,6 +984,24 @@ pre {
   font-weight: 800;
   font-size: 0.85rem;
   text-align: center;
+}
+
+.auth-toggle-text {
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.auth-toggle-link {
+  color: var(--teal);
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.auth-toggle-link:hover {
+  color: var(--ink);
 }
 
 @media (max-width: 768px) {
@@ -1352,6 +1337,10 @@ pre {
   .nav-actions a:hover::after {
     transform: scaleX(0);
   }
+}
+
+.is-hidden {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

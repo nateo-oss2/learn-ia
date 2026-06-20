@@ -2440,7 +2440,7 @@ message();</code></pre>
     <div class="pill-list">
       <li>Une variable stocke le prénom</li>
       <li>Une fonction organise le code</li>
-      <li>alert() affiche le message final</li>
+      <li>console.log() affiche le message final</li>
     </div>
   </div>
 </section>
@@ -2825,3 +2825,186 @@ overlay.querySelectorAll(".mobile-link").forEach(link => {
     overlay.classList.remove("is-open");
   });
 });
+
+/* ── Auth ── */
+
+const authOverlay = document.querySelector("#authOverlay");
+const authClose = document.querySelector("#authClose");
+const btnAuth = document.querySelector("#btnAuth");
+const btnLogout = document.querySelector("#btnLogout");
+const userMenu = document.querySelector("#userMenu");
+const userName = document.querySelector("#userName");
+const mobileBtnAuth = document.querySelector("#mobileBtnAuth");
+const mobileBtnLogout = document.querySelector("#mobileBtnLogout");
+const mobileUserMenu = document.querySelector("#mobileUserMenu");
+const mobileUserName = document.querySelector("#mobileUserName");
+
+const loginForm = document.querySelector("#loginForm");
+const registerForm = document.querySelector("#registerForm");
+const loginError = document.querySelector("#loginError");
+const registerError = document.querySelector("#registerError");
+const showRegister = document.querySelector("#showRegister");
+const showLogin = document.querySelector("#showLogin");
+
+function openAuth() {
+  authOverlay.classList.remove("is-hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAuth() {
+  authOverlay.classList.add("is-hidden");
+  document.body.style.overflow = "";
+  loginError.classList.add("is-hidden");
+  registerError.classList.add("is-hidden");
+  loginForm.reset();
+  registerForm.reset();
+}
+
+function showLoginForm() {
+  loginForm.classList.remove("is-hidden");
+  registerForm.classList.add("is-hidden");
+  loginError.classList.add("is-hidden");
+  registerError.classList.add("is-hidden");
+}
+
+function showRegisterForm() {
+  loginForm.classList.add("is-hidden");
+  registerForm.classList.remove("is-hidden");
+  loginError.classList.add("is-hidden");
+  registerError.classList.add("is-hidden");
+}
+
+function updateAuthUI(username) {
+  if (username) {
+    btnAuth.classList.add("is-hidden");
+    userMenu.classList.remove("is-hidden");
+    userName.textContent = username;
+    mobileBtnAuth.classList.add("is-hidden");
+    mobileUserMenu.classList.remove("is-hidden");
+    mobileUserName.textContent = username;
+  } else {
+    btnAuth.classList.remove("is-hidden");
+    userMenu.classList.add("is-hidden");
+    mobileBtnAuth.classList.remove("is-hidden");
+    mobileUserMenu.classList.add("is-hidden");
+  }
+}
+
+function showError(el, msg) {
+  el.textContent = msg;
+  el.classList.remove("is-hidden");
+}
+
+async function api(path, method, body) {
+  const res = await fetch(path, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return res.json();
+}
+
+async function checkSession() {
+  try {
+    const data = await api("/api/me", "GET");
+    if (data.username) {
+      updateAuthUI(data.username);
+    } else {
+      updateAuthUI(null);
+      showLoginForm();
+      openAuth();
+    }
+  } catch {
+    updateAuthUI(null);
+    showLoginForm();
+    openAuth();
+  }
+}
+
+loginForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  loginError.classList.add("is-hidden");
+  const username = document.querySelector("#loginUsername").value;
+  const password = document.querySelector("#loginPassword").value;
+  try {
+    const res = await api("/api/login", "POST", { username, password });
+    if (res.error) {
+      showError(loginError, res.error);
+    } else {
+      updateAuthUI(res.username);
+      closeAuth();
+    }
+  } catch {
+    showError(loginError, "Impossible de contacter le serveur.");
+  }
+});
+
+registerForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  registerError.classList.add("is-hidden");
+  const username = document.querySelector("#registerUsername").value;
+  const password = document.querySelector("#registerPassword").value;
+  try {
+    const res = await api("/api/register", "POST", { username, password });
+    if (res.error) {
+      showError(registerError, res.error);
+    } else {
+      updateAuthUI(res.username);
+      closeAuth();
+    }
+  } catch {
+    showError(registerError, "Impossible de contacter le serveur.");
+  }
+});
+
+showRegister.addEventListener("click", e => {
+  e.preventDefault();
+  showRegisterForm();
+});
+
+showLogin.addEventListener("click", e => {
+  e.preventDefault();
+  showLoginForm();
+});
+
+btnAuth.addEventListener("click", () => {
+  showLoginForm();
+  openAuth();
+});
+
+mobileBtnAuth.addEventListener("click", () => {
+  hamburger.classList.remove("is-active");
+  overlay.classList.remove("is-open");
+  showLoginForm();
+  openAuth();
+});
+
+authClose.addEventListener("click", closeAuth);
+authOverlay.addEventListener("click", e => {
+  if (e.target === authOverlay) closeAuth();
+});
+
+async function logout() {
+  try {
+    await api("/api/logout", "POST");
+  } catch {}
+  updateAuthUI(null);
+}
+
+btnLogout.addEventListener("click", logout);
+mobileBtnLogout.addEventListener("click", () => {
+  hamburger.classList.remove("is-active");
+  overlay.classList.remove("is-open");
+  logout();
+});
+
+/* ── Close mobile menu on route change ── */
+
+window.addEventListener("hashchange", () => {
+  hamburger.classList.remove("is-active");
+  overlay.classList.remove("is-open");
+});
+
+/* ── Init auth session ── */
+
+checkSession();

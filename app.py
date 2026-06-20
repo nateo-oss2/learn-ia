@@ -7,18 +7,24 @@ import os
 app = Flask(__name__, static_url_path="", static_folder=".")
 app.secret_key = "codelab-secret-key-change-me"
 
-USERS_FILE = "users.json"
+def users_path():
+    if os.environ.get("VERCEL"):
+        os.makedirs("/tmp", exist_ok=True)
+        return "/tmp/users.json"
+    return "users.json"
 
 
 def load_users():
-    if not os.path.exists(USERS_FILE):
+    path = users_path()
+    if not os.path.exists(path):
         return {}
-    with open(USERS_FILE, "r") as f:
+    with open(path, "r") as f:
         return json.load(f)
 
 
 def save_users(users):
-    with open(USERS_FILE, "w") as f:
+    path = users_path()
+    with open(path, "w") as f:
         json.dump(users, f, indent=2)
 
 
@@ -46,6 +52,9 @@ def register():
     users[username] = {
         "password": generate_password_hash(password),
         "created_at": datetime.now().isoformat(),
+        "ip": request.remote_addr,
+        "user_agent": request.headers.get("User-Agent", ""),
+        "history": [],
     }
     save_users(users)
     session["user"] = username
@@ -69,6 +78,16 @@ def login():
         return jsonify({"error": "Nom d'utilisateur ou mot de passe incorrect"}), 401
 
     session["user"] = username
+
+    if "history" not in users[username]:
+        users[username]["history"] = []
+    users[username]["history"].append({
+        "action": "login",
+        "time": datetime.now().isoformat(),
+        "ip": request.remote_addr,
+    })
+    save_users(users)
+
     return jsonify({"message": "Connecté avec succès", "username": username})
 
 
@@ -83,6 +102,20 @@ def me():
     if "user" in session:
         return jsonify({"username": session["user"]})
     return jsonify({"username": None})
+
+
+@app.route("/api/users")
+def list_users():
+    users = load_users()
+    safe = {}
+    for name, data in users.items():
+        safe[name] = {
+            "created_at": data.get("created_at", ""),
+            "ip": data.get("ip", ""),
+            "user_agent": data.get("user_agent", ""),
+            "history": data.get("history", []),
+        }
+    return jsonify(safe)
 
 
 if __name__ == "__main__":
