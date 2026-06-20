@@ -134,6 +134,32 @@ def login():
     return jsonify({"message": "Connecté avec succès", "username": username})
 
 
+@app.route("/api/track", methods=["POST"])
+def track():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Données requises"}), 400
+    body = {
+        "visitor_id": data.get("visitor_id", ""),
+        "page": data.get("page", ""),
+        "referrer": data.get("referrer", ""),
+        "screen": data.get("screen", ""),
+        "user_agent": request.headers.get("User-Agent", ""),
+        "ip": request.remote_addr,
+        "username": session.get("user", ""),
+    }
+    supabase_request("POST", "visits", body)
+    return jsonify({"ok": True})
+
+
+@app.route("/api/visits")
+def list_visits():
+    res = supabase_request("GET", "visits?order=visited_at.desc&limit=100")
+    if isinstance(res, list):
+        return jsonify(res)
+    return jsonify([])
+
+
 @app.route("/api/logout", methods=["POST"])
 def logout():
     session.pop("user", None)

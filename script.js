@@ -2811,6 +2811,34 @@ const observer = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
+/* ── Tracking ── */
+
+function getVisitorId() {
+  let id = document.cookie.replace(/(?:(?:^|.*;\s*)visitor_id\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  if (!id) {
+    id = "v_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    document.cookie = `visitor_id=${id}; path=/; max-age=${31536000}; SameSite=Lax`;
+  }
+  return id;
+}
+
+function sendTrack() {
+  const data = {
+    visitor_id: getVisitorId(),
+    page: location.hash || "/",
+    referrer: document.referrer || "",
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+  };
+  fetch("/api/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).catch(() => {});
+}
+
+sendTrack();
+window.addEventListener("hashchange", sendTrack);
+
 const hamburger = document.querySelector("#hamburger");
 const overlay = document.querySelector("#mobileOverlay");
 
