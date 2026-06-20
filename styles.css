@@ -829,6 +829,202 @@ pre {
   font-weight: 900;
 }
 
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn-auth {
+  min-height: 40px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-name {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.btn-logout {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-logout:hover {
+  background: var(--wash);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.mobile-divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 8px 0;
+}
+
+.mobile-auth-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mobile-user-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 16px;
+}
+
+.mobile-user-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+/* ── Auth Modal ── */
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  animation: fadeUp 250ms ease both;
+}
+
+.auth-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 28px 28px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  animation: pageEnter 300ms ease both;
+}
+
+.auth-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+}
+
+.auth-close:hover {
+  background: var(--wash);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--wash);
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  color: var(--muted);
+}
+
+.auth-tab.is-active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-form h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 1rem;
+  background: #fff;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.auth-submit {
+  margin-top: 4px;
+}
+
+.auth-error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: var(--red);
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .user-area {
+    display: none;
+  }
+}
+
 .hamburger {
   display: none;
   flex-direction: column;

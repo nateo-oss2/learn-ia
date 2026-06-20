@@ -18,6 +18,14 @@
       <a href="#explorer">Langages</a>
     </div>
 
+    <div class="user-area">
+      <button class="button secondary btn-auth" id="btnAuth">Connexion</button>
+      <div class="user-menu is-hidden" id="userMenu">
+        <span class="user-name" id="userName"></span>
+        <button class="btn-logout" id="btnLogout">Déconnexion</button>
+      </div>
+    </div>
+
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span>
       <span></span>
@@ -29,6 +37,12 @@
     <div class="mobile-menu">
       <a href="#accueil" class="mobile-link">Accueil</a>
       <a href="#explorer" class="mobile-link">Langages</a>
+      <hr class="mobile-divider" />
+      <button class="mobile-link mobile-auth-btn" id="mobileBtnAuth">Connexion</button>
+      <div class="mobile-user-menu is-hidden" id="mobileUserMenu">
+        <span class="mobile-user-name" id="mobileUserName"></span>
+        <button class="mobile-link" id="mobileBtnLogout">Déconnexion</button>
+      </div>
     </div>
   </div>
 
@@ -105,6 +119,33 @@ function progresser(langage) {
 
     <section class="page lesson-page is-hidden" id="lessonPage"></section>
   </main>
+
+  <div class="auth-overlay is-hidden" id="authOverlay">
+    <div class="auth-modal">
+      <button class="auth-close" id="authClose">&times;</button>
+
+      <div class="auth-tabs">
+        <button class="auth-tab is-active" data-tab="login">Connexion</button>
+        <button class="auth-tab" data-tab="register">Inscription</button>
+      </div>
+
+      <form class="auth-form" id="loginForm">
+        <h3>Connecte-toi</h3>
+        <input type="text" class="auth-input" placeholder="Nom d'utilisateur" required autocomplete="username" />
+        <input type="password" class="auth-input" placeholder="Mot de passe" required autocomplete="current-password" />
+        <button type="submit" class="button primary auth-submit">Se connecter</button>
+        <p class="auth-error is-hidden" id="loginError"></p>
+      </form>
+
+      <form class="auth-form is-hidden" id="registerForm">
+        <h3>Crée ton compte</h3>
+        <input type="text" class="auth-input" placeholder="Nom d'utilisateur" required autocomplete="username" />
+        <input type="password" class="auth-input" placeholder="Mot de passe (min. 4 car.)" required autocomplete="new-password" />
+        <button type="submit" class="button primary auth-submit">Créer mon compte</button>
+        <p class="auth-error is-hidden" id="registerError"></p>
+      </form>
+    </div>
+  </div>
 
   <footer class="footer">
     <p>CodeLab - apprendre, pratiquer, creer.</p>
