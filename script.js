@@ -2926,7 +2926,7 @@ setInterval(() => {
     action: "heartbeat",
   };
   navigator.sendBeacon("/api/track", JSON.stringify(data));
-}, 15000);
+}, 5000);
 
 const hamburger = document.querySelector("#hamburger");
 const overlay = document.querySelector("#mobileOverlay");
