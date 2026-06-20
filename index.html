@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeLab - Apprendre 20 langages</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="topbar">
+    <a class="brand" href="#accueil">
+      <span class="brand-mark">C</span>
+      <span>CodeLab</span>
+    </a>
+
+    <div class="nav-actions">
+      <a href="#accueil">Accueil</a>
+      <a href="#explorer">Langages</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-overlay" id="mobileOverlay">
+    <div class="mobile-menu">
+      <a href="#accueil" class="mobile-link">Accueil</a>
+      <a href="#explorer" class="mobile-link">Langages</a>
+    </div>
+  </div>
+
+  <main>
+    <section class="page home-page" id="homePage">
+      <header class="hero" id="accueil">
+        <div class="hero-copy">
+          <p class="eyebrow">20 chemins pour apprendre a coder</p>
+
+          <h1>Apprends le code comme on construit un vrai projet.</h1>
+
+          <p class="hero-text">
+            Choisis un langage, decouvre a quoi il sert, apprends ses bases et avance avec
+            des exemples utiles. Chaque carte ouvre une page consacree uniquement au langage choisi.
+          </p>
+
+          <a class="button primary" href="#explorer">Explorer les langages</a>
+        </div>
+
+        <div class="hero-panel">
+          <div class="panel-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="panel-grid">
+            <div class="mini-card" style="--i: 0">
+              <strong>20</strong>
+              <span>langages</span>
+            </div>
+
+            <div class="mini-card" style="--i: 1">
+              <strong>5</strong>
+              <span>domaines</span>
+            </div>
+
+            <div class="mini-card" style="--i: 2">
+              <strong>1</strong>
+              <span>page par cours</span>
+            </div>
+          </div>
+
+          <pre><code>const objectif = "apprendre a coder";
+
+function progresser(langage) {
+  return bases + pratique + projets;
+}</code></pre>
+        </div>
+      </header>
+
+      <section class="explorer" id="explorer">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Explorer les langages</p>
+
+          <h2>Choisis ton point de depart</h2>
+
+          <p>
+            Clique sur une carte pour ouvrir une page de cours dediee au langage.
+          </p>
+        </div>
+
+        <div class="toolbar reveal">
+          <button class="filter is-active" data-filter="Tous">Tous</button>
+          <button class="filter" data-filter="Web">Web</button>
+          <button class="filter" data-filter="Applications">Applications</button>
+          <button class="filter" data-filter="Donnees">Donnees</button>
+          <button class="filter" data-filter="Systeme">Systeme</button>
+        </div>
+
+        <div class="language-grid" id="languageGrid"></div>
+      </section>
+    </section>
+
+    <section class="page lesson-page is-hidden" id="lessonPage"></section>
+  </main>
+
+  <footer class="footer">
+    <p>CodeLab - apprendre, pratiquer, creer.</p>
+    <a href="#accueil">Retour a l'accueil</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
