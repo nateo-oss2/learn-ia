@@ -120,11 +120,24 @@ function progresser(langage) {
     <section class="page lesson-page is-hidden" id="lessonPage"></section>
   </main>
 
-  <div class="cookie-banner" id="cookieBanner">
-    <p>Ce site utilise un cookie pour analyser les pages visitées et améliorer ton expérience.</p>
-    <div class="cookie-actions">
-      <button class="button secondary" id="cookieRefuse">Refuser</button>
-      <button class="button primary" id="cookieAccept">Accepter</button>
+  <div class="cookie-overlay" id="cookieOverlay">
+    <div class="cookie-modal" id="cookieModal">
+      <div class="cookie-icon">
+        <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+          <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2" fill="#fff3e0"/>
+          <circle cx="16" cy="18" r="2.5" fill="#e65100"/>
+          <circle cx="26" cy="14" r="2" fill="#e65100"/>
+          <circle cx="30" cy="26" r="2.5" fill="#e65100"/>
+          <circle cx="18" cy="30" r="2" fill="#e65100"/>
+          <circle cx="22" cy="22" r="1.5" fill="#e65100"/>
+        </svg>
+      </div>
+      <h3>Ce site utilise un cookie</h3>
+      <p>Un cookie est déposé pour analyser les pages que tu consultes. Tu peux l'accepter ou le refuser. Ce choix est définitif pour ce navigateur.</p>
+      <div class="cookie-actions">
+        <button class="button secondary" id="cookieRefuse">Refuser</button>
+        <button class="button primary" id="cookieAccept">Accepter</button>
+      </div>
     </div>
   </div>
 

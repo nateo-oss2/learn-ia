@@ -2813,7 +2813,7 @@ document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
 /* ── Cookie Consent ── */
 
-const cookieBanner = document.querySelector("#cookieBanner");
+const cookieOverlay = document.querySelector("#cookieOverlay");
 const cookieAccept = document.querySelector("#cookieAccept");
 const cookieRefuse = document.querySelector("#cookieRefuse");
 
@@ -2826,20 +2826,20 @@ function setCookieConsent(value) {
 }
 
 if (!getCookieConsent()) {
-  cookieBanner.classList.remove("is-hidden");
+  cookieOverlay.classList.remove("is-hidden");
 } else if (getCookieConsent() === "accepted") {
   sendTrack();
 }
 
 cookieAccept.addEventListener("click", () => {
   setCookieConsent("accepted");
-  cookieBanner.classList.add("is-hidden");
+  cookieOverlay.classList.add("is-hidden");
   sendTrack();
 });
 
 cookieRefuse.addEventListener("click", () => {
   setCookieConsent("refused");
-  cookieBanner.classList.add("is-hidden");
+  cookieOverlay.classList.add("is-hidden");
 });
 
 /* ── Tracking ── */
