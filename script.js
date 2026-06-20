@@ -2811,37 +2811,6 @@ const observer = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-/* ── Cookie Consent ── */
-
-const cookieOverlay = document.querySelector("#cookieOverlay");
-const cookieAccept = document.querySelector("#cookieAccept");
-const cookieRefuse = document.querySelector("#cookieRefuse");
-
-function getCookieConsent() {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)cookie_consent\s*=\s*([^;]*).*$)|^.*$/, "$1");
-}
-
-function setCookieConsent(value) {
-  document.cookie = `cookie_consent=${value}; path=/; max-age=31536000; SameSite=Lax`;
-}
-
-if (!getCookieConsent()) {
-  cookieOverlay.classList.remove("is-hidden");
-} else if (getCookieConsent() === "accepted") {
-  sendTrack();
-}
-
-cookieAccept.addEventListener("click", () => {
-  setCookieConsent("accepted");
-  cookieOverlay.classList.add("is-hidden");
-  sendTrack();
-});
-
-cookieRefuse.addEventListener("click", () => {
-  setCookieConsent("refused");
-  cookieOverlay.classList.add("is-hidden");
-});
-
 /* ── Tracking ── */
 
 let trackingStart = Date.now();
@@ -2858,11 +2827,13 @@ function getPageName(hash) {
 }
 
 function getVisitorId() {
-  if (getCookieConsent() !== "accepted") return null;
-  let id = document.cookie.replace(/(?:(?:^|.*;\s*)visitor_id\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  var consentMatch = document.cookie.match(/cookie_consent=([^;]+)/);
+  if (!consentMatch || consentMatch[1] !== "accepted") return null;
+  var match = document.cookie.match(/visitor_id=([^;]+)/);
+  var id = match ? match[1] : null;
   if (!id) {
     id = "v_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
-    document.cookie = `visitor_id=${id}; path=/; max-age=${31536000}; SameSite=Lax`;
+    document.cookie = "visitor_id=" + id + "; path=/; max-age=31536000; SameSite=Lax";
   }
   return id;
 }

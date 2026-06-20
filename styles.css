@@ -902,16 +902,12 @@ pre {
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: grid;
+  display: none;
   place-items: center;
   padding: 20px;
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(6px);
   animation: fadeUp 300ms ease both;
-}
-
-.cookie-overlay.is-hidden {
-  display: none;
 }
 
 .cookie-modal {
