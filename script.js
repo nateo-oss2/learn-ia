@@ -1,271 +1,563 @@
 const languages = [
   {
-    name: "HTML",
-    category: "Web",
-    accent: "#e5484d",
-    level: "Debutant",
-    intro: "HTML est la structure d'une page web. Il sert a placer les titres, paragraphes, images, liens, formulaires et sections.",
-    why: "C'est le squelette du web. Sans HTML, CSS n'a rien a styliser et JavaScript n'a rien a rendre interactif.",
-    build: "Tu peux creer une page personnelle, un blog, une fiche produit ou une interface simple.",
-    concepts: ["Balises", "Attributs", "Liens", "Images", "Formulaires"],
-    code: `<h1>Mon premier projet</h1>
-<p>J'apprends a structurer une page web.</p>`
+    name: 'HTML',
+    category: 'Web',
+    accent: '#e5484d',
+    level: 'Debutant',
+    intro: 'HTML est la structure d\'une page web. Il sert a placer les titres, paragraphes, images, liens, formulaires et sections.',
+    why: 'C\'est le squelette du web. Sans HTML, CSS n\'a rien a styliser et JavaScript n\'a rien a rendre interactif.',
+    build: 'Tu peux creer une page personnelle, un blog, une fiche produit ou une interface simple.',
+    concepts: ['Balises', 'Attributs', 'Liens', 'Images', 'Formulaires'],
+    code: '<h1>Mon premier projet</h1>\n<p>J\'apprends a structurer une page web.</p>',
+    help: 'Ouvre un fichier .html dans VS Code, tape ! puis Enter pour generer la structure de base. Ajoute du contenu entre les balises <body>.',
+    run: 'Double-clique sur le fichier .html ou glisse-le dans un navigateur pour voir le resultat.',
+    basics: [
+      {title: 'Les balises', text: 'Une balise HTML s\'ecrit entre < >. La plupart s\'ouvrent et se ferment.', code: '<p>Ceci est un paragraphe</p>'},
+      {title: 'Les attributs', text: 'Un attribut donne des informations supplementaires a une balise.', code: '<a href="https://exemple.fr">Mon lien</a>'},
+      {title: 'La structure d\'une page', text: 'Une page HTML a toujours un doctype, un <html>, un <head> et un <body>.', code: '<!DOCTYPE html>\n<html>\n<head><title>Ma page</title></head>\n<body>...</body>\n</html>'}
+    ],
+    examples: [
+      {title: 'Afficher un message', desc: 'Utilise les balises h1 et p pour afficher un titre et un paragraphe.', code: '<h1>Bienvenue sur mon site</h1>\n<p>Je decouvre le HTML.</p>', explanation: ['h1 est une balise de titre de niveau 1 (le plus important)', 'p cree un paragraphe de texte', 'Les balises HTML s ecrivent entre chevrons < >', 'h1 ne doit etre utilise qu une fois par page pour le SEO', 'p est une balise bloc : elle occupe toute la largeur disponible']},
+      {title: 'Creer un lien', desc: 'La balise a permet de creer un lien cliquable.', code: '<a href="https://google.com">Clique ici</a>', explanation: ['href est l attribut qui indique l URL de destination', 'Le texte entre <a> et </a> est affiche cliquable', 'a provient de anchor (ancre en anglais)', 'Les attributs s ecrivent dans la balise ouvrante', 'Tu peux ajouter target=_blank pour ouvrir dans un nouvel onglet']}
+    ],
+    exercises: [
+      {title: 'Ma premiere page', desc: 'Cree une page HTML avec un titre, un paragraphe et un lien.', hint: 'Utilise h1, p et a.', correction: '<!DOCTYPE html>\n<html>\n<head><title>Ma page</title></head>\n<body>\n  <h1>Bonjour</h1>\n  <p>Bienvenue sur ma page.</p>\n  <a href="https://example.com">Mon lien</a>\n</body>\n</html>'},
+      {title: 'Ajouter une image', desc: 'Ajoute une image avec la balise img et un attribut src.', hint: 'N\'oublie pas l\'attribut alt.', correction: '<!DOCTYPE html>\n<html>\n<body>\n  <img src="photo.jpg" alt="Ma photo">\n</body>\n</html>'},
+      {title: 'Formulaire de contact', desc: 'Cree un formulaire complet avec des champs nom, email, message et un bouton d envoi. Ajoute les attributs required et placeholder.', hint: 'Utilise <form>, <input>, <textarea> et <button>. Ajoute l attribut required sur les champs obligatoires.', correction: '<!DOCTYPE html>\n<html>\n<body>\n  <form>\n    <label>Nom: <input type=\"text\" name=\"nom\" required></label>\n    <label>Email: <input type=\"email\" name=\"email\" placeholder=\"exemple@mail.com\" required></label>\n    <label>Message: <textarea name=\"message\" rows=\"4\" required></textarea></label>\n    <button type=\"submit\">Envoyer</button>\n  </form>\n</body>\n</html>'}
+    ],
+    project: {desc: 'Cree une petite page de presentation personnelle avec un titre, une photo, une description et un lien.', steps: ['Ajoute un titre principal avec ton prenom', 'Ecris un paragraphe de presentation', 'Ajoute une image (balise img)', 'Ajoute un lien cliquable', 'Teste la page dans ton navigateur']}
   },
   {
-    name: "CSS",
-    category: "Web",
-    accent: "#2563eb",
-    level: "Debutant",
-    intro: "CSS donne du style aux pages web : couleurs, tailles, espacements, grilles, animations et responsive.",
-    why: "CSS transforme une page simple en interface agreable et professionnelle.",
-    build: "Tu peux creer des cartes, menus, tableaux de bord, pages responsive et animations.",
-    concepts: ["Selecteurs", "Flexbox", "Grid", "Responsive", "Transitions"],
-    code: `.card {
-  padding: 20px;
-  border-radius: 8px;
-  background: white;
-}`
+    name: 'CSS',
+    category: 'Web',
+    accent: '#2563eb',
+    level: 'Debutant',
+    intro: 'CSS donne du style aux pages web : couleurs, tailles, espacements, grilles, animations et responsive.',
+    why: 'CSS transforme une page simple en interface agreable et professionnelle.',
+    build: 'Tu peux creer des cartes, menus, tableaux de bord, pages responsive et animations.',
+    concepts: ['Selecteurs', 'Flexbox', 'Grid', 'Responsive', 'Transitions'],
+    code: '.card {\n  padding: 20px;\n  border-radius: 8px;\n  background: white;\n}',
+    help: 'Cree un fichier style.css et lie-le a ton HTML avec <link rel="stylesheet" href="style.css">. Les selecteurs ciblent les elements HTML.',
+    run: 'Il suffit d\'actualiser la page HTML dans le navigateur. Les changements CSS sont visibles immediatement.',
+    basics: [
+      {title: 'Les selecteurs', text: 'Un selecteur cible les elements HTML a styliser.', code: 'h1 { color: blue; }'},
+      {title: 'Les couleurs et fonds', text: 'Tu peux changer la couleur du texte et le fond des elements.', code: 'body { background: #f0f0f0; color: #333; }'},
+      {title: 'Les marges et espacements', text: 'margin ajoute de l\'espace a l\'exterieur, padding a l\'interieur.', code: '.carte { margin: 20px; padding: 16px; }'}
+    ],
+    examples: [
+      {title: 'Styliser un bouton', desc: 'Cree un bouton avec des coins arrondis et une ombre.', code: 'button {\n  background: #2563eb;\n  color: white;\n  border: none;\n  padding: 12px 24px;\n  border-radius: 8px;\n  cursor: pointer;\n}', explanation: ['background change la couleur de fond du bouton', 'border-radius arrondit les coins avec une valeur en pixels', 'padding ajoute de l\'espace interieur entre le texte et le bord', 'cursor: pointer change le curseur au survol', 'border: none supprime la bordure par defaut du bouton', 'color definit la couleur du texte']},
+      {title: 'Centrer avec Flexbox', desc: 'Flexbox permet de centrer facilement un element.', code: '.parent {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n}', explanation: ['display: flex transforme le conteneur en mode Flexbox', 'justify-content centre les elements horizontalement', 'align-items centre les elements verticalement', 'height: 100vh prend toute la hauteur de la fenetre', 'vh signifie viewport height (hauteur de l ecran)', 'Flexbox est ideal pour centrer un element dans son parent']}
+    ],
+    exercises: [
+      {title: 'Carte stylisee', desc: 'Cree une carte avec un fond blanc, une ombre, des coins arrondis et un effet au survol.', hint: 'Utilise box-shadow, border-radius et :hover.', correction: '.carte {\n  background: white;\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.1);\n  padding: 20px;\n  transition: transform 0.3s;\n}\n.carte:hover {\n  transform: scale(1.05);\n}'},
+      {title: 'Page responsive', desc: 'Adapte ta page pour qu\'elle s\'affiche bien sur mobile avec une media query.', hint: 'Utilise @media (max-width: 600px).', correction: '@media (max-width: 600px) {\n  body { font-size: 14px; }\n  .menu { flex-direction: column; }\n  .carte { width: 100%; }\n}'},
+      {title: 'Grille responsive avec Grid', desc: 'Cree une grille d images qui s adapte au nombre de colonnes selon la largeur de l ecran. Utilise CSS Grid avec auto-fill et minmax.', hint: 'Utilise display: grid, grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) et gap.', correction: '.grille {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 16px;\n}\n.grille img {\n  width: 100%;\n  border-radius: 8px;\n  transition: transform 0.3s;\n}\n.grille img:hover {\n  transform: scale(1.05);\n}'}
+    ],
+    project: {desc: 'Concois une page d\'accueil simple avec une barre de navigation, une section hero et des cartes. Utilise Flexbox pour la mise en page et ajoute une transition au survol.', steps: ['Cree la structure HTML', 'Stylise la barre de navigation', 'Cree la section hero avec un fond colore', 'Ajoute des cartes avec Flexbox', 'Ajoute des animations au survol']}
   },
   {
-    name: "JavaScript",
-    category: "Web",
-    accent: "#f5b700",
-    level: "Essentiel",
-    intro: "JavaScript rend les pages interactives avec des clics, animations, formulaires et donnees dynamiques.",
-    why: "C'est le langage ideal pour passer d'une page statique a une vraie application.",
-    build: "Tu peux creer un quiz, une todo-list, un jeu simple ou une app connectee a une API.",
-    concepts: ["Variables", "Fonctions", "DOM", "Evenements", "Tableaux"],
-    code: `button.addEventListener("click", () => {
-  alert("Bravo !");
-});`
+    name: 'JavaScript',
+    category: 'Web',
+    accent: '#f5b700',
+    level: 'Essentiel',
+    intro: 'JavaScript rend les pages interactives avec des clics, animations, formulaires et donnees dynamiques.',
+    why: 'C\'est le langage ideal pour passer d\'une page statique a une vraie application.',
+    build: 'Tu peux creer un quiz, une todo-list, un jeu simple ou une app connectee a une API.',
+    concepts: ['Variables', 'Fonctions', 'DOM', 'Evenements', 'Tableaux'],
+    code: 'button.addEventListener("click", () => {\n  alert("Bravo !");\n});',
+    help: 'Ouvre la console du navigateur (F12 > Console) pour voir les logs. Utilise console.log() pour deboguer.',
+    run: 'Ajoute <script src="script.js"></script> dans ton HTML ou ecris le code directement dans une balise <script>. Actualise la page pour executer.',
+    basics: [
+      {title: 'Les variables', text: 'Une variable stocke une valeur (texte, nombre, tableau...).', code: 'let prenom = "Alice";\nlet age = 17;'},
+      {title: 'Les fonctions', text: 'Une fonction regroupe des instructions pour les reutiliser.', code: 'function direBonjour() {\n  console.log("Bonjour !");\n}'},
+      {title: 'Les evenements', text: 'Tu peux reagir a un clic, un survol ou une soumission de formulaire.', code: 'button.addEventListener("click", function() {\n  alert("Clique !");\n});'}
+    ],
+    examples: [
+      {title: 'Calculer une somme', desc: 'Cree une fonction qui additionne deux nombres.', code: 'function addition(a, b) {\n  return a + b;\n}\nconsole.log(addition(3, 5));', explanation: ['function definit une fonction reutilisable', 'return renvoie la valeur calculee a l appelant', 'console.log() affiche le resultat dans la console du navigateur', 'les parametres a et b recoivent les valeurs passees a l appel', 'les accolades { } delimitent le corps de la fonction', 'Ouvre F12 > Console pour voir le resultat']},
+      {title: 'Manipuler un tableau', desc: 'Parcours un tableau et affiche chaque element.', code: 'let fruits = ["Pomme", "Banane", "Orange"];\nfruits.forEach(function(fruit) {\n  console.log(fruit);\n});', explanation: ['forEach est une methode qui parcourt chaque element du tableau', 'fruit contient la valeur de l element courant a chaque iteration', 'La fonction anonyme function(fruit) est executee pour chaque element', 'Les tableaux se declarent avec des crochets [ ]', 'forEach est plus lisible qu une boucle for classique', 'Tu peux aussi utiliser map() ou filter() pour manipuler les tableaux']}
+    ],
+    exercises: [
+      {title: 'Compteur de clics', desc: 'Cree un bouton qui affiche le nombre de clics.', hint: 'Utilise une variable let pour compter et textContent pour mettre a jour l\'affichage.', correction: 'let compteur = 0;\nconst bouton = document.getElementById("monBouton");\nbouton.addEventListener("click", function() {\n  compteur++;\n  bouton.textContent = "Clics: " + compteur;\n});'},
+      {title: 'Liste dynamique', desc: 'Cree un champ texte et un bouton pour ajouter des elements a une liste.', hint: 'Utilise createElement et appendChild.', correction: 'const input = document.getElementById("tache");\nconst liste = document.getElementById("liste");\ndocument.getElementById("ajouter").addEventListener("click", function() {\n  const li = document.createElement("li");\n  li.textContent = input.value;\n  liste.appendChild(li);\n  input.value = "";\n});'},
+      {title: 'Mini jeu de devinettes', desc: 'Cree un jeu ou l ordinateur choisit un nombre aleatoire entre 1 et 100 et l utilisateur doit le deviner avec des indices.', hint: 'Utilise Math.random(), Math.floor(), une boucle while ou une fonction recursive et prompt() ou un champ input.', correction: 'let nombre = Math.floor(Math.random() * 100) + 1;\nlet tentative;\nlet essais = 0;\nwhile (tentative !== nombre) {\n  tentative = parseInt(prompt(\"Devine le nombre (1-100) :\"));\n  essais++;\n  if (tentative < nombre) alert(\"Plus grand !\");\n  else if (tentative > nombre) alert(\"Plus petit !\");\n}\nalert(\"Bravo ! Tu as trouve en \" + essais + \" essais.\");'}
+    ],
+    project: {desc: 'Cree une Todo List interactive : un champ pour entrer une tache, un bouton pour l\'ajouter, et un clic sur une tache la marque comme terminee.', steps: ['Cree l\'interface HTML', 'Ajoute un ecouteur sur le bouton', 'Cree un element pour chaque tache', 'Ajoute la fonction supprimer', 'Teste et ameliore le design']}
   },
   {
-    name: "TypeScript",
-    category: "Web",
-    accent: "#3178c6",
-    level: "Intermediaire",
-    intro: "TypeScript ajoute des types a JavaScript pour rendre les gros projets plus fiables.",
-    why: "Il aide a reperer les erreurs avant meme de lancer le site.",
-    build: "Tu peux creer des applications web robustes avec React, Vue, Angular ou Node.",
-    concepts: ["Types", "Interfaces", "Generics", "Modules"],
-    code: `type User = {
-  name: string;
-  points: number;
-};`
+    name: 'TypeScript',
+    category: 'Web',
+    accent: '#3178c6',
+    level: 'Essentiel',
+    intro: 'TypeScript est du JavaScript avec des types. Il permet d\'ecrire du code plus sur et plus facile a maintenir.',
+    why: 'Les types detectent les erreurs avant meme d\'executer le code.',
+    build: 'Tu peux creer une app React typee, une API, un jeu ou un outil en ligne de commande.',
+    concepts: ['Types', 'Interfaces', 'Fonctions typees', 'Generiques', 'Enums'],
+    code: 'type User = {\n  name: string;\n  points: number;\n};',
+    help: 'Installe TypeScript avec npm install -g typescript. Compile avec tsc fichier.ts. Les erreurs de type apparaissent a la compilation.',
+    run: 'Cree un fichier .ts et compile-le avec tsc. Le resultat est un fichier .js que tu peux executer normalement.',
+    basics: [
+      {title: 'Les types', text: 'TypeScript permet de definir le type des variables pour eviter les erreurs.', code: 'let prenom: string = "Alice";\nlet age: number = 17;'},
+      {title: 'Les interfaces', text: 'Une interface definit la structure d\'un objet.', code: 'interface Personne {\n  nom: string;\n  age: number;\n}'},
+      {title: 'Les fonctions typees', text: 'Tu peux definir le type des parametres et de la valeur de retour.', code: 'function addition(a: number, b: number): number {\n  return a + b;\n}'}
+    ],
+    examples: [
+      {title: 'Objet type', desc: 'Cree un objet avec une interface et utilise-le.', code: 'interface Produit {\n  nom: string;\n  prix: number;\n}\nconst pomme: Produit = { nom: "Pomme", prix: 1.5 };\nconsole.log(pomme.nom);', explanation: ['interface definit la structure et les types attends d\'un objet', 'Les proprietes doivent obligatoirement correspondre a l\'interface declaree', ': string et : number specifient le type de chaque champ', 'const cree une constante qui ne peut pas etre reassignee', 'TypeScript verifie les types a la compilation, pas a l\'execution', 'Les interfaces commencent par convention par une majuscule']},
+      {title: 'Fonction avec types', desc: 'Cree une fonction qui additionne deux nombres types.', code: 'function addition(a: number, b: number): number {\n  return a + b;\n}\nconsole.log(addition(3, 5));', explanation: [': number apres a et b specifie le type des parametres', ': number apres les parentheses declare le type de retour', 'TypeScript verifie que les arguments passes sont bien des nombres', 'Le code compile en JavaScript sans les annotations de type', 'Les types permettent de detecter les erreurs avant l execution', 'Tu peux utiliser des types plus complexes comme string, boolean, void']}
+    ],
+    exercises: [
+      {title: 'Interface produit', desc: 'Cree une interface Produit avec un nom, un prix et une quantite.', hint: 'Declare chaque champ avec son type.', correction: 'interface Produit {\n  nom: string;\n  prix: number;\n  quantite: number;\n}\nconst article: Produit = { nom: "Livre", prix: 12.99, quantite: 3 };\nconsole.log(article);'},
+      {title: 'Fonction typee', desc: 'Cree une fonction qui prend un tableau de nombres et retourne leur somme.', hint: 'Utilise number[] pour un tableau de nombres.', correction: 'function somme(nombres: number[]): number {\n  return nombres.reduce((a, b) => a + b, 0);\n}\nconsole.log(somme([1, 2, 3, 4, 5]));'},
+      {title: 'Generique de fonction', desc: 'Cree une fonction generique qui prend un tableau d elements et retourne le premier element. Utilise les generiques TypeScript pour que le type de retour corresponde au type d entree.', hint: 'Utilise <T> avant les parentheses de la fonction et le type T pour le parametre et le retour.', correction: 'function premier<T>(tableau: T[]): T | undefined {\n  return tableau[0];\n}\n\nconst premierNombre = premier([1, 2, 3]);\nconst premierMot = premier([\"a\", \"b\", \"c\"]);\nconsole.log(premierNombre, premierMot);'}
+    ],
+    project: {desc: 'Cree un petit gestionnaire de taches type : chaque tache a un titre, un statut (completee ou non) et une priorite. Ajoute, supprime et filtre les taches.', steps: ['Definis les types Task et Priority', 'Cree un tableau de taches type', 'Ajoute une fonction pour ajouter une tache', 'Ajoute une fonction pour filtrer', 'Teste le tout dans la console']}
   },
   {
-    name: "Python",
-    category: "Donnees",
-    accent: "#16a34a",
-    level: "Debutant",
-    intro: "Python est simple, lisible et tres utilise pour les scripts, les donnees, l'IA et les APIs.",
-    why: "Sa syntaxe claire permet de se concentrer sur la logique.",
-    build: "Tu peux creer un bot, un script, une analyse de donnees ou une petite API.",
-    concepts: ["Listes", "Dictionnaires", "Boucles", "Fonctions"],
-    code: `notes = [12, 16, 18]
-moyenne = sum(notes) / len(notes)
-print(moyenne)`
+    name: 'Python',
+    category: 'Donnees',
+    accent: '#16a34a',
+    level: 'Debutant',
+    intro: 'Python est un langage polyvalent et simple a lire, ideal pour l\'analyse de donnees, le web et l\'automatisation.',
+    why: 'Sa syntaxe claire en fait le meilleur langage pour commencer la programmation.',
+    build: 'Tu peux creer un analyseur de donnees, un bot, un site web ou un script d\'automatisation.',
+    concepts: ['Variables', 'Fonctions', 'Listes', 'Conditions', 'Boucles'],
+    code: 'print("Bonjour Python")\nprint("Les variables n\'ont pas de type explicite")',
+    help: 'Installe Python sur python.org. Execute python3 mon_fichier.py dans le terminal. Utilise print() pour afficher.',
+    run: 'Cree un fichier .py et execute python3 fichier.py dans le terminal. Les resultats s\'affichent dans la console.',
+    basics: [
+      {title: 'Les variables', text: 'Python n\'a pas besoin de type explicite. On assigne directement.', code: 'prenom = "Alice"\nage = 17'},
+      {title: 'Les fonctions', text: 'Une fonction se definit avec def et le code est indent.', code: 'def saluer(nom):\n    print("Bonjour", nom)'},
+      {title: 'Les listes', text: 'Une liste stocke plusieurs valeurs dans l\'ordre.', code: 'fruits = ["Pomme", "Banane", "Orange"]\nprint(fruits[0])'}
+    ],
+    examples: [
+      {title: 'Calculer une somme', desc: 'Cree une fonction qui additionne deux nombres.', code: 'def addition(a, b):\n    return a + b\n\nprint(addition(3, 5))', explanation: ['def est le mot-cle pour definir une fonction en Python', 'return renvoie le resultat a l\'appelant', 'L\'indentation (4 espaces) est obligatoire en Python', 'Les parametres a et b n\'ont pas de type declare', 'print() affiche le resultat dans le terminal', 'Python execute le code ligne par ligne de haut en bas']},
+      {title: 'Parcourir une liste', desc: 'Utilise une boucle for pour afficher chaque element.', code: 'fruits = ["Pomme", "Banane", "Orange"]\nfor fruit in fruits:\n    print(fruit)', explanation: ['for parcourt chaque element de la liste un par un', 'fruit prend successivement chaque valeur du tableau', 'Les listes se declarent avec des crochets [ ]', 'Le bloc sous for est indentee (obligatoire en Python)', 'range() permet de creer des sequences numeriques', 'len() donne la taille d une liste']}
+    ],
+    exercises: [
+      {title: 'Pair ou impair', desc: 'Ecris un programme qui demande un nombre et affiche s\'il est pair ou impair.', hint: 'Utilise le modulo % pour verifier le reste de la division par 2.', correction: 'nombre = int(input("Donne un nombre: "))\nif nombre % 2 == 0:\n    print("Pair")\nelse:\n    print("Impair")'},
+      {title: 'Table de multiplication', desc: 'Affiche la table de multiplication d\'un nombre choisi par l\'utilisateur.', hint: 'Utilise une boucle for de 1 a 10.', correction: 'n = int(input("Table de: "))\nfor i in range(1, 11):\n    print(n, "x", i, "=", n * i)'},
+      {title: 'Gestionnaire de taches JSON', desc: 'Cree un programme qui lit une liste de taches depuis un fichier JSON, permet d en ajouter une, et sauvegarde le fichier. Les taches ont un titre et un statut (faire ou terminee).', hint: 'Utilise les modules json et os. json.load() lit, json.dump() ecrit. Une tache est un dictionnaire.', correction: 'import json\nimport os\n\nfichier = \"taches.json\"\nif os.path.exists(fichier):\n    with open(fichier) as f:\n        taches = json.load(f)\nelse:\n    taches = []\n\ntaches.append({"titre": "Apprendre Python", "statut": "faire"})\n\nwith open(fichier, "w") as f:\n    json.dump(taches, f, indent=2)\n\nprint("Tache ajoutee !")'}
+    ],
+    project: {desc: 'Cree un programme qui lit un fichier CSV de notes d\'eleves et calcule la moyenne, la note la plus haute et la plus basse.', steps: ['Cree un fichier notes.csv avec des noms et notes', 'Lis le fichier avec Python', 'Calcule la moyenne de chaque eleve', 'Trouve le meilleur et le moins bon', 'Affiche les resultats dans le terminal']}
   },
   {
-    name: "Java",
-    category: "Applications",
-    accent: "#e11d48",
-    level: "Solide",
-    intro: "Java est utilise pour les applications d'entreprise, Android et les serveurs.",
-    why: "Il apprend la programmation orientee objet avec rigueur.",
-    build: "Tu peux creer une API, une app Android ou un logiciel de gestion.",
-    concepts: ["Classes", "Objets", "Methodes", "Collections"],
-    code: `class Main {
-  public static void main(String[] args) {
-    System.out.println("Bonjour Java");
-  }
-}`
+    name: 'Java',
+    category: 'Back-end',
+    accent: '#ed8b00',
+    level: 'Essentiel',
+    intro: 'Java est un langage robuste utilise dans les entreprises, Android et les serveurs.',
+    why: 'Sa machine virtuelle (JVM) permet d\'executer le meme code sur n\'importe quel systeme.',
+    build: 'Tu peux creer une application Android, une API REST, un jeu ou un outil desktop.',
+    concepts: ['Classes', 'Methodes', 'Conditions', 'Tableaux', 'Heritage'],
+    code: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Bonjour Java");\n  }\n}',
+    help: 'Installe le JDK. Compile avec javac Main.java, execute avec java Main. Tout programme a besoin d\'une classe avec un main().',
+    run: 'Cree un fichier Main.java, compile-le avec javac, puis execute avec java. La JVM gere la memoire automatiquement.',
+    basics: [
+      {title: 'Les classes', text: 'En Java, tout programme commence par une classe.', code: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Bonjour");\n  }\n}'},
+      {title: 'Les variables', text: 'Les variables ont un type qu\'on doit declarer.', code: 'String prenom = "Alice";\nint age = 17;'},
+      {title: 'Les conditions', text: 'if/else fonctionne comme dans la plupart des langages.', code: 'if (age >= 18) {\n  System.out.println("Majeur");\n} else {\n  System.out.println("Mineur");\n}'}
+    ],
+    examples: [
+      {title: 'Calculer une somme', desc: 'Cree une methode qui additionne deux entiers.', code: 'public class Main {\n  public static int addition(int a, int b) {\n    return a + b;\n  }\n  public static void main(String[] args) {\n    System.out.println(addition(3, 5));\n  }\n}', explanation: ['static permet d\'appeler la methode sans creer d\'objet de la classe', 'int est le type de retour : la methode renvoie un entier', 'public rend la methode accessible depuis l\'exterieur', 'La classe Main est le point d\'entree du programme', 'System.out.println() affiche un resultat dans la console', 'Les accolades { } definissent le corps de la methode']},
+      {title: 'Parcourir un tableau', desc: 'Utilise une boucle pour afficher chaque element.', code: 'int[] notes = {12, 15, 18};\nfor (int note : notes) {\n  System.out.println(note);\n}', explanation: ['int[] declare un tableau d\'entiers', 'La boucle for-each (for (int note : notes)) parcourt chaque element', 'note prend la valeur de chaque element un par un', 'Les tableaux en Java ont une taille fixe', 'System.out.println() affiche chaque valeur', 'Les indices d\'un tableau commencent a 0']}
+    ],
+    exercises: [
+      {title: 'Verifier l\'age', desc: 'Ecris un programme qui verifie si une personne peut voter (18 ans ou plus).', hint: 'Utilise if/else avec un entier.', correction: 'public class Main {\n  public static void main(String[] args) {\n    int age = 16;\n    if (age >= 18) {\n      System.out.println("Tu peux voter");\n    } else {\n      System.out.println("Trop jeune");\n    }\n  }\n}'},
+      {title: 'Moyenne de notes', desc: 'Cree un tableau de notes et calcule la moyenne.', hint: 'Additionne les notes dans une boucle, puis divise par la longueur.', correction: 'public class Main {\n  public static void main(String[] args) {\n    int[] notes = {12, 15, 18, 10, 14};\n    int somme = 0;\n    for (int n : notes) somme += n;\n    double moyenne = (double) somme / notes.length;\n    System.out.println("Moyenne: " + moyenne);\n  }\n}'},
+      {title: 'Classe Personne orientee objet', desc: 'Cree une classe Personne avec un nom et un age. Ajoute un constructeur, des getters, et une methode afficher(). Dans le main, cree un tableau de personnes et affiche-les.', hint: 'Utilise une class, un constructeur public Personne(String nom, int age), et une boucle for pour parcourir le tableau.', correction: 'class Personne {\n  private String nom;\n  private int age;\n\n  public Personne(String nom, int age) {\n    this.nom = nom;\n    this.age = age;\n  }\n\n  public void afficher() {\n    System.out.println(nom + " a " + age + " ans");\n  }\n\n  public static void main(String[] args) {\n    Personne[] gens = {new Personne("Alice", 17), new Personne("Bob", 22)};\n    for (Personne p : gens) p.afficher();\n  }\n}'}
+    ],
+    project: {desc: 'Cree une calculatrice simple en Java : demande deux nombres et un operateur, puis effectue le calcul et affiche le resultat.', steps: ['Cree la classe Calculatrice', 'Ajoute une methode pour additionner', 'Ajoute une methode pour soustraire', 'Ajoute une methode pour multiplier/diviser', 'Utilise Scanner pour lire l\'entree utilisateur', 'Affiche le resultat dans la console']}
   },
   {
-    name: "C",
-    category: "Systeme",
-    accent: "#475569",
-    level: "Fondations",
-    intro: "C est proche de la machine et aide a comprendre la memoire et la compilation.",
-    why: "Il donne une base solide pour comprendre comment fonctionne un ordinateur.",
-    build: "Tu peux creer des programmes rapides, outils terminal ou systemes embarques.",
-    concepts: ["Compilation", "Pointeurs", "Memoire", "Structures"],
-    code: `#include <stdio.h>
-
-int main(void) {
-  printf("Bonjour C");
-  return 0;
-}`
+    name: 'C',
+    category: 'Systeme',
+    accent: '#555555',
+    level: 'Avance',
+    intro: 'C est un langage proche de la machine, utilise pour les systemes d\'exploitation, les drivers et l\'embarque.',
+    why: 'Il te force a gerer la memoire toi-meme et te donne un controle total.',
+    build: 'Tu peux creer un mini-systeme, un jeu en console ou un editeur de texte.',
+    concepts: ['Pointeurs', 'Memoire', 'Structures', 'Fichiers', 'Tableaux'],
+    code: '#include <stdio.h>\n\nint main(void) {\n  printf("Bonjour C");\n  return 0;\n}',
+    help: 'Installe GCC (Xcode sur Mac, MinGW sur Windows). Compile avec gcc main.c -o main, execute avec ./main.',
+    run: 'Cree un fichier .c, compile-le avec gcc, puis execute le binaire produit. N\'oublie pas #include <stdio.h> pour printf.',
+    basics: [
+      {title: 'Structure de base', text: 'Un programme C commence par #include <stdio.h> et la fonction main.', code: '#include <stdio.h>\n\nint main() {\n  printf("Bonjour");\n  return 0;\n}'},
+      {title: 'Les variables', text: 'On declare une variable avec son type (int, char, float...).', code: 'int age = 17;\nchar prenom[] = "Alice";'},
+      {title: 'Les pointeurs', text: 'Un pointeur stocke l\'adresse memoire d\'une variable.', code: 'int x = 10;\nint* ptr = &x;\nprintf("%d", *ptr);'}
+    ],
+    examples: [
+      {title: 'Afficher une variable', desc: 'Declare une variable et affiche sa valeur.', code: '#include <stdio.h>\n\nint main() {\n  int age = 17;\n  printf("Age: %d", age);\n  return 0;\n}', explanation: ['%d est le format specifiant un entier decimal dans printf', 'age est passe en second argument pour remplacer %d', 'La virgule separe le format des valeurs a afficher', '#include <stdio.h> est necessaire pour utiliser printf', 'int age = 17 declare une variable entiere', 'return 0 termine le programme avec succes']},
+      {title: 'Boucle for', desc: 'Affiche les nombres de 1 a 5.', code: '#include <stdio.h>\n\nint main() {\n  for (int i = 1; i <= 5; i++) {\n    printf("%d\\n", i);\n  }\n  return 0;\n}', explanation: ['for se compose de trois parties : initialisation ; condition ; incrementation', 'int i = 1 initialise le compteur a 1', 'i <= 5 est la condition qui maintient la boucle active', 'i++ incremente le compteur de 1 a chaque tour', 'Les accolades { } entourent le bloc a repeter', '\n dans printf ajoute un retour a la ligne']}
+    ],
+    exercises: [
+      {title: 'Somme de deux nombres', desc: 'Ecris un programme qui additionne deux entiers et affiche le resultat.', hint: 'Utilise int, printf et l\'operateur +.', correction: '#include <stdio.h>\n\nint main() {\n  int a = 5, b = 3;\n  int somme = a + b;\n  printf("%d + %d = %d", a, b, somme);\n  return 0;\n}'},
+      {title: 'Table de multiplication', desc: 'Affiche la table de multiplication d\'un nombre donne.', hint: 'Utilise une boucle for de 1 a 10.', correction: '#include <stdio.h>\n\nint main() {\n  int n = 7;\n  for (int i = 1; i <= 10; i++) {\n    printf("%d x %d = %d\\n", n, i, n * i);\n  }\n  return 0;\n}'},
+      {title: 'Calculer la longueur d une chaine', desc: 'Ecris un programme qui calcule la longueur d une chaine de caracteres sans utiliser strlen(). Utilise un pointeur pour parcourir la chaine.', hint: 'Parcourt la chaine avec un pointeur char* jusqu a rencontrer le caractere nul \\0.', correction: '#include <stdio.h>\n\nint longueur(char *s) {\n  int len = 0;\n  while (*s != \'\\0\') {\n    len++;\n    s++;\n  }\n  return len;\n}\n\nint main() {\n  char mot[] = "Bonjour";\n  printf("Longueur: %d\\n", longueur(mot));\n  return 0;\n}'}
+    ],
+    project: {desc: 'Cree un jeu du plus ou moins en C : l\'utilisateur doit deviner un nombre entre 1 et 100 genere aleatoirement.', steps: ['Genere un nombre aleatoire avec rand()', 'Boucle tant que l\'utilisateur n\'a pas trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation a la fin']}
   },
   {
-    name: "C++",
-    category: "Systeme",
-    accent: "#0f766e",
-    level: "Avance",
-    intro: "C++ combine performance et organisation de grands projets.",
-    why: "Il est tres utilise dans les jeux, moteurs 3D et logiciels lourds.",
-    build: "Tu peux creer un moteur de jeu, un simulateur ou un programme performant.",
-    concepts: ["Objets", "STL", "Templates", "Performance"],
-    code: `#include <iostream>
-
-int main() {
-  std::cout << "Bonjour C++";
-}`
+    name: 'C++',
+    category: 'Systeme',
+    accent: '#00599c',
+    level: 'Avance',
+    intro: 'C++ ajoute la programmation objet a C, avec des classes, des templates et la STL.',
+    why: 'Il est utilise dans les jeux video, les simulateurs et les applications performances.',
+    build: 'Tu peux creer un jeu 2D, un moteur physique, une bibliotheque ou une app desktop.',
+    concepts: ['Classes', 'Heritage', 'Pointeurs', 'Templates', 'STL'],
+    code: '#include <iostream>\n\nint main() {\n  std::cout << "Bonjour C++";\n}',
+    help: 'Installe un compilateur C++ (g++ sur Mac/Linux, MinGW sur Windows). Compile avec g++ main.cpp -o main, execute avec ./main.',
+    run: 'Cree un fichier .cpp, compile-le avec g++ main.cpp -o main, puis execute ./main. La STL est incluse dans le compilateur.',
+    basics: [
+      {title: 'Structure de base', text: 'Un programme C++ commence par #include <iostream> et la fonction main.', code: '#include <iostream>\n\nint main() {\n  std::cout << "Bonjour";\n  return 0;\n}'},
+      {title: 'Les variables', text: 'On declare une variable avec son type.', code: 'int age = 17;\nstd::string prenom = "Alice";'},
+      {title: 'Les conditions', text: 'if/else permet d\'executer du code selon une condition.', code: 'if (age >= 18) {\n  std::cout << "Majeur";\n}'}
+    ],
+    examples: [
+      {title: 'Additionner deux nombres', desc: 'Cree une fonction qui additionne deux entiers.', code: '#include <iostream>\n\nint addition(int a, int b) {\n  return a + b;\n}\n\nint main() {\n  std::cout << addition(3, 5);\n  return 0;\n}', explanation: ['int est le type de retour : la fonction renvoie un entier', 'Les parametres ont un type explicite (int a, int b)', 'std::cout est le flux de sortie standard', '<< envoie la valeur dans le flux de sortie', 'Le programme principal est dans la fonction main()', '#include <iostream> est necessaire pour std::cout']},
+      {title: 'Boucle for', desc: 'Affiche les nombres de 1 a 5 avec une boucle.', code: 'for (int i = 1; i <= 5; i++) {\n  std::cout << i << " ";\n}', explanation: ['for (initialisation; condition; incrementation) est la syntaxe standard', 'int i = 1 initialise le compteur de boucle', 'i <= 5 est la condition de continuation', 'i++ ajoute 1 au compteur apres chaque iteration', 'std::cout << i << " " affiche chaque valeur suivie d un espace', 'Les boucles for sont tres utilisees pour parcourir des tableaux']}
+    ],
+    exercises: [
+      {title: 'Pair ou impair', desc: 'Ecris un programme qui verifie si un nombre est pair ou impair.', hint: 'Utilise l\'operateur % (modulo).', correction: '#include <iostream>\n\nint main() {\n  int n = 7;\n  if (n % 2 == 0) std::cout << "Pair";\n  else std::cout << "Impair";\n  return 0;\n}'},
+      {title: 'Table de multiplication', desc: 'Affiche la table de 7 avec une boucle for.', hint: 'Multiplie i * 7 dans la boucle.', correction: '#include <iostream>\n\nint main() {\n  for (int i = 1; i <= 10; i++) {\n    std::cout << "7 x " << i << " = " << 7 * i << std::endl;\n  }\n  return 0;\n}'},
+      {title: 'Classe CompteBancaire', desc: 'Cree une classe CompteBancaire avec un titulaire et un solde. Ajoute des methodes deposer(), retirer() et afficher(). Teste avec plusieurs operations.', hint: 'Utilise class, private pour les attributs, public pour les methodes. Verifie que le retrait ne depasse pas le solde.', correction: '#include <iostream>\n#include <string>\nusing namespace std;\n\nclass CompteBancaire {\nprivate:\n  string titulaire;\n  double solde;\npublic:\n  CompteBancaire(string t, double s) : titulaire(t), solde(s) {}\n  void deposer(double montant) { solde += montant; }\n  bool retirer(double montant) {\n    if (montant > solde) return false;\n    solde -= montant;\n    return true;\n  }\n  void afficher() {\n    cout << titulaire << " : " << solde << " EUR" << endl;\n  }\n};\n\nint main() {\n  CompteBancaire cb("Alice", 1000);\n  cb.deposer(500);\n  cb.retirer(200);\n  cb.afficher();\n  return 0;\n}'}
+    ],
+    project: {desc: 'Cree un programme qui demande des notes a l\'utilisateur, les stocke dans un tableau, calcule la moyenne et affiche un recapitulatif.', steps: ['Cree un tableau de notes', 'Boucle pour saisir les notes', 'Calcule la somme et la moyenne', 'Trouve la note min et max', 'Affiche les resultats']}
   },
   {
-    name: "C#",
-    category: "Applications",
-    accent: "#7c3aed",
-    level: "Intermediaire",
-    intro: "C# sert a creer des apps Windows, APIs et jeux avec Unity.",
-    why: "Il est moderne, propre et tres pratique pour des projets complets.",
-    build: "Tu peux creer un jeu Unity, une API ou une application de bureau.",
-    concepts: ["Classes", ".NET", "LINQ", "Async"],
-    code: `Console.WriteLine("Bonjour C#");`
+    name: 'C#',
+    category: 'Back-end',
+    accent: '#9b4f96',
+    level: 'Essentiel',
+    intro: 'C# est le langage principal de l\'ecosysteme .NET, utilise pour le web, les jeux Unity et les apps Windows.',
+    why: 'Il combine la puissance de C++ avec la simplicite de Java, et s\'integre parfaitement a Windows.',
+    build: 'Tu peux creer un jeu Unity, une API ASP.NET, une app desktop ou un service cloud.',
+    concepts: ['Classes', 'Proprietes', 'LINQ', 'Async', 'Heritage'],
+    code: 'Console.WriteLine("Bonjour C#");',
+    help: 'Installe .NET SDK depuis dotnet.microsoft.com. Cree un projet avec dotnet new console. Execute avec dotnet run.',
+    run: 'Cree un projet .NET avec dotnet new console. Le fichier Program.cs contient le point d\'entree. Execute avec dotnet run.',
+    basics: [
+      {title: 'Les classes', text: 'Tout en C# est dans une classe.', code: 'class Personne {\n  public string Nom { get; set; }\n}'},
+      {title: 'Les variables', text: 'Les variables ont un type explicite ou utilise var.', code: 'string prenom = "Alice";\nint age = 17;'},
+      {title: 'Les conditions', text: 'if/else fonctionne comme en Java ou C.', code: 'if (age >= 18) {\n  Console.WriteLine("Majeur");\n}'}
+    ],
+    examples: [
+      {title: 'Afficher un message', desc: 'Utilise Console.WriteLine pour afficher.', code: 'Console.WriteLine("Bonjour C# !");', explanation: ['Console.WriteLine() affiche un message avec un retour a la ligne automatique', 'Console.Write() affiche sans retour a la ligne', 'Le point-virgule termine chaque instruction en C#', 'La methode Main() est le point d entree du programme', 'using System; permet d utiliser Console sans prefixe complet', 'Les guillemets droits "" delimitent une chaine de caracteres']},
+      {title: 'Calculer une somme', desc: 'Cree une fonction qui additionne deux entiers.', code: 'int Addition(int a, int b) {\n  return a + b;\n}\nConsole.WriteLine(Addition(3, 5));', explanation: ['int est le type de retour de la fonction', 'Les parametres a et b sont de type int (entier)', 'Console.WriteLine() affiche le resultat dans la console', 'La fonction est appelee avec Addition(3, 5)', 'C# utilise la syntaxe des types avant les noms des parametres', 'Les accolades { } delimitent le corps de la fonction']}
+    ],
+    exercises: [
+      {title: 'Nombre positif ou negatif', desc: 'Ecris un programme qui verifie si un nombre est positif.', hint: 'Utilise if (nombre >= 0).', correction: 'int n = -3;\nif (n >= 0) Console.WriteLine("Positif");\nelse Console.WriteLine("Negatif");'},
+      {title: 'Moyenne', desc: 'Cree un tableau de notes et calcule la moyenne.', hint: 'Additionne avec une boucle, divise par la longueur.', correction: 'int[] notes = {12, 15, 18};\nint somme = 0;\nforeach (int n in notes) somme += n;\nConsole.WriteLine("Moyenne: " + (double)somme / notes.Length);'},
+      {title: 'LINQ sur une liste d objets', desc: 'Cree une classe Etudiant avec Nom et Note. Cree une liste d etudiants et utilise LINQ pour filtrer ceux qui ont la moyenne, les trier par note et afficher le top 3.', hint: 'Utilise List<Etudiant>, Where(), OrderByDescending(), Take(). Ajoute using System.Linq;.', correction: 'using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nclass Etudiant {\n  public string Nom { get; set; }\n  public int Note { get; set; }\n}\n\nclass Program {\n  static void Main() {\n    var etudiants = new List<Etudiant> {\n      new Etudiant { Nom = "Alice", Note = 15 },\n      new Etudiant { Nom = "Bob", Note = 8 },\n      new Etudiant { Nom = "Charlie", Note = 18 }\n    };\n    var top = etudiants.Where(e => e.Note >= 10)\n                      .OrderByDescending(e => e.Note)\n                      .Take(2);\n    foreach (var e in top) Console.WriteLine(e.Nom + " : " + e.Note);\n  }\n}'}
+    ],
+    project: {desc: 'Cree une application console de gestion de bibliotheque : ajoute, supprime et recherche des livres.', steps: ['Cree une classe Livre avec Titre, Auteur, Annee', 'Cree une classe Bibliotheque avec une liste de livres', 'Ajoute des methodes Ajouter, Supprimer, Rechercher', 'Cree un menu console', 'Teste toutes les fonctionnalites']}
   },
   {
-    name: "PHP",
-    category: "Web",
-    accent: "#4f46e5",
-    level: "Pratique",
-    intro: "PHP sert a creer des sites dynamiques cote serveur.",
-    why: "Il aide a comprendre les formulaires, sessions et bases de donnees.",
-    build: "Tu peux creer un blog, un espace membre ou un back-office.",
-    concepts: ["Serveur", "Formulaires", "Sessions", "PDO"],
-    code: `<?php
-echo "Bienvenue en PHP";
-?>`
+    name: 'PHP',
+    category: 'Back-end',
+    accent: '#777bb3',
+    level: 'Essentiel',
+    intro: 'PHP est un langage serveur utilise par WordPress, Facebook et la majorite des sites web dynamiques.',
+    why: 'Il se melange directement au HTML et est tres simple a deployer.',
+    build: 'Tu peux creer un blog, un systeme de connexion, une API ou un CMS.',
+    concepts: ['Variables', 'Fonctions', 'Formulaires', 'Sessions', 'MySQL'],
+    code: '<?php\n$prenom = "Alice";\necho "Bonjour $prenom";\n?>',
+    help: 'Installe PHP ou utilise un serveur local comme MAMP/XAMPP. Execute avec php -S localhost:8000.',
+    run: 'Cree un fichier .php, lance le serveur avec php -S localhost:8000, puis ouvre http://localhost:8000 dans le navigateur.',
+    basics: [
+      {title: 'Les variables', text: 'Une variable commence par le symbole $.', code: '$prenom = "Alice";\necho $prenom;'},
+      {title: 'Les fonctions', text: 'Une fonction se definit avec function.', code: 'function saluer($nom) {\n  return "Bonjour $nom";\n}'},
+      {title: 'Les formulaires', text: 'PHP recupere les donnees d\'un formulaire avec GET ou POST.', code: 'echo $_GET[\'prenom\'];'}
+    ],
+    examples: [
+      {title: 'Page personnalisee', desc: 'Cree un script qui affiche "Bonjour" suivi du prenom de l\'utilisateur.', code: '<?php\n$prenom = "Alice";\necho "Bonjour $prenom !";\n?>', explanation: ['$prenom declare une variable PHP (le $ est obligatoire)', 'Les guillemets doubles " " interpretent les variables a l interieur', 'Les guillemets simples \' \' n interpretent pas les variables', 'echo affiche du texte dans le navigateur', '<?php ... ?> est la balise d ouverture et fermeture PHP', 'PHP est execute sur le serveur avant d envoyer la page au navigateur']},
+      {title: 'Calculatrice', desc: 'Cree un script qui additionne deux nombres.', code: '<?php\n$a = 5; $b = 3;\necho "$a + $b = " . ($a + $b);\n?>', explanation: ['Le point . concatene (assemble) les chaines de caracteres', 'Les parentheses ( ) priorisent le calcul avant la concatenation', '$a + $b = effectue l addition', 'Chaque instruction PHP se termine par un point-virgule', 'Les variables sont interpretees directement dans les doubles quotes', 'echo peut afficher des chaines assemblees avec .']}
+    ],
+    exercises: [
+      {title: 'Message personnalise', desc: 'Cree un script PHP qui affiche "Bonjour" suivi d\'un prenom.', hint: 'Stocke le prenom dans une variable $prenom.', correction: '<?php\n$prenom = "Bob";\necho "Bonjour " . $prenom . " !";\n?>'},
+      {title: 'Calcul simple', desc: 'Cree un script qui additionne deux nombres et affiche le resultat.', hint: 'Additionne avec l\'operateur +.', correction: '<?php\n$a = 10; $b = 5;\n$somme = $a + $b;\necho "$a + $b = $somme";\n?>'},
+      {title: 'Page avec session utilisateur', desc: 'Cree une page PHP qui utilise les sessions pour stocker le prenom de l utilisateur et l afficher. Si le prenom n est pas defini, un formulaire le demande.', hint: 'Utilise session_start(), $_SESSION pour stocker, et un formulaire POST pour saisir le prenom.', correction: '<?php\nsession_start();\nif ($_POST[\"prenom\"]) {\n  $_SESSION[\"prenom\"] = $_POST[\"prenom\"];\n}\n?><form method=\"post\">\n  <input name=\"prenom\" placeholder=\"Ton prenom\">\n  <button type=\"submit\">Valider</button>\n</form>\n<p>Bonjour <?= $_SESSION[\"prenom\"] ?? "invite" ?> !</p>'}
+    ],
+    project: {desc: 'Cree un petit systeme de blog : page d\'accueil avec liste d\'articles, page article et formulaire de contact.', steps: ['Cree une page d\'accueil avec des articles simules', 'Cree une page article individuelle', 'Ajoute un formulaire de contact traite par PHP', 'Utilise $_GET ou $_POST pour les donnees', 'Teste avec le serveur integre PHP']}
   },
   {
-    name: "Ruby",
-    category: "Web",
-    accent: "#dc2626",
-    level: "Elegant",
-    intro: "Ruby est un langage expressif, souvent utilise avec Ruby on Rails.",
-    why: "Il encourage un code lisible et simple.",
-    build: "Tu peux creer un blog, une plateforme ou un prototype web.",
-    concepts: ["Objets", "Blocs", "Gems", "Rails"],
-    code: `students = ["Ada", "Grace"]
-students.each do |student|
-  puts student
-end`
+    name: 'Ruby',
+    category: 'Back-end',
+    accent: '#cc342d',
+    level: 'Essentiel',
+    intro: 'Ruby est un langage elegant et expressif, connu pour le framework web Ruby on Rails.',
+    why: 'Sa philosophie est la liberte du developpeur avec une syntaxe tres naturelle.',
+    build: 'Tu peux creer un site web, une API, un outil CLI ou un prototype rapide.',
+    concepts: ['Variables', 'Methodes', 'Symboles', 'Blocs', 'Gems'],
+    code: 'puts "Bonjour Ruby"',
+    help: 'Installe Ruby avec rbenv ou ruby-install. Execute ruby fichier.rb dans le terminal. Utilise puts pour afficher.',
+    run: 'Cree un fichier .rb et execute ruby fichier.rb dans le terminal. Les gems (bibliotheques) s\'installent avec gem install.',
+    basics: [
+      {title: 'Les variables', text: 'Les variables n\'ont pas de type declare.', code: 'prenom = "Alice"\nage = 17'},
+      {title: 'Les methodes', text: 'Une methode se definit avec def et finit par end.', code: 'def saluer(nom)\n  puts "Bonjour #{nom}"\nend'},
+      {title: 'Les tableaux', text: 'Un tableau se note avec des crochets.', code: 'fruits = ["Pomme", "Banane"]\nputs fruits[0]'}
+    ],
+    examples: [
+      {title: 'Dire bonjour', desc: 'Cree une methode qui salue l\'utilisateur.', code: 'def saluer(nom)\n  puts "Bonjour #{nom}"\nend\n\nsaluer("Alice")', explanation: ['def est le mot-cle pour definir une methode en Ruby', '#{} insere le resultat d une expression dans une chaine', 'end termine la methode (pas d accolades en Ruby)', 'puts affiche du texte avec un retour a la ligne', 'Les parentheses sont optionnelles en Ruby : saluer "Alice" fonctionne aussi', 'Les parametres n ont pas de type declare en Ruby']},
+      {title: 'Parcourir un tableau', desc: 'Utilise each pour parcourir un tableau.', code: 'nombres = [1, 2, 3]\nnombres.each do |n|\n  puts n * 2\nend', explanation: ['each est une methode qui parcourt chaque element du tableau', '|n| est la variable qui recoit la valeur courante entre barres verticales', 'do...end est le bloc de code execute pour chaque element', 'puts n * 2 affiche chaque valeur multipliee par 2', 'Les blocs peuvent aussi s\'ecrire avec des accolades { }', 'Les tableaux se declarent avec des crochets [ ]']}
+    ],
+    exercises: [
+      {title: 'Message personnalise', desc: 'Ecris un programme qui demande un prenom et affiche "Bonjour" suivi du prenom.', hint: 'Utilise gets.chomp pour lire l\'entree.', correction: 'puts "Quel est ton prenom ?"\nprenom = gets.chomp\nputs "Bonjour #{prenom} !"'},
+      {title: 'Somme', desc: 'Cree une methode qui additionne deux nombres.', hint: 'Definit une methode avec def et return.', correction: 'def addition(a, b)\n  a + b\nend\nputs addition(5, 3)'},
+      {title: 'Classe Livre avec module', desc: 'Cree une classe Livre avec un titre et un auteur. Ajoute un module Recherchable qui permet de chercher un livre par titre dans un tableau. Utilise include pour ajouter le module a la classe.', hint: 'Utilise module, def self.included, et une methode de classe ou d instance selon ton choix.', correction: 'module Recherchable\n  def self.chercher(titre, livres)\n    livres.select { |l| l.titre.include?(titre) }\n  end\nend\n\nclass Livre\n  attr_accessor :titre, :auteur\n  def initialize(titre, auteur)\n    @titre = titre\n    @auteur = auteur\n  end\nend\n\ninclude Recherchable\nlivres = [Livre.new("Ruby Facile", "Alice"), Livre.new("POO Avancee", "Bob")]\nputs chercher("Ruby", livres).map(&:titre)'}
+    ],
+    project: {desc: 'Cree un petit annuaire en memoire : ajoute des contacts (nom, telephone), affiche la liste et permet de rechercher par nom.', steps: ['Cree une classe Contact', 'Ajoute des contacts dans un tableau', 'Affiche tous les contacts', 'Permet de rechercher par nom', 'Ajoute une interface simple dans le terminal']}
   },
   {
-    name: "Go",
-    category: "Systeme",
-    accent: "#0891b2",
-    level: "Moderne",
-    intro: "Go est rapide, simple et tres utilise pour les serveurs et outils cloud.",
-    why: "Il permet d'ecrire des services efficaces avec une syntaxe claire.",
-    build: "Tu peux creer une API, un outil terminal ou un microservice.",
-    concepts: ["Packages", "Structs", "Goroutines", "Erreurs"],
-    code: `package main
-
-import "fmt"
-
-func main() {
-  fmt.Println("Bonjour Go")
-}`
+    name: 'Go',
+    category: 'Systeme',
+    accent: '#00add8',
+    level: 'Avance',
+    intro: 'Go est un langage moderne et rapide cree par Google, ideal pour les serveurs et les outils CLI.',
+    why: 'Sa simplicite et sa concurrence native le rendent parfait pour les microservices.',
+    build: 'Tu peux creer une API REST, un outil en ligne de commande, un proxy ou un serveur web.',
+    concepts: ['Goroutines', 'Channels', 'Interfaces', 'Pointeurs', 'Packages'],
+    code: 'package main\n\nimport "fmt"\n\nfunc main() {\n  fmt.Println("Bonjour Go")\n}',
+    help: 'Installe Go depuis go.dev. Execute go run fichier.go ou compile avec go build. Les packages sont geres automatiquement.',
+    run: 'Cree un fichier .go, execute go run fichier.go. Le package main est obligatoire pour un executable. Utilise fmt.Println pour afficher.',
+    basics: [
+      {title: 'Structure d\'un programme', text: 'Un programme Go commence par package main et la fonction main.', code: 'package main\n\nimport "fmt"\n\nfunc main() {\n  fmt.Println("Bonjour")\n}'},
+      {title: 'Les variables', text: 'On utilise := pour declarer une variable inferree.', code: 'prenom := "Alice"\nage := 17'},
+      {title: 'Les fonctions', text: 'Une fonction se definit avec func.', code: 'func addition(a int, b int) int {\n  return a + b\n}'}
+    ],
+    examples: [
+      {title: 'Conditions', desc: 'Utilise if pour verifier une condition.', code: 'age := 17\nif age >= 18 {\n  fmt.Println("Majeur")\n} else {\n  fmt.Println("Mineur")\n}', explanation: ['if ne necessite pas de parentheses autour de la condition en Go', 'Les accolades { } sont obligatoires meme pour une seule ligne', 'L else se place sur la meme ligne que l accolade fermante', ':= declare et assigne une variable en une seule operation', 'fmt.Println affiche du texte dans la console', 'age >= 18 est une expression booleenne (vrai ou faux)']},
+      {title: 'Boucle for', desc: 'La seule boucle en Go est for.', code: 'for i := 1; i <= 5; i++ {\n  fmt.Println(i)\n}', explanation: ['for est la seule boucle en Go (elle remplace while et for)', ':= declare et assigne le compteur i directement dans la boucle', 'i <= 5 est la condition qui maintient la boucle active', 'i++ incremente le compteur de 1', 'fmt.Println(i) affiche chaque valeur', 'for peut aussi s utiliser avec range pour parcourir des tableaux']}
+    ],
+    exercises: [
+      {title: 'Nombre pair', desc: 'Ecris un programme qui verifie si un nombre est pair.', hint: 'Utilise % 2 == 0.', correction: 'package main\nimport "fmt"\n\nfunc main() {\n  n := 7\n  if n%2 == 0 {\n    fmt.Println("Pair")\n  } else {\n    fmt.Println("Impair")\n  }\n}'},
+      {title: 'Table de multiplication', desc: 'Affiche la table de 5 avec une boucle for.', hint: 'Multiplie i * 5 a chaque iteration.', correction: 'package main\nimport "fmt"\n\nfunc main() {\n  for i := 1; i <= 10; i++ {\n    fmt.Printf("5 x %d = %d\\n", i, 5*i)\n  }\n}'},
+      {title: 'Compteur concurrent avec goroutines', desc: 'Cree un programme qui lance 5 goroutines. Chaque goroutine incremente un compteur partage 10 fois. Utilise un mutex pour proteger l acces au compteur et eviter les conditions de course.', hint: 'Utilise sync.Mutex, Lock() et Unlock(). Les goroutines se lancent avec go. Utilise sync.WaitGroup pour attendre la fin.', correction: 'package main\n\nimport (\n  "fmt"\n  "sync"\n)\n\nfunc main() {\n  var mu sync.Mutex\n  var wg sync.WaitGroup\n  compteur := 0\n  for i := 0; i < 5; i++ {\n    wg.Add(1)\n    go func() {\n      defer wg.Done()\n      for j := 0; j < 10; j++ {\n        mu.Lock()\n        compteur++\n        mu.Unlock()\n      }\n    }()\n  }\n  wg.Wait()\n  fmt.Println("Compteur:", compteur)\n}'}
+    ],
+    project: {desc: 'Cree un programme qui lit un fichier texte et compte le nombre de mots.', steps: ['Cree un fichier texte d\'exemple', 'Lis le fichier avec ioutil.ReadFile', 'Decoupe le texte en mots avec strings.Split', 'Compte les mots avec len', 'Affiche le resultat']}
   },
   {
-    name: "Rust",
-    category: "Systeme",
-    accent: "#b45309",
-    level: "Avance",
-    intro: "Rust vise la performance et la securite memoire.",
-    why: "Il aide a construire des logiciels fiables et rapides.",
-    build: "Tu peux creer un outil CLI, un serveur rapide ou un module WebAssembly.",
-    concepts: ["Ownership", "Borrowing", "Traits", "Cargo"],
-    code: `fn main() {
-  println!("Bonjour Rust");
-}`
+    name: 'Rust',
+    category: 'Systeme',
+    accent: '#dea584',
+    level: 'Avance',
+    intro: 'Rust est un langage systeme moderne qui garantit la securite memoire sans garbage collector.',
+    why: 'Il est parfait pour les outils critiques, les navigateurs et les systemes embarques.',
+    build: 'Tu peux creer un outil CLI, un jeu, un navigateur ou un systeme de fichiers.',
+    concepts: ['Ownership', 'Borrowing', 'Traits', 'Pattern matching', 'Macros'],
+    code: 'fn main() {\n  println!("Bonjour Rust");\n}',
+    help: 'Installe Rust avec rustup.rs. Execute rustc fichier.rs ou utilise cargo new pour un projet complet.',
+    run: 'Cree un fichier .rs, compile avec rustc fichier.rs, execute ./fichier. Utilise cargo pour les projets plus grands.',
+    basics: [
+      {title: 'Structure de base', text: 'Un programme Rust commence par fn main().', code: 'fn main() {\n  println!("Bonjour");\n}'},
+      {title: 'Les variables', text: 'let declare une variable immuable par defaut.', code: 'let prenom = "Alice";\nlet age = 17;'},
+      {title: 'Les variables mutables', text: 'Ajoute mut pour pouvoir modifier la variable.', code: 'let mut compteur = 0;\ncompteur += 1;'}
+    ],
+    examples: [
+      {title: 'Fonction avec retour', desc: 'Cree une fonction qui additionne deux nombres.', code: 'fn addition(a: i32, b: i32) -> i32 {\n  a + b\n}\n\nfn main() {\n  println!("{}", addition(3, 5));\n}', explanation: ['i32 est le type entier signe sur 32 bits', '-> i32 declare que la fonction retourne un entier', 'La derniere expression sans point-virgule est automatiquement retournee', 'fn main() est le point d entree du programme Rust', 'println!() est une macro (note le !) qui affiche du texte', '{} dans println! est remplace par la valeur passee']},
+      {title: 'Boucle for', desc: 'Itere sur une plage de nombres.', code: 'fn main() {\n  for i in 1..=5 {\n    println!("{}", i);\n  }\n}', explanation: ['1..=5 est une plage inclusive qui va de 1 a 5', 'for parcourt automatiquement chaque element de la plage', 'i prend chaque valeur de la plage un tour apres l autre', 'println!("{}", i) affiche chaque nombre', 'Pour une plage exclusive (1 a 4), utilise 1..5 (sans le =)', 'Les boucles for sont idiomatiques en Rust pour iterer']}
+    ],
+    exercises: [
+      {title: 'Verification d\'age', desc: 'Ecris une fonction qui prend un age et retourne "Majeur" ou "Mineur".', hint: 'Utilise if/else et retourne une String.', correction: 'fn main() {\n  let age = 16;\n  if age >= 18 {\n    println!("Majeur");\n  } else {\n    println!("Mineur");\n  }\n}'},
+      {title: 'Somme d\'un tableau', desc: 'Cree une fonction qui calcule la somme d\'un tableau d\'entiers.', hint: 'Utilise slice &[i32] et une boucle for.', correction: 'fn somme(notes: &[i32]) -> i32 {\n  let mut total = 0;\n  for n in notes {\n    total += n;\n  }\n  total\n}\n\nfn main() {\n  let notes = [12, 15, 18];\n  println!("{}", somme(&notes));\n}'},
+      {title: 'Ownership et emprunt', desc: 'Cree une fonction qui prend une String en parametre, calcule sa longueur, et retourne la longueur sans prendre possession de la chaine. Dans main, affiche la chaine originale et sa longueur.', hint: 'Utilise une reference &String en parametre. La fonction retourne usize. La chaine originale reste accessible dans main.', correction: 'fn longueur(s: &String) -> usize {\n  s.len()\n}\n\nfn main() {\n  let mot = String::from("Bonjour Rust");\n  let len = longueur(&mot);\n  println!("\\"{}\\" fait {} caracteres", mot, len);\n}'}
+    ],
+    project: {desc: 'Cree un convertisseur temperature Celsius/Fahrenheit. Demande la valeur et l\'unite, puis affiche la conversion.', steps: ['Cree les fonctions de conversion', 'Demande la temperature a l\'utilisateur', 'Demande l\'unite de depart', 'Affiche le resultat converti', 'Teste avec differentes valeurs']}
   },
   {
-    name: "Swift",
-    category: "Applications",
-    accent: "#f97316",
-    level: "Mobile",
-    intro: "Swift est le langage d'Apple pour creer des apps iPhone, iPad et Mac.",
-    why: "Il est moderne, rapide et agreable pour creer des interfaces natives.",
-    build: "Tu peux creer une application mobile ou une interface SwiftUI.",
-    concepts: ["Structs", "Optionals", "SwiftUI", "Protocoles"],
-    code: `Text("Bonjour Swift")`
+    name: 'Swift',
+    category: 'Mobile',
+    accent: '#f05138',
+    level: 'Essentiel',
+    intro: 'Swift est le langage d\'Apple pour les apps iOS, macOS, watchOS et tvOS.',
+    why: 'Sa syntaxe moderne et sure le rend agreable a ecrire et performant.',
+    build: 'Tu peux creer une app iPhone, une app Mac, un jeu ou une app Apple Watch.',
+    concepts: ['Optionals', 'Structs', 'Protocols', 'Closures', 'SwiftUI'],
+    code: 'print("Bonjour Swift")',
+    help: 'Installe Xcode depuis l\'App Store. Cree un nouveau projet Swift ou utilise Swift Playgrounds pour tester rapidement.',
+    run: 'Cree un fichier .swift et execute swift fichier.swift dans le terminal. Ou utilise Xcode pour un projet complet.',
+    basics: [
+      {title: 'Les variables', text: 'let pour une constante, var si la valeur doit changer.', code: 'let prenom = "Alice"\nvar age = 17'},
+      {title: 'Les fonctions', text: 'Une fonction se definit avec func.', code: 'func saluer(nom: String) {\n  print("Bonjour \\(nom)")\n}'},
+      {title: 'Les optionals', text: 'Un optional peut contenir nil ou une valeur.', code: 'var age: Int? = nil\nif let a = age {\n  print(a)\n}'}
+    ],
+    examples: [
+      {title: 'Afficher un message', desc: 'Affiche un message dans la console.', code: 'let message = "Bonjour Swift"\nprint(message)', explanation: ['let declare une constante dont la valeur ne change pas', 'print() affiche le resultat dans la console', 'var serait utilise pour une variable modifiable', 'Swift infere automatiquement le type String de la variable', 'Les guillemets droits introduisent une chaine de caracteres', 'Swift est un langage type mais l inference de type est automatique']},
+      {title: 'Calculer une somme', desc: 'Cree une fonction qui additionne deux entiers.', code: 'func addition(a: Int, b: Int) -> Int {\n  return a + b\n}\nprint(addition(a: 3, b: 5))', explanation: ['-> Int declare le type de retour de la fonction', 'a: et b: sont les etiquettes des parametres (Swift les distingue)', 'Les parametres ont des types explicites (Int)', 'return renvoie le resultat de l addition', 'print(addition(a: 3, b: 5)) appelle la fonction avec ses etiquettes', 'Les etiquettes rendent le code plus lisible a l appel']}
+    ],
+    exercises: [
+      {title: 'Pair ou impair', desc: 'Ecris un programme qui verifie si un nombre est pair.', hint: 'Utilise l\'operateur % (modulo).', correction: 'let n = 7\nif n % 2 == 0 {\n  print("Pair")\n} else {\n  print("Impair")\n}'},
+      {title: 'Moyenne', desc: 'Cree une fonction qui calcule la moyenne d\'un tableau de notes.', hint: 'Additionne avec une boucle, puis divise par le nombre d\'elements.', correction: 'func moyenne(notes: [Int]) -> Double {\n  let somme = notes.reduce(0, +)\n  return Double(somme) / Double(notes.count)\n}\nprint(moyenne(notes: [12, 15, 18]))'},
+      {title: 'Closure et tri personnalise', desc: 'Cree un tableau de dictionnaires contenant des noms et ages. Utilise la methode sorted() avec une closure pour trier par age decroissant. Affiche le resultat.', hint: 'Utilise sorted(by: { $0.age > $1.age }). Les closures en Swift s ecrivent entre accolades.', correction: 'struct Personne {\n  let nom: String\n  let age: Int\n}\n\nlet gens = [\n  Personne(nom: "Alice", age: 17),\n  Personne(nom: "Bob", age: 22),\n  Personne(nom: "Charlie", age: 19)\n]\nlet tries = gens.sorted { $0.age > $1.age }\nfor p in tries {\n  print("\(p.nom) a \(p.age) ans")\n}'}
+    ],
+    project: {desc: 'Cree une app SwiftUI simple qui affiche une liste de taches avec la possibilite d\'en ajouter et de les cocher.', steps: ['Cree un nouveau projet SwiftUI dans Xcode', 'Cree un modele Task avec un id et un titre', 'Affiche une liste avec ForEach', 'Ajoute un champ texte pour creer une tache', 'Ajoute la possibilite de cocher une tache terminee']}
   },
   {
-    name: "Kotlin",
-    category: "Applications",
-    accent: "#9333ea",
-    level: "Mobile",
-    intro: "Kotlin est tres utilise pour les applications Android modernes.",
-    why: "Il est concis, clair et compatible avec l'ecosysteme Java.",
-    build: "Tu peux creer une app Android ou une API serveur.",
-    concepts: ["Null safety", "Data classes", "Coroutines", "Compose"],
-    code: `fun main() {
-  println("Bonjour Kotlin")
-}`
+    name: 'Kotlin',
+    category: 'Mobile',
+    accent: '#7f52ff',
+    level: 'Essentiel',
+    intro: 'Kotlin est le langage officiel pour Android, concis et interoperable avec Java.',
+    why: 'Il est plus moderne et plus sur que Java, avec une null safety integree.',
+    build: 'Tu peux creer une app Android, un backend avec Ktor ou une app multi-plateforme.',
+    concepts: ['Null safety', 'Fonctions', 'Coroutines', 'Data classes', 'Extensions'],
+    code: 'fun main() {\n  println("Bonjour Kotlin")\n}',
+    help: 'Installe IntelliJ IDEA ou Android Studio. Cree un projet Kotlin et execute avec le bouton Run.',
+    run: 'Cree un fichier .kt, compile avec kotlinc Main.kt -include-runtime -d main.jar, execute avec java -jar main.jar.',
+    basics: [
+      {title: 'Variables', text: 'val pour une constante, var pour une variable modifiable.', code: 'val prenom = "Alice"\nvar age = 17'},
+      {title: 'Fonctions', text: 'Une fonction se definit avec fun.', code: 'fun saluer(nom: String) {\n  println("Bonjour $nom")\n}'},
+      {title: 'Null safety', text: 'Le type? permet d\'eviter les erreurs de null.', code: 'var age: Int? = null\nif (age != null) {\n  println(age)\n}'}
+    ],
+    examples: [
+      {title: 'Addition', desc: 'Cree une fonction qui additionne deux entiers.', code: 'fun addition(a: Int, b: Int): Int {\n  return a + b\n}\n\nfun main() {\n  println(addition(3, 5))\n}', explanation: ['fun est le mot-cle pour definir une fonction en Kotlin', ': Int apres les parentheses declare le type de retour', 'Les parametres sont declares avec nom: Type', 'return renvoie la valeur calculee', 'println() affiche le resultat dans la console', 'fun main() est le point d entree du programme Kotlin']},
+      {title: 'Parcourir une liste', desc: 'Utilise forEach pour parcourir une liste.', code: 'val notes = listOf(12, 16, 18)\nnotes.forEach { println(it) }', explanation: ['listOf() cree une liste qui ne peut pas etre modifiee', 'it est le nom par defaut de l\'element courant dans un bloc lambda', 'forEach { } est une facon concise de parcourir une collection', 'Les accolades { } entourent le bloc de code a executer', 'mutableListOf() cree une liste modifiable si tu veux ajouter des elements', 'forEach evite d\'ecrire une boucle for explicite']}
+    ],
+    exercises: [
+      {title: 'Verification', desc: 'Ecris un programme qui verifie si un nombre est positif ou negatif.', hint: 'Utilise if (nombre >= 0).', correction: 'fun main() {\n  val n = -3\n  if (n >= 0) println("Positif")\n  else println("Negatif")\n}'},
+      {title: 'Somme d\'une liste', desc: 'Cree une fonction qui calcule la somme d\'une liste d\'entiers.', hint: 'Utilise une boucle ou la fonction sum().', correction: 'fun somme(notes: List<Int>): Int {\n  return notes.sum()\n}\n\nfun main() {\n  println(somme(listOf(12, 15, 18)))\n}'},
+      {title: 'Data class avec filtrage', desc: 'Cree une data class Produit avec un nom, un prix et une categorie. Cree une liste de produits et utilise filter et map pour afficher les noms des produits de la categorie "alimentaire" a moins de 5 euros.', hint: 'Utilise data class, filter { } et map { }. La syntaxe Kotlin permet de chainer les operations sur les collections.', correction: 'data class Produit(val nom: String, val prix: Double, val categorie: String)\n\nfun main() {\n  val produits = listOf(\n    Produit("Pain", 1.2, "alimentaire"),\n    Produit("Stylo", 2.5, "fourniture"),\n    Produit("Lait", 3.8, "alimentaire")\n  )\n  val resultats = produits\n    .filter { it.categorie == "alimentaire" && it.prix < 5.0 }\n    .map { it.nom }\n  println(resultats)\n}'}
+    ],
+    project: {desc: 'Cree une application console qui permet de gerer une liste de taches (ToDo).', steps: ['Cree une data class Task', 'Cree une liste mutable de taches', 'Ajoute des fonctions ajouter, supprimer, afficher', 'Cree un menu interactif dans le terminal', 'Teste toutes les operations']}
   },
   {
-    name: "SQL",
-    category: "Donnees",
-    accent: "#0ea5e9",
-    level: "Indispensable",
-    intro: "SQL sert a interroger et organiser les donnees dans une base relationnelle.",
-    why: "Presque toutes les applications stockent des donnees.",
-    build: "Tu peux analyser des ventes, gerer des utilisateurs ou alimenter un tableau de bord.",
-    concepts: ["SELECT", "WHERE", "JOIN", "GROUP BY"],
-    code: `SELECT name, score
-FROM students
-WHERE score >= 15;`
+    name: 'SQL',
+    category: 'Donnees',
+    accent: '#e38c00',
+    level: 'Essentiel',
+    intro: 'SQL est le langage des bases de donnees relationnelles. Il permet de stocker, interroger et manipuler des donnees.',
+    why: 'C\'est un langage indispensable pour tout developpeur, quel que soit le domaine.',
+    build: 'Tu peux creer des requetes, des rapports, des analyses de donnees et gerer des utilisateurs.',
+    concepts: ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'JOIN'],
+    code: 'CREATE TABLE users (\n  id INT PRIMARY KEY,\n  name TEXT,\n  age INT\n);',
+    help: 'Utilise DB Browser for SQLite, MySQL Workbench, ou la ligne de commande. Cree une table avec CREATE TABLE.',
+    run: 'Execute le fichier .sql dans ton outil de base de donnees prefere. Les resultats s\'affichent dans un tableau.',
+    basics: [
+      {title: 'SELECT', text: 'SELECT recupere des donnees depuis une table.', code: 'SELECT * FROM users;'},
+      {title: 'INSERT', text: 'INSERT ajoute une nouvelle ligne dans une table.', code: 'INSERT INTO users (name, age) VALUES (\'Alice\', 17);'},
+      {title: 'WHERE', text: 'WHERE filtre les resultats selon une condition.', code: 'SELECT * FROM users WHERE age >= 18;'}
+    ],
+    examples: [
+      {title: 'Filtrer des donnees', desc: 'Utilise WHERE pour filtrer les utilisateurs majeurs.', code: 'SELECT * FROM users WHERE age >= 18;', explanation: ['WHERE filtre les lignes selon une condition donnee', '>= est un operateur de comparaison (superieur ou egal)', 'SELECT * selectionne toutes les colonnes de la table', 'FROM users specifie la table a interroger', 'Les mots-cles SQL sont insensibles a la casse (where = WHERE)', 'Le point-virgule termine la requete SQL']},
+      {title: 'Trier des resultats', desc: 'Utilise ORDER BY pour trier par age.', code: 'SELECT * FROM users ORDER BY age DESC;', explanation: ['ORDER BY trie les resultats selon une colonne', 'DESC signifie descendant (du plus grand au plus petit)', 'ASC signifie ascendant (du plus petit au plus grand, par defaut)', 'ORDER BY se place apres WHERE dans une requete', 'Tu peux trier sur plusieurs colonnes : ORDER BY age, nom', 'Les requetes SQL peuvent combiner WHERE et ORDER BY']}
+    ],
+    exercises: [
+      {title: 'Requete simple', desc: 'Ecris une requete qui affiche tous les utilisateurs de plus de 18 ans.', hint: 'Utilise SELECT * FROM ... WHERE ...', correction: 'SELECT * FROM users WHERE age > 18;'},
+      {title: 'Ajouter des donnees', desc: 'Ajoute un nouvel etudiant avec une note dans la table etudiants.', hint: 'Utilise INSERT INTO ... VALUES (...)', correction: 'INSERT INTO etudiants (nom, note) VALUES (\'Alice\', 15);'},
+      {title: 'Jointure et sous-requete', desc: 'Cree deux tables : etudiants (id, nom, classe_id) et classes (id, nom). Ecris une requete qui affiche le nom de chaque etudiant avec sa classe, puis une sous-requete qui trouve les etudiants dont la classe a plus de 3 etudiants.', hint: 'Utilise SELECT avec JOIN, puis une sous-requete avec GROUP BY et HAVING COUNT(*) > 3.', correction: '-- Table etudiants\nCREATE TABLE etudiants (id INT, nom TEXT, classe_id INT);\n-- Table classes\nCREATE TABLE classes (id INT, nom TEXT);\n\n-- Jointure\nSELECT e.nom, c.nom AS classe\nFROM etudiants e\nJOIN classes c ON e.classe_id = c.id;\n\n-- Sous-requete\nSELECT * FROM etudiants\nWHERE classe_id IN (\n  SELECT classe_id FROM etudiants\n  GROUP BY classe_id\n  HAVING COUNT(*) > 3\n);'}
+    ],
+    project: {desc: 'Cree une base de donnees pour une bibliotheque avec des tables pour les livres, les membres et les emprunts. Ecris des requetes pour trouver les livres disponibles et les membres avec des retards.', steps: ['Cree la table livres (id, titre, auteur, disponible)', 'Cree la table membres (id, nom, email)', 'Cree la table emprunts (id, livre_id, membre_id, date)', 'Insere des donnees d\'exemple', 'Ecris des requetes SELECT avec JOIN', 'Trouve les livres actuellement empruntes']}
   },
   {
-    name: "R",
-    category: "Donnees",
-    accent: "#1d4ed8",
-    level: "Analyse",
-    intro: "R est specialise dans les statistiques, graphiques et analyses de donnees.",
-    why: "Il est utile pour explorer des donnees et produire des visualisations.",
-    build: "Tu peux creer une analyse statistique ou un rapport automatise.",
-    concepts: ["Data frames", "Vecteurs", "ggplot2", "dplyr"],
-    code: `scores <- c(12, 16, 18)
-mean(scores)`
+    name: 'R',
+    category: 'Donnees',
+    accent: '#276dc3',
+    level: 'Essentiel',
+    intro: 'R est le langage de reference pour les statistiques, l\'analyse de donnees et la visualisation.',
+    why: 'Il permet de manipuler facilement des tableaux de donnees et de creer des graphiques.',
+    build: 'Tu peux creer des graphiques, des analyses statistiques, des rapports automatises et des modeles predictifs.',
+    concepts: ['Vecteurs', 'Data frames', 'Fonctions', 'Graphiques', 'Packages'],
+    code: 'prenom <- "Alice"\nage <- 17\nnotes <- c(12, 15, 18)\nprint(mean(notes))',
+    help: 'Installe R depuis r-project.org. Execute Rscript fichier.R dans le terminal. Utilise RStudio pour une interface plus agreable.',
+    run: 'Cree un fichier .R et execute Rscript fichier.R. Les resultats s\'affichent dans le terminal. Les packages s\'installent avec install.packages().',
+    basics: [
+      {title: 'Les vecteurs', text: 'Un vecteur est une liste de valeurs du meme type.', code: 'notes <- c(12, 15, 18)'},
+      {title: 'Les data frames', text: 'Un data frame est un tableau de donnees.', code: 'df <- data.frame(nom = c("Alice", "Bob"), note = c(15, 12))'},
+      {title: 'Les fonctions', text: 'Une fonction se definit avec function().', code: 'moyenne <- function(x) {\n  mean(x)\n}'}
+    ],
+    examples: [
+      {title: 'Calculer une moyenne', desc: 'Calcule la moyenne d\'un vecteur de notes.', code: 'notes <- c(12, 15, 18)\nmoyenne <- mean(notes)\nprint(moyenne)', explanation: ['c() combine des valeurs en un vecteur en R', 'mean() calcule la moyenne arithmetique des valeurs', '<- est l operateur d assignation en R (equivalent a =)', 'print() affiche le resultat dans la console', 'Tu peux aussi utiliser sum(), min(), max() sur le vecteur', 'R est concu pour les operations statistiques sur des vecteurs']},
+      {title: 'Creer un graphique', desc: 'Utilise plot() pour afficher un nuage de points.', code: 'x <- c(1, 2, 3, 4, 5)\ny <- c(2, 4, 6, 8, 10)\nplot(x, y)', explanation: ['plot() cree un nuage de points (scatter plot)', 'x contient les coordonnees horizontales des points', 'y contient les coordonnees verticales des points', 'Chaque paire (x, y) forme un point sur le graphique', 'R affiche le graphique dans une fenetre separee', 'Tu peux ajouter des titres avec main= et des couleurs avec col=']}
+    ],
+    exercises: [
+      {title: 'Analyse de notes', desc: 'Cree un vecteur de notes et calcule la moyenne, la note min et max.', hint: 'Utilise mean(), min() et max().', correction: 'notes <- c(12, 15, 8, 18, 14)\nprint(paste("Moyenne:", mean(notes)))\nprint(paste("Min:", min(notes)))\nprint(paste("Max:", max(notes)))'},
+      {title: 'Table de multiplication', desc: 'Cree une fonction qui affiche la table de multiplication d\'un nombre.', hint: 'Utilise une boucle for de 1 a 10.', correction: 'table_multiplication <- function(n) {\n  for (i in 1:10) {\n    print(paste(n, "x", i, "=", n * i))\n  }\n}\ntable_multiplication(7)'},
+      {title: 'Analyse statistique d un data frame', desc: 'Utilise le jeu de donnees iris integre. Calcule la moyenne, mediane et ecart-type de la longueur des petales par espece. Cree un boxplot pour visualiser la distribution.', hint: 'Utilise aggregate() ou group_by() avec summarise(). Pour le graphique, utilise boxplot(Petal.Length ~ Species, data = iris).', correction: 'data(iris)\n\nstats <- aggregate(Petal.Length ~ Species, data = iris,\n  FUN = function(x) c(moyenne = mean(x), mediane = median(x), sd = sd(x)))\nprint(stats)\n\nboxplot(Petal.Length ~ Species, data = iris,\n  main = "Longueur des petales par espece",\n  col = c("lightblue", "lightgreen", "lightpink"))'}
+    ],
+    project: {desc: 'Analyse un jeu de donnees integrer (iris, mtcars) et cree un rapport avec des graphiques et des statistiques descriptives.', steps: ['Charge le jeu de donnees iris', 'Affiche un resume avec summary()', 'Cree un histogramme avec hist()', 'Cree un nuage de points avec plot()', 'Calcule des correlations', 'Exporte les graphiques en PNG']}
   },
   {
-    name: "Dart",
-    category: "Applications",
-    accent: "#0284c7",
-    level: "Mobile",
-    intro: "Dart est le langage de Flutter pour creer des apps mobile, web et desktop.",
-    why: "Il permet de creer une seule app pour plusieurs plateformes.",
-    build: "Tu peux creer une application mobile moderne avec Flutter.",
-    concepts: ["Widgets", "Classes", "State", "Flutter"],
-    code: `void main() {
-  print("Bonjour Dart");
-}`
+    name: 'Dart',
+    category: 'Mobile',
+    accent: '#0175c2',
+    level: 'Essentiel',
+    intro: 'Dart est le langage de Flutter pour creer des apps mobiles, web et desktop avec une seule base de code.',
+    why: 'Il est optimise pour les UI reactives et compile en code natif performant.',
+    build: 'Tu peux creer une app mobile, une app web, une app desktop ou un jeu.',
+    concepts: ['Widgets', 'State', 'Async', 'Streams', 'Classes'],
+    code: 'void main() {\n  print("Bonjour Dart");\n}',
+    help: 'Installe Flutter (qui inclut Dart). Execute dart run fichier.dart. Pour les apps Flutter, utilise flutter run.',
+    run: 'Cree un fichier .dart et execute dart run fichier.dart. Pour Flutter, cree un projet avec flutter create.',
+    basics: [
+      {title: 'Programme de base', text: 'Tout programme Dart commence par main().', code: 'void main() {\n  print("Bonjour");\n}'},
+      {title: 'Les variables', text: 'final pour une constante, var pour une variable.', code: 'final prenom = "Alice";\nvar age = 17;'},
+      {title: 'Les types', text: 'Dart est type, mais le type peut etre infere.', code: 'String nom = "Alice";\nint age = 17;'}
+    ],
+    examples: [
+      {title: 'Fonction', desc: 'Cree une fonction typee.', code: 'int addition(int a, int b) {\n  return a + b;\n}\n\nvoid main() {\n  print(addition(3, 5));\n}', explanation: ['int est le type de retour de la fonction', 'Les parametres a et b sont de type int', 'void main() est le point d entree du programme Dart', 'print() affiche le resultat dans la console', 'Les accolades { } delimitent le corps de la fonction', 'Dart est un langage type mais le type peut etre infere avec var']},
+      {title: 'Boucle for', desc: 'Parcourt une liste avec une boucle.', code: 'var notes = [12, 16, 18];\nfor (var note in notes) {\n  print(note);\n}', explanation: ['for-in parcourt chaque element de la liste un par un', 'var note recoit la valeur de l element courant', 'Les listes se declarent avec des crochets [ ]', 'Le bloc sous for est entre accolades { }', 'Dart est fortement type : var deduit automatiquement le type', 'Tu peux aussi utiliser forEach() pour parcourir une liste']}
+    ],
+    exercises: [
+      {title: 'Message', desc: 'Cree un programme qui stocke ton prenom dans une variable et l\'affiche.', hint: 'Utilise final et print().', correction: 'void main() {\n  final prenom = "Alice";\n  print(prenom);\n}'},
+      {title: 'Somme', desc: 'Cree une fonction qui additionne deux nombres.', hint: 'Declare les parametres avec leurs types.', correction: 'int somme(int a, int b) {\n  return a + b;\n}\n\nvoid main() {\n  print(somme(5, 3));\n}'},
+      {title: 'Classe avec async/await', desc: 'Cree une classe Utilisateur avec un nom et un email. Ajoute une methode asynchrone fetchDonnees() qui simule un appel API avec Future.delayed(). Dans main, cree un utilisateur, appelle la methode avec await et affiche les donnees.', hint: 'Utilise Future<void> et async/await. Future.delayed(Duration(seconds: 2), () { ... }) simule un delai.', correction: 'class Utilisateur {\n  String nom;\n  String email;\n  Utilisateur(this.nom, this.email);\n\n  Future<void> fetchDonnees() async {\n    print("Chargement des donnees de $nom...");\n    await Future.delayed(Duration(seconds: 2));\n    print("Donnees chargees pour $nom ($email)");\n  }\n}\n\nFuture<void> main() async {\n  var user = Utilisateur("Alice", "alice@mail.com");\n  await user.fetchDonnees();\n}'}
+    ],
+    project: {desc: 'Cree une calculatrice en console avec Dart : l\'utilisateur choisit une operation et entre deux nombres.', steps: ['Cree les fonctions de calcul', 'Affiche un menu a l\'utilisateur', 'Lit le choix et les nombres', 'Effectue le calcul et affiche le resultat', 'Boucle jusqu\'a ce que l\'utilisateur quitte']}
   },
   {
-    name: "Bash",
-    category: "Systeme",
-    accent: "#15803d",
-    level: "Automatisation",
-    intro: "Bash sert a automatiser des actions dans le terminal.",
-    why: "Il rend plus rapide pour manipuler des fichiers et lancer des outils.",
-    build: "Tu peux creer un script de sauvegarde ou un lanceur de projet.",
-    concepts: ["Commandes", "Variables", "Boucles", "Pipes"],
-    code: `for file in *.txt; do
-  echo "$file"
-done`
+    name: 'Bash',
+    category: 'Systeme',
+    accent: '#4eaa25',
+    level: 'Debutant',
+    intro: 'Bash est le langage du terminal Linux/Mac. Il automatise les taches, manipule les fichiers et lance des programmes.',
+    why: 'C\'est indispensable pour tout developpeur qui travaille sur un serveur ou en ligne de commande.',
+    build: 'Tu peux creer des scripts d\'installation, des sauvegardes automatiques, des renommages en lot.',
+    concepts: ['Variables', 'Conditions', 'Boucles', 'Fonctions', 'Redirections'],
+    code: '#!/usr/bin/env bash\necho "Bonjour Bash"',
+    help: 'Cree un fichier .sh, rends-le executable avec chmod +x fichier.sh, execute avec ./fichier.sh.',
+    run: 'Dans le terminal, execute bash fichier.sh ou rends le fichier executable avec chmod +x puis execute-le directement.',
+    basics: [
+      {title: 'Les variables', text: 'Les variables n\'ont pas de type et s\'utilisent avec $.', code: 'prenom="Alice"\necho "$prenom"'},
+      {title: 'Les conditions', text: 'if se termine par fi et utilise crochets.', code: 'if [ "$age" -ge 18 ]; then\n  echo "Majeur"\nfi'},
+      {title: 'Les boucles', text: 'for parcourt une liste de valeurs.', code: 'for i in 1 2 3; do\n  echo $i\ndone'}
+    ],
+    examples: [
+      {title: 'Afficher un message', desc: 'Utilise echo pour afficher du texte.', code: 'echo "Bonjour Bash !"', explanation: ['echo affiche du texte dans le terminal', 'Les guillemets preservent les espaces dans le message', 'Le shebang #!/usr/bin/env bash indique l interpreteur', 'Rends le script executable avec chmod +x fichier.sh', 'Execute le script avec ./fichier.sh ou bash fichier.sh', 'echo ajoute automatiquement un retour a la ligne']},
+      {title: 'Renommer des fichiers', desc: 'Boucle sur des fichiers .txt et les renomme en .bak.', code: 'for f in *.txt; do\n  mv "$f" "${f%.txt}.bak"\ndone', explanation: ['${f%.txt} enleve le suffixe .txt du nom de fichier', 'mv deplace ou renomme un fichier', 'for f in *.txt boucle sur tous les fichiers .txt du dossier', '\"$f\" est le nom original du fichier (entre guillemets pour la securite)', 'mv \"$f\" \"${f%.txt}.bak\" renomme .txt en .bak', 'Les guillemets autour de $f evite les problemes avec les espaces']}
+    ],
+    exercises: [
+      {title: 'Afficher un fichier', desc: 'Ecris un script qui affiche le contenu d\'un fichier passe en argument.', hint: 'Utilise cat $1 pour lire le premier argument.', correction: '#!/usr/bin/env bash\ncat "$1"'},
+      {title: 'Compteur', desc: 'Cree un script qui compte de 1 a 10.', hint: 'Utilise une boucle for avec seq 1 10.', correction: '#!/usr/bin/env bash\nfor i in $(seq 1 10); do\n  echo $i\ndone'},
+      {title: 'Script de sauvegarde avec fonctions', desc: 'Cree un script qui prend un dossier en argument et cree une archive .tar.gz horodatee. Ajoute trois fonctions : usage() qui affiche l aide, verifier_dossier() qui verifie que le dossier existe, et sauvegarder() qui compresse.', hint: 'Utilise $1 pour l argument, [[ -d $1 ]] pour verifier, et tar -czf pour compresser. La date avec date +%Y%m%d_%H%M%S.', correction: '#!/usr/bin/env bash\n\nusage() {\n  echo "Usage: $0 <dossier>"\n  exit 1\n}\n\nverifier_dossier() {\n  if [[ ! -d "$1" ]]; then\n    echo "Erreur: $1 n existe pas"\n    exit 1\n  fi\n}\n\nsauvegarder() {\n  local nom="backup_$(date +%Y%m%d_%H%M%S).tar.gz"\n  tar -czf "$nom" "$1"\n  echo "Sauvegarde creee : $nom"\n}\n\n[[ $# -eq 0 ]] && usage\nverifier_dossier "$1"\nsauvegarder "$1"'}
+    ],
+    project: {desc: 'Cree un script de sauvegarde qui compresse un dossier en .tar.gz avec un nom contenant la date du jour.', steps: ['Demande le dossier a sauvegarder', 'Cree un nom de fichier avec la date', 'Utilise tar pour compresser', 'Affiche un message de confirmation', 'Teste le script sur un dossier exemple']}
   },
   {
-    name: "Lua",
-    category: "Applications",
-    accent: "#1e40af",
-    level: "Leger",
-    intro: "Lua est leger et souvent utilise dans les jeux et logiciels extensibles.",
-    why: "Il est simple a apprendre et pratique pour creer des scripts.",
-    build: "Tu peux creer des scripts de jeu ou des extensions.",
-    concepts: ["Tables", "Fonctions", "Modules", "Scripts"],
-    code: `local score = 10
-print("Score : " .. score)`
+    name: 'Lua',
+    category: 'Systeme',
+    accent: '#000080',
+    level: 'Essentiel',
+    intro: 'Lua est un langage leger et rapide, utilise comme langage de script dans les jeux (Roblox, WoW), Redis et Nginx.',
+    why: 'Il est petit, simple a integrer et tres performant.',
+    build: 'Tu peux creer un script de jeu, une configuration, un plugin ou un outil integre.',
+    concepts: ['Tables', 'Fonctions', 'Metatables', 'Coroutines', 'Modules'],
+    code: 'local prenom = "Alice"\nprint("Bonjour " .. prenom)',
+    help: 'Installe Lua depuis lua.org. Execute lua fichier.lua dans le terminal. Les bibliotheques sont minimes mais efficaces.',
+    run: 'Cree un fichier .lua et execute lua fichier.lua dans le terminal.',
+    basics: [
+      {title: 'Les variables', text: 'local cree une variable locale.', code: 'local prenom = "Alice"\nprint(prenom)'},
+      {title: 'Les tables', text: 'Les tables servent a la fois de listes et de dictionnaires.', code: 'local fruits = {"Pomme", "Banane"}\nprint(fruits[1])'},
+      {title: 'Les fonctions', text: 'Une fonction se definit avec function.', code: 'local function saluer(nom)\n  print("Bonjour " .. nom)\nend'}
+    ],
+    examples: [
+      {title: 'Afficher un message', desc: 'Utilise print() pour afficher un message.', code: 'print("Bonjour Lua !")', explanation: ['.. est l operateur de concatenation de chaines en Lua', 'print() affiche le resultat dans la console', 'Les guillemets droits entourent les chaines de caracteres', 'Le point-virgule est optionnel en Lua', 'Les variables sont globales par defaut, utilisez local pour les rendres locales', 'Lua a ete concu pour etre integre dans d autres applications']},
+      {title: 'Parcourir une table', desc: 'Utilise ipairs pour parcourir une liste.', code: 'local notes = {12, 16, 18}\nfor i, note in ipairs(notes) do\n  print(note)\nend', explanation: ['ipairs parcourt les elements d\'un tableau de l\'index 1 a n', 'i recoit l\'index numerique de chaque element', 'note recoit la valeur a chaque position', 'ipairs s\'arrete au premier nil trouve', 'pairs() parcourt toutes les cles d\'une table (pas seulement les indices)', 'Les indices en Lua commencent a 1 (pas a 0 comme dans la plupart des langages)']}
+    ],
+    exercises: [
+      {title: 'Message personnalise', desc: 'Cree un programme qui stocke ton prenom dans une variable et l\'affiche.', hint: 'Utilise local et print().', correction: 'local prenom = "Alice"\nprint("Bonjour " .. prenom)'},
+      {title: 'Pair ou impair', desc: 'Verifie si un nombre est pair ou impair.', hint: 'Utilise % 2 == 0 pour tester.', correction: 'local n = 7\nif n % 2 == 0 then\n  print("Pair")\nelse\n  print("Impair")\nend'},
+      {title: 'Metatables : operateurs personnalises', desc: 'Cree une table qui represente un vecteur 2D (x, y). Ajoute une metatable qui permet d additionner deux vecteurs avec l operateur + et de les afficher avec tostring().', hint: 'Utilise setmetatable(), __add pour l addition et __tostring pour l affichage. Chaque vecteur est une table {x = ..., y = ...}.', correction: 'local Vector = {}\nVector.__index = Vector\n\nfunction Vector:new(x, y)\n  return setmetatable({x = x, y = y}, self)\nend\n\nVector.__add = function(a, b)\n  return Vector:new(a.x + b.x, a.y + b.y)\nend\n\nVector.__tostring = function(v)\n  return "(" .. v.x .. ", " .. v.y .. ")"\nend\n\nlocal v1 = Vector:new(1, 2)\nlocal v2 = Vector:new(3, 4)\nlocal v3 = v1 + v2\nprint(v1 .. " + " .. v2 .. " = " .. v3)'}
+    ],
+    project: {desc: 'Cree un petit jeu de devinettes : l\'ordinateur choisit un nombre aleatoire entre 1 et 100 et l\'utilisateur doit le trouver.', steps: ['Utilise math.random pour generer un nombre', 'Boucle jusqu\'a ce que l\'utilisateur trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation']}
   }
 ];
 
@@ -296,6 +588,102 @@ function findLanguageFromHash() {
 }
 
 const helpRunGuides = {
+  html: {
+    file: "index.html",
+    command: "Ouvre le fichier dans un navigateur (double-clic)",
+    tips: [
+      "Tape ! puis Enter dans VS Code pour generer la structure de base HTML.",
+      "Les balises HTML s'ecrivent entre < > et se ferment souvent avec </ >.",
+      "Utilise <h1> a <h6> pour les titres, <p> pour les paragraphes.",
+      "Pour une image, utilise <img src=\"photo.jpg\" alt=\"description\">.",
+      "Tout le contenu visible doit etre entre <body> et </body>."
+    ],
+    starter: `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ma page</title>
+</head>
+<body>
+  <h1>Bonjour !</h1>
+  <p>Ceci est ma premiere page HTML.</p>
+  <img src="photo.jpg" alt="Ma photo">
+</body>
+</html>`
+  },
+  css: {
+    file: "style.css",
+    command: "Lie le fichier CSS à ton HTML avec <link> puis actualise le navigateur",
+    tips: [
+      "Un sélecteur cible les éléments HTML : h1 { color: blue; }",
+      "Utilise class=\"nom\" en HTML et .nom en CSS pour cibler une classe.",
+      "Flexbox aligne les éléments : display: flex; justify-content: center;",
+      "Les media queries adaptent le style selon la taille de l'écran.",
+      "Les transitions ajoutent des animations au survol : transition: 0.3s;"
+    ],
+    starter: `/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+.carte {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.carte:hover {
+  transform: scale(1.05);
+}`
+  },
+  javascript: {
+    file: "script.js",
+    command: "Ajoute <script src=\"script.js\"></script> dans le HTML puis actualise la page",
+    tips: [
+      "Utilise let pour déclarer une variable qui peut changer.",
+      "Les fonctions se définissent avec function nom() { ... }",
+      "document.getElementById('id') sélectionne un élément HTML.",
+      "addEventListener réagit aux clics, soumissions, etc.",
+      "console.log() affiche dans la console du navigateur (F12)."
+    ],
+    starter: `// script.js
+let compteur = 0;
+const bouton = document.getElementById("monBouton");
+const affichage = document.getElementById("compteur");
+
+bouton.addEventListener("click", function() {
+  compteur++;
+  affichage.textContent = compteur;
+});`
+  },
+  typescript: {
+    file: "main.ts",
+    command: "Compile avec tsc main.ts puis exécute le fichier .js généré",
+    tips: [
+      "Déclare le type des variables : let nom: string = \"Alice\";",
+      "Les interfaces décrivent la forme d'un objet.",
+      "Utilise : type pour les paramètres de fonction.",
+      "Le compilateur tsc signale les erreurs de type avant l'exécution.",
+      "npm install -g typescript installe le compilateur globalement."
+    ],
+    starter: `// main.ts
+interface Personne {
+  nom: string;
+  age: number;
+}
+
+function saluer(p: Personne): string {
+  return "Bonjour " + p.nom + ", tu as " + p.age + " ans";
+}
+
+const utilisateur: Personne = { nom: "Alice", age: 17 };
+console.log(saluer(utilisateur));`
+  },
   python: {
     file: "main.py",
     command: "python main.py",
@@ -619,7 +1007,7 @@ function renderHelpRunSection(language) {
     <p>Si tu bloques, voici quelques indices :</p>
 
     <div class="pill-list">
-      ${guide.tips.map((tip) => `<li>${tip}</li>`).join("")}
+      ${guide.tips.map((tip) => `<li>${escapeHtml(tip)}</li>`).join("")}
     </div>
 
     <pre><code>${escapeHtml(guide.starter)}</code></pre>
@@ -631,7 +1019,7 @@ function renderHelpRunSection(language) {
 
   <div class="info-card">
     <p>
-      Enregistre ton fichier sous le nom <strong>${guide.file}</strong>.
+      Enregistre ton fichier sous le nom <strong>${escapeHtml(guide.file)}</strong>.
     </p>
 
     <p>
@@ -663,32 +1051,32 @@ function renderCards(filter = "Tous") {
 }
 
 function renderLesson(language) {
-  document.title = `${language.name} - CodeLab`;
+  document.title = `${escapeHtml(language.name)} - CodeLab`;
   homePage.classList.add("is-hidden");
   lessonPage.classList.remove("is-hidden");
 
   let html = `
-    <div class="lesson-inner page-enter" style="--accent: ${language.accent}">
+    <div class="lesson-inner page-enter" style="--accent: ${escapeHtml(language.accent)}">
       <a class="back-link" href="#explorer">← Retour aux langages</a>
 
       <div class="lesson-hero">
         <div class="lesson-title">
-          <span class="lesson-kicker">${language.category} - ${language.level}</span>
-          <h2>${language.name}</h2>
-          <p>${language.intro}</p>
+          <span class="lesson-kicker">${escapeHtml(language.category)} - ${escapeHtml(language.level)}</span>
+          <h2>${escapeHtml(language.name)}</h2>
+          <p>${escapeHtml(language.intro)}</p>
         </div>
 
         <aside class="lesson-side">
           <div class="stat" style="--i: 0">
-            <strong>${language.concepts.length}</strong>
+            <strong>${escapeHtml(language.concepts.length)}</strong>
             <span>notions cles</span>
           </div>
           <div class="stat" style="--i: 1">
-            <strong>${language.level}</strong>
+            <strong>${escapeHtml(language.level)}</strong>
             <span>niveau conseille</span>
           </div>
           <div class="stat" style="--i: 2">
-            <strong>${language.category}</strong>
+            <strong>${escapeHtml(language.category)}</strong>
             <span>domaine principal</span>
           </div>
         </aside>
@@ -696,19 +1084,19 @@ function renderLesson(language) {
 
       <div class="lesson-content">
         <section class="lesson-block">
-          <h3>Pourquoi apprendre ${language.name} ?</h3>
-          <p>${language.why}</p>
+          <h3>Pourquoi apprendre ${escapeHtml(language.name)} ?</h3>
+          <p>${escapeHtml(language.why)}</p>
         </section>
 
         <section class="lesson-block">
           <h3>Ce que tu peux creer</h3>
-          <p>${language.build}</p>
+          <p>${escapeHtml(language.build)}</p>
         </section>
 
         <section class="lesson-block full">
           <h3>Notions importantes</h3>
           <ul class="pill-list">
-            ${language.concepts.map(concept => `<li>${concept}</li>`).join("")}
+            ${language.concepts.map(concept => `<li>${escapeHtml(concept)}</li>`).join("")}
           </ul>
         </section>
 
