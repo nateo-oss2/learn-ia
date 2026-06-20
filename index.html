@@ -120,45 +120,31 @@ function progresser(langage) {
     <section class="page lesson-page is-hidden" id="lessonPage"></section>
   </main>
 
-  <div class="cookie-overlay" id="cookieOverlay">
-    <div class="cookie-modal">
-      <div class="cookie-icon">
-        <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
-          <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2" fill="#fff3e0"/>
-          <circle cx="16" cy="18" r="2.5" fill="#e65100"/>
-          <circle cx="26" cy="14" r="2" fill="#e65100"/>
-          <circle cx="30" cy="26" r="2.5" fill="#e65100"/>
-          <circle cx="18" cy="30" r="2" fill="#e65100"/>
-          <circle cx="22" cy="22" r="1.5" fill="#e65100"/>
-        </svg>
-      </div>
-      <h3>Un petit cookie pour mieux t'aider</h3>
-      <p>Ce site utilise un cookie pour savoir quelles pages sont consultées afin d'améliorer ton expérience. Aucune donnée personnelle n'est collectée.</p>
-      <div class="cookie-actions">
-        <button class="button secondary" id="cookieRefuse">Refuser</button>
-        <button class="button primary" id="cookieAccept">Accepter</button>
-      </div>
+  <div class="cookie-bar" id="cookieBar">
+    <p>Ce site utilise un cookie pour améliorer ton expérience.</p>
+    <div class="cookie-actions">
+      <button id="cookieRefuse">Refuser</button>
+      <button id="cookieAccept">Accepter</button>
     </div>
   </div>
 
   <script>
     (function() {
-      var overlay = document.getElementById("cookieOverlay");
+      var bar = document.getElementById("cookieBar");
       var accept = document.getElementById("cookieAccept");
       var refuse = document.getElementById("cookieRefuse");
-      var match = document.cookie.match(/cookie_consent=([^;]+)/);
-      if (!match) {
-        overlay.style.display = "grid";
+      if (document.cookie.indexOf("cookie_consent=") === -1) {
+        bar.style.display = "flex";
       }
-      accept.addEventListener("click", function() {
+      accept.onclick = function() {
         document.cookie = "cookie_consent=accepted; path=/; max-age=31536000; SameSite=Lax";
-        overlay.style.display = "none";
+        bar.style.display = "none";
         if (typeof sendTrack === "function") sendTrack();
-      });
-      refuse.addEventListener("click", function() {
+      };
+      refuse.onclick = function() {
         document.cookie = "cookie_consent=refused; path=/; max-age=31536000; SameSite=Lax";
-        overlay.style.display = "none";
-      });
+        bar.style.display = "none";
+      };
     })();
   </script>
 
