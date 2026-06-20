@@ -2880,6 +2880,7 @@ function sendTrack() {
     referrer: document.referrer || "",
     screen: `${window.innerWidth}x${window.innerHeight}`,
     duration_seconds: duration,
+    action: duration > 0 ? "page_exit" : "page_enter",
   };
   trackingStart = now;
   trackingPage = newPage;
@@ -2902,6 +2903,7 @@ function sendFinalTrack() {
     referrer: "",
     screen: `${window.innerWidth}x${window.innerHeight}`,
     duration_seconds: duration,
+    action: "page_exit",
   };
   navigator.sendBeacon("/api/track", JSON.stringify(data));
 }
@@ -3031,6 +3033,7 @@ loginForm.addEventListener("submit", async e => {
     } else {
       updateAuthUI(res.username);
       closeAuth();
+      sendTrack();
     }
   } catch {
     showError(loginError, "Impossible de contacter le serveur.");
@@ -3049,6 +3052,7 @@ registerForm.addEventListener("submit", async e => {
     } else {
       updateAuthUI(res.username);
       closeAuth();
+      sendTrack();
     }
   } catch {
     showError(registerError, "Impossible de contacter le serveur.");

@@ -144,6 +144,7 @@ def track():
         "page": data.get("page", ""),
         "page_name": data.get("page_name", ""),
         "duration_seconds": data.get("duration_seconds", 0),
+        "action": data.get("action", "page_enter"),
         "referrer": data.get("referrer", ""),
         "screen": data.get("screen", ""),
         "user_agent": request.headers.get("User-Agent", ""),
