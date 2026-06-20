@@ -1251,7 +1251,7 @@ pre {
 
   .explorer,
   .lesson-page {
-    padding: 48px 18px;
+    padding: 48px 14px;
   }
 
   .footer {
@@ -1347,7 +1347,11 @@ pre {
 
   .explorer,
   .lesson-page {
-    padding: 36px 14px;
+    padding: 36px 10px;
+  }
+
+  .language-card {
+    padding: 12px;
   }
 
   .run-card {
