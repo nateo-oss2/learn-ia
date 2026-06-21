@@ -10,6 +10,29 @@ import urllib.error
 app = Flask(__name__)
 app.secret_key = "codelab-secret-key-change-me"
 
+LANGUAGES = {
+    "html": {"name": "HTML", "desc": "Apprends HTML, le langage de structure des pages web. Cours gratuit pour debutant avec exemples et exercices.", "cat": "Web"},
+    "css": {"name": "CSS", "desc": "Apprends CSS pour styliser tes pages web. Cours gratuit avec couleurs, flexbox, animations et mise en page.", "cat": "Web"},
+    "javascript": {"name": "JavaScript", "desc": "Apprends JavaScript pour rendre tes pages interactives. Cours gratuit avec DOM, events et API.", "cat": "Web"},
+    "typescript": {"name": "TypeScript", "desc": "Apprends TypeScript, le superset type de JavaScript. Cours gratuit pour un code plus fiable.", "cat": "Web"},
+    "python": {"name": "Python", "desc": "Apprends Python, langage polyvalent et lisible. Cours gratuit pour debutant : variables, boucles, fichiers.", "cat": "Back-end"},
+    "java": {"name": "Java", "desc": "Apprends Java, langage objet utilise dans les entreprises et Android. Cours gratuit avec POO.", "cat": "Applications"},
+    "c": {"name": "C", "desc": "Apprends le langage C, proche de la machine. Cours gratuit : pointeurs, memoire, systeme.", "cat": "Systeme"},
+    "cplus": {"name": "C++", "desc": "Apprends le C++, langage puissant pour jeux et systemes. Cours gratuit avec POO et templates.", "cat": "Applications"},
+    "csharp": {"name": "C#", "desc": "Apprends C# pour .NET, Unity et apps Windows. Cours gratuit avec classes et LINQ.", "cat": "Applications"},
+    "php": {"name": "PHP", "desc": "Apprends PHP pour le web dynamique et les bases de donnees. Cours gratuit avec MySQL.", "cat": "Back-end"},
+    "ruby": {"name": "Ruby", "desc": "Apprends Ruby, langage elegant et expressif. Cours gratuit avec Ruby on Rails.", "cat": "Systeme"},
+    "go": {"name": "Go", "desc": "Apprends Go, langage rapide de Google pour la concurrence. Cours gratuit avec goroutines.", "cat": "Applications"},
+    "rust": {"name": "Rust", "desc": "Apprends Rust, langage systeme sur et performant. Cours gratuit avec ownership et borrowing.", "cat": "Applications"},
+    "swift": {"name": "Swift", "desc": "Apprends Swift pour creer des apps iOS et macOS. Cours gratuit avec optionals et SwiftUI.", "cat": "Mobile"},
+    "kotlin": {"name": "Kotlin", "desc": "Apprends Kotlin, langage moderne pour Android. Cours gratuit avec null safety et coroutines.", "cat": "Mobile"},
+    "sql": {"name": "SQL", "desc": "Apprends SQL pour interroger et gerer des bases de donnees. Cours gratuit avec SELECT, JOIN, GROUP BY.", "cat": "Donnees"},
+    "r": {"name": "R", "desc": "Apprends R pour les statistiques et la data science. Cours gratuit avec data frames et ggplot2.", "cat": "Donnees"},
+    "dart": {"name": "Dart", "desc": "Apprends Dart pour creer des apps avec Flutter. Cours gratuit avec classes, async et streams.", "cat": "Mobile"},
+    "bash": {"name": "Bash", "desc": "Apprends Bash pour automatiser des taches dans le terminal. Cours gratuit avec scripts shell.", "cat": "Systeme"},
+    "lua": {"name": "Lua", "desc": "Apprends Lua pour les jeux et scripts integres. Cours gratuit avec tables et fonctions.", "cat": "Systeme"},
+}
+
 SUPABASE_URL = "https://ezrhgpqehlheyppggnjf.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cmhncHFlaGxoZXlwcGdnbmpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5NzE4NzEsImV4cCI6MjA5NzU0Nzg3MX0.odI1Zu705j3s7siEV8w-j1qoVrPbvvLDu5XEYgeHMuc"
 
@@ -207,7 +230,12 @@ def list_users():
 @app.route("/sitemap.xml")
 def sitemap():
     from flask import make_response
-    content = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://learn-codelab-theta.vercel.app/</loc>\n  </url>\n</urlset>\n'
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    lines.append('  <url>\n    <loc>https://learn-codelab-theta.vercel.app/</loc>\n    <priority>1.0</priority>\n  </url>')
+    for slug in LANGUAGES:
+        lines.append(f'  <url>\n    <loc>https://learn-codelab-theta.vercel.app/{slug}</loc>\n    <priority>0.8</priority>\n  </url>')
+    lines.append('</urlset>')
+    content = '\n'.join(lines)
     resp = make_response(content, 200)
     resp.headers["Content-Type"] = "application/xml; charset=utf-8"
     return resp
@@ -217,7 +245,33 @@ def sitemap():
 def static_files(filename):
     if "." in filename:
         return serve_file(filename)
-    return serve_file("index.html")
+    lang = LANGUAGES.get(filename)
+    if not lang:
+        return serve_file("index.html")
+    idx = serve_file("index.html")
+    content = idx[0].decode() if isinstance(idx[0], bytes) else idx[0]
+    title = f"Apprendre {lang['name']} - Cours gratuit | CodeLab"
+    desc = lang["desc"]
+    heading = f"Apprendre {lang['name']} - {lang['cat']}"
+    content = content.replace(
+        "<title>CodeLab - Apprendre à coder en 20 langages de programmation</title>",
+        f"<title>{title}</title>"
+    )
+    content = content.replace(
+        '<meta name="description" content="Apprends la programmation gratuitement avec CodeLab. Cours interactifs pour 20 langages : Python, JavaScript, HTML, CSS, Java, C++, Rust, et plus." />',
+        f'<meta name="description" content="{desc}" />'
+    )
+    content = content.replace(
+        '<meta property="og:title" content="CodeLab - Apprendre à coder en 20 langages" />',
+        f'<meta property="og:title" content="{title}" />'
+    )
+    content = content.replace(
+        '<meta property="og:description" content="Cours de programmation gratuits et interactifs pour 20 langages. Parfait pour les débutants." />',
+        f'<meta property="og:description" content="{desc}" />'
+    )
+    resp = make_response(content, 200)
+    resp.headers["Content-Type"] = "text/html; charset=utf-8"
+    return resp
 
 
 if __name__ == "__main__":
