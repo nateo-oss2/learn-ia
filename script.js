@@ -1144,6 +1144,39 @@ function renderLesson(language) {
           <h3>Premier exemple</h3>
           <pre><code>${escapeHtml(language.code)}</code></pre>
         </section>
+
+        <section class="lesson-block full">
+          <h3>Exemples</h3>
+          <div class="example-grid">
+            ${language.examples.map((ex, i) => `
+            <div class="code-card">
+              <h4>${escapeHtml(ex.title)}</h4>
+              <p>${escapeHtml(ex.desc)}</p>
+              <details>
+                <summary>Voir le code</summary>
+                <pre><code>${escapeHtml(ex.code)}</code></pre>
+                <div class="pill-list">
+                  ${(ex.explanation || []).map(expl => `<li>${escapeHtml(expl)}</li>`).join("")}
+                </div>
+              </details>
+            </div>`).join("")}
+          </div>
+        </section>
+
+        <section class="lesson-block full">
+          <h3>Exercices</h3>
+          ${language.exercises.map((ex, i) => `
+          <div class="exercise-card">
+            <h4>${i + 1}. ${escapeHtml(ex.title)}</h4>
+            <p>${escapeHtml(ex.desc)}</p>
+            ${ex.hint ? `<details><summary>💡 Indice</summary><p>${escapeHtml(ex.hint)}</p></details>` : ""}
+            <button class="correction-btn" onclick="toggleCorrection(this)">Voir la correction</button>
+            <div class="correction-content">
+              <pre><code>${escapeHtml(ex.correction)}</code></pre>
+            </div>
+          </div>`).join("")}
+        </section>
+
       </div>
     </div>
 
