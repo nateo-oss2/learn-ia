@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, send_file
+from flask import Flask, request, jsonify, session, send_file, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import json
@@ -229,7 +229,6 @@ def list_users():
 
 @app.route("/sitemap.xml")
 def sitemap():
-    from flask import make_response
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     lines.append('  <url>\n    <loc>https://learn-codelab-theta.vercel.app/</loc>\n    <priority>1.0</priority>\n  </url>')
     for slug in LANGUAGES:
@@ -248,11 +247,13 @@ def static_files(filename):
     lang = LANGUAGES.get(filename)
     if not lang:
         return serve_file("index.html")
-    idx = serve_file("index.html")
-    content = idx[0].decode() if isinstance(idx[0], bytes) else idx[0]
+    idx_path = os.path.join(BASE, "index.html")
+    if not os.path.exists(idx_path):
+        return serve_file("index.html")
+    with open(idx_path) as f:
+        content = f.read()
     title = f"Apprendre {lang['name']} - Cours gratuit | CodeLab"
     desc = lang["desc"]
-    heading = f"Apprendre {lang['name']} - {lang['cat']}"
     content = content.replace(
         "<title>CodeLab - Apprendre à coder en 20 langages de programmation</title>",
         f"<title>{title}</title>"
