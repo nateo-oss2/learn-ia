@@ -1,77 +1,13 @@
+import json, os, sqlite3, hashlib, uuid, hmac, time
+from functools import wraps
 from flask import Flask, request, jsonify, session, send_file
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
-import json
-import os
-import ssl
-import urllib.request
-import urllib.error
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.secret_key = "codelab-secret-key-change-me"
+app.secret_key = os.environ.get("SECRET_KEY", os.urandom(32).hex())
+CORS(app, supports_credentials=True)
 
-SUPABASE_URL = "https://ezrhgpqehlheyppggnjf.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cmhncHFlaGxoZXlwcGdnbmpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5NzE4NzEsImV4cCI6MjA5NzU0Nzg3MX0.odI1Zu705j3s7siEV8w-j1qoVrPbvvLDu5XEYgeHMuc"
-
-
-def supabase_request(method, path, body=None):
-    url = f"{SUPABASE_URL}/rest/v1/{path}"
-    headers = {
-        "apikey": SUPABASE_KEY,
-        "Authorization": f"Bearer {SUPABASE_KEY}",
-        "Content-Type": "application/json",
-        "Prefer": "return=representation",
-    }
-    data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-    kwargs = {}
-    if not os.environ.get("VERCEL"):
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        kwargs["context"] = ctx
-    try:
-        with urllib.request.urlopen(req, **kwargs) as resp:
-            text = resp.read().decode().strip()
-            return json.loads(text) if text else {}
-    except urllib.error.HTTPError as e:
-        text = e.read().decode().strip()
-        return {"error": text, "status": e.code}
-    except json.JSONDecodeError:
-        return {}
-
-
-def find_user(username):
-    res = supabase_request("GET", f"users?username=eq.{username}&select=*")
-    if isinstance(res, list) and len(res) > 0:
-        return res[0]
-    return None
-
-
-def create_user(username, password_hash, ip, user_agent):
-    body = {
-        "username": username,
-        "password": password_hash,
-        "ip": ip,
-        "user_agent": user_agent,
-        "history": [],
-    }
-    return supabase_request("POST", "users", body)
-
-
-def add_login_history(username, ip):
-    user = find_user(username)
-    if not user:
-        return
-    history = user.get("history") or []
-    history.append({
-        "action": "login",
-        "time": datetime.now().isoformat(),
-        "ip": ip,
-    })
-    supabase_request("PATCH", f"users?username=eq.{username}", {"history": history})
-
-
+DB = "site.db"
 BASE = os.path.dirname(os.path.abspath(__file__))
 
 def serve_file(path):
@@ -91,25 +27,22 @@ def register():
     data = request.get_json()
     username = data.get("username", "").strip()
     password = data.get("password", "")
-
-    if not username or not password:
-        return jsonify({"error": "Nom d'utilisateur et mot de passe requis"}), 400
-
+    if len(username) < 2:
+        return jsonify({"error": "Nom trop court (min. 2 caractères)"}), 400
     if len(password) < 4:
-        return jsonify({"error": "Mot de passe trop court (minimum 4 caractères)"}), 400
-
-    if find_user(username):
+        return jsonify({"error": "Mot de passe trop court (min. 4 caractères)"}), 400
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    try:
+        c.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", (username, hashlib.sha256(password.encode()).hexdigest()))
+        conn.commit()
+        session["user_id"] = c.lastrowid
+        session["username"] = username
+        return jsonify({"ok": True, "username": username})
+    except sqlite3.IntegrityError:
         return jsonify({"error": "Ce nom d'utilisateur existe déjà"}), 409
-
-    password_hash = generate_password_hash(password)
-    res = create_user(username, password_hash, request.remote_addr,
-                      request.headers.get("User-Agent", ""))
-
-    if isinstance(res, dict) and res.get("error"):
-        return jsonify({"error": "Erreur lors de la création du compte"}), 500
-
-    session["user"] = username
-    return jsonify({"message": "Compte créé avec succès", "username": username})
+    finally:
+        conn.close()
 
 
 @app.route("/api/login", methods=["POST"])
@@ -117,97 +50,151 @@ def login():
     data = request.get_json()
     username = data.get("username", "").strip()
     password = data.get("password", "")
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("SELECT id, username FROM users WHERE username=? AND password_hash=?", (username, hashlib.sha256(password.encode()).hexdigest()))
+    row = c.fetchone()
+    conn.close()
+    if row:
+        session["user_id"] = row[0]
+        session["username"] = row[1]
+        return jsonify({"ok": True, "username": row[1]})
+    return jsonify({"error": "Identifiants incorrects"}), 401
 
-    if not username or not password:
-        return jsonify({"error": "Nom d'utilisateur et mot de passe requis"}), 400
 
-    user = find_user(username)
-    if not user:
-        return jsonify({"error": "Nom d'utilisateur ou mot de passe incorrect"}), 401
+@app.route("/api/me", methods=["GET"])
+def me():
+    if "user_id" in session:
+        return jsonify({"username": session["username"]})
+    return jsonify({"error": "Non connecté"}), 401
 
-    if not check_password_hash(user["password"], password):
-        return jsonify({"error": "Nom d'utilisateur ou mot de passe incorrect"}), 401
 
-    session["user"] = username
-    add_login_history(username, request.remote_addr)
-
-    return jsonify({"message": "Connecté avec succès", "username": username})
+@app.route("/api/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return jsonify({"ok": True})
 
 
 @app.route("/api/track", methods=["POST"])
 def track():
     data = request.get_json()
     if not data:
-        return jsonify({"error": "Données requises"}), 400
-    body = {
-        "visitor_id": data.get("visitor_id", ""),
-        "page": data.get("page", ""),
-        "page_name": data.get("page_name", ""),
-        "duration_seconds": data.get("duration_seconds", 0),
-        "action": data.get("action", "page_enter"),
-        "referrer": data.get("referrer", ""),
-        "screen": data.get("screen", ""),
-        "user_agent": request.headers.get("User-Agent", ""),
-        "ip": request.remote_addr,
-        "username": session.get("user", ""),
-    }
-    supabase_request("POST", "visits", body)
+        return ("", 400)
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("""CREATE TABLE IF NOT EXISTS tracking (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        visitor_id TEXT,
+        page TEXT,
+        page_name TEXT,
+        referrer TEXT,
+        screen TEXT,
+        duration_seconds INTEGER,
+        action TEXT,
+        created_at TEXT DEFAULT (datetime('now'))
+    )""")
+    c.execute("""INSERT INTO tracking (visitor_id, page, page_name, referrer, screen, duration_seconds, action)
+        VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (data.get("visitor_id"), data.get("page"), data.get("page_name"),
+         data.get("referrer"), data.get("screen"), data.get("duration_seconds"), data.get("action")))
+    conn.commit()
+    conn.close()
+    return ("", 200)
+
+
+@app.route("/api/users", methods=["GET"])
+def get_users():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    if token != "n8e_6f8a2c1d9e3b4f5a6b7c8d9e0f1a2b3c4d5e6f":
+        return jsonify({"error": "Non autorisé"}), 403
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("SELECT id, username, created_at FROM users ORDER BY id DESC")
+    rows = c.fetchall()
+    c.execute("SELECT DISTINCT visitor_id, MIN(created_at) as first_seen, MAX(created_at) as last_seen, COUNT(*) as events FROM tracking GROUP BY visitor_id ORDER BY last_seen DESC")
+    tracks = c.fetchall()
+    conn.close()
+    out = []
+    for row in rows:
+        visits = [{"first_seen": t[1], "last_seen": t[2], "events": t[3]} for t in tracks]
+        out.append({
+            "id": row[0],
+            "username": row[1],
+            "created_at": row[2],
+            "visits": visits,
+        })
+    return jsonify(out)
+
+
+@app.route("/api/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    if token != "n8e_6f8a2c1d9e3b4f5a6b7c8d9e0f1a2b3c4d5e6f":
+        return jsonify({"error": "Non autorisé"}), 403
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("DELETE FROM users WHERE id=?", (user_id,))
+    conn.commit()
+    conn.close()
     return jsonify({"ok": True})
 
 
-def require_auth():
-    if "user" not in session:
-        return jsonify({"error": "Authentification requise"}), 401
-    return None
+@app.route("/api/stats/tracking", methods=["GET"])
+def get_tracking_stats():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    if token != "n8e_6f8a2c1d9e3b4f5a6b7c8d9e0f1a2b3c4d5e6f":
+        return jsonify({"error": "Non autorisé"}), 403
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("""SELECT visitor_id,
+                    MIN(CASE WHEN action IN ('page_enter','heartbeat') THEN created_at END) as first_seen,
+                    MAX(created_at) as last_seen,
+                    COUNT(CASE WHEN action='page_enter' THEN 1 END) as page_views,
+                    COUNT(CASE WHEN action='heartbeat' THEN 1 END) as heartbeats,
+                    MAX(CASE WHEN action='page_enter' OR action='heartbeat' THEN duration_seconds ELSE 0 END) as max_duration
+                 FROM tracking GROUP BY visitor_id ORDER BY last_seen DESC""")
+    rows = c.fetchall()
+    conn.close()
+    out = []
+    for r in rows:
+        out.append({
+            "visitor_id": r[0],
+            "first_seen": r[1],
+            "last_seen": r[2],
+            "page_views": r[3],
+            "heartbeats": r[4],
+            "max_duration": r[5],
+        })
+    return jsonify(out)
 
 
-@app.route("/api/visits")
-def list_visits():
-    err = require_auth()
-    if err:
-        return err
-    res = supabase_request("GET", "visits?order=visited_at.desc&limit=100")
-    if isinstance(res, list):
-        return jsonify(res)
-    return jsonify([])
-
-
-@app.route("/api/logout", methods=["POST"])
-def logout():
-    session.pop("user", None)
-    return jsonify({"message": "Déconnecté"})
-
-
-@app.route("/api/me")
-def me():
-    if "user" in session:
-        return jsonify({"username": session["user"]})
-    return jsonify({"username": None})
-
-
-@app.route("/api/users")
-def list_users():
-    err = require_auth()
-    if err:
-        return err
-    res = supabase_request("GET", "users?select=username,created_at,ip,user_agent,history")
-    if isinstance(res, list):
-        out = {}
-        for u in res:
-            out[u["username"]] = {
-                "created_at": u.get("created_at", ""),
-                "ip": u.get("ip", ""),
-                "user_agent": u.get("user_agent", ""),
-                "history": u.get("history", []),
-            }
-        return jsonify(out)
-    return jsonify({"error": "Impossible de récupérer les utilisateurs"}), 500
+@app.route("/sitemap.xml")
+def sitemap():
+    from flask import make_response
+    content = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://learn-codelab-theta.vercel.app/</loc>
+  </url>
+</urlset>
+'''
+    resp = make_response(content, 200)
+    resp.headers["Content-Type"] = "application/xml; charset=utf-8"
+    return resp
 
 
 @app.route("/<path:filename>")
 def static_files(filename):
-    return serve_file(filename)
+    if "." in filename:
+        return serve_file(filename)
+    return serve_file("index.html")
+
+
+
 
 
 if __name__ == "__main__":
+    with sqlite3.connect(DB) as conn:
+        conn.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password_hash TEXT, created_at TEXT DEFAULT (datetime('now')))")
+        conn.execute("CREATE TABLE IF NOT EXISTS tracking (id INTEGER PRIMARY KEY AUTOINCREMENT, visitor_id TEXT, page TEXT, page_name TEXT, referrer TEXT, screen TEXT, duration_seconds INTEGER, action TEXT, created_at TEXT DEFAULT (datetime('now')))")
     app.run(debug=True, port=5000)
