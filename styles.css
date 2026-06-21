@@ -755,6 +755,102 @@ pre {
   transform: translateY(-1px);
 }
 
+/* ── Lesson TOC ── */
+
+.lesson-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -10px 0 20px;
+}
+
+.lesson-toc a {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lesson-toc a:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* ── Concept Cards ── */
+
+.concept-card {
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.concept-card:last-child {
+  margin-bottom: 0;
+}
+
+.concept-card h4 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+
+.concept-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.concept-card pre {
+  margin: 0;
+}
+
+.concept-card .pill-list {
+  margin-top: 12px;
+}
+
+.lesson-section {
+  margin-bottom: 20px;
+}
+
+.lesson-section:last-child {
+  margin-bottom: 0;
+}
+
+.lesson-content > .lesson-section:not(.full) {
+  grid-column: 1 / -1;
+}
+
+/* ── Exercise Cards ── */
+
+.exercise-card details {
+  margin-top: 10px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--wash);
+  cursor: pointer;
+}
+
+.exercise-card summary {
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.exercise-card details p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.exercise-card .correction-btn {
+  margin-top: 12px;
+}
+
 .correction-btn {
   display: inline-flex;
   align-items: center;
