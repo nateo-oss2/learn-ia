@@ -1,12 +1,10 @@
 {
-  "builds": [
+  "headers": [
     {
-      "src": "app.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb" }
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" }
+      ]
     }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "app.py" }
   ]
 }
