@@ -3338,29 +3338,57 @@ button:hover{
 ${language.quiz ? `
 <section class="lesson-block full">
   <h3>Quiz</h3>
-  ${language.quiz.map((q, i) => `
-  <div class="radio-input" data-answer="${q.answer}" data-correct-text="${escapeHtml(q.options[q.answer])}">
-    <div class="info">
-      <span class="question">${i+1}. ${escapeHtml(q.q)}</span>
-      <span class="steps">${i+1}/${language.quiz.length}</span>
+  <div class="quiz-container" data-total="${language.quiz.length}">
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"></div>
+      <span class="quiz-counter">Question 1/${language.quiz.length}</span>
     </div>
-    ${(() => {
-      let wrongIdx = 1;
-      return q.options.map((opt, j) => {
-        const val = j === q.answer ? "value-2" : "value-" + (wrongIdx++ === 1 ? "1" : "3");
-        return `
-    <input type="radio" id="q${i}-${j}" name="q${i}" value="${val}" onchange="checkQuiz(this)">
-    <label for="q${i}-${j}">${escapeHtml(opt)}</label>`;
-      }).join("");
-    })()}
-    <span class="quiz-feedback success">Bonne reponse !</span>
-    <span class="quiz-feedback error">Mauvaise reponse</span>
-  </div>`).join("")}
-  <div class="quiz-actions">
-    <button class="correction-btn" onclick="showQuizCorrection(this)">Voir correction</button>
-    <a href="#" onclick="resetQuiz(event, this)">Recommencer</a>
+    ${language.quiz.map((q, i) => `
+    <div class="quiz-question ${i === 0 ? 'active' : ''}" data-index="${i}" data-answer="${q.answer}">
+      <p class="quiz-question-text">${escapeHtml(q.q)}</p>
+      <div class="quiz-options">
+        ${q.options.map((opt, j) => {
+          const letter = String.fromCharCode(65 + j);
+          return `
+        <label class="quiz-option" data-index="${j}">
+          <input type="radio" name="q${i}" value="${j}">
+          <span class="option-badge">${letter}</span>
+          <span class="option-text">${escapeHtml(opt)}</span>
+          <span class="option-check"></span>
+        </label>`;
+        }).join("")}
+      </div>
+      <div class="quiz-feedback">
+        <span class="feedback-icon"></span>
+        <span class="feedback-text"></span>
+      </div>
+    </div>`).join("")}
+    <div class="quiz-nav">
+      <button class="quiz-nav-btn prev" onclick="quizPrev()" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+        Precedent
+      </button>
+      <div class="quiz-dots">
+        ${language.quiz.map((_, i) => `<span class="quiz-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join("")}
+      </div>
+      <button class="quiz-nav-btn next" onclick="quizNext()">Suivant
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="quiz-result">
+      <div class="result-stars"></div>
+      <div class="result-score">
+        <span class="result-score-num">0</span>
+        <span class="result-score-sep">/</span>
+        <span class="result-score-total">${language.quiz.length}</span>
+      </div>
+      <p class="result-message"></p>
+      <div class="result-actions">
+        <button class="result-btn retry" onclick="quizRetry()">Recommencer</button>
+        <button class="result-btn review" onclick="quizReview()">Voir les reponses</button>
+      </div>
+    </div>
   </div>
-  <div class="quiz-result"></div>
 </section>` : ""}
   `;
 
@@ -3382,6 +3410,7 @@ ${language.quiz ? `
   }
 
   lessonPage.innerHTML = html;
+  quizInit();
   window.scrollTo(0, 0);
 }
 
@@ -3420,66 +3449,195 @@ renderCards();
 handleRoute();
 
 window.addEventListener("hashchange", handleRoute);
-function checkQuiz(input) {
-  const card = input.closest('.radio-input');
-  const allInputs = card.querySelectorAll('input[type=radio]');
-  const correctVal = "value-2";
+let quizCurrent = 0;
 
-  // The Uiverse CSS handles color/success/error display automatically.
-  // We just need to track for the score.
-  card.dataset.userAnswer = input.value;
+function quizInit() {
+  const container = document.querySelector('.quiz-container');
+  if (!container) return;
+  quizCurrent = 0;
+  const questions = container.querySelectorAll('.quiz-question');
+  questions.forEach((q, i) => {
+    q.classList.toggle('active', i === 0);
+    const inputs = q.querySelectorAll('input[type=radio]');
+    inputs.forEach(inp => {
+      inp.onchange = function() { quizSelect(this); };
+    });
+  });
+  updateProgress();
+  updateDots();
+  updateNav();
+}
 
-  // Show quiz actions if all questions answered
-  const container = card.closest('.lesson-block');
-  const allCards = container.querySelectorAll('.radio-input');
-  const allAnswered = Array.from(allCards).every(c => c.querySelector('input[type=radio]:checked'));
-  if (allAnswered) {
-    const actions = container.querySelector('.quiz-actions');
-    actions.style.display = 'flex';
-    const result = container.querySelector('.quiz-result');
-    const total = allCards.length;
-    const correctCount = Array.from(allCards).filter(c => {
-      const checked = c.querySelector('input[type=radio]:checked');
-      return checked && checked.value === correctVal;
-    }).length;
-    result.textContent = 'Score : ' + correctCount + '/' + total + ' (' + Math.round(correctCount/total*100) + '%)';
-    result.style.display = 'block';
+function quizSelect(input) {
+  const question = input.closest('.quiz-question');
+  const idx = parseInt(input.value);
+  const correct = parseInt(question.dataset.answer);
+  const options = question.querySelectorAll('.quiz-option');
+  const feedback = question.querySelector('.quiz-feedback');
+  const feedbackIcon = feedback.querySelector('.feedback-icon');
+  const feedbackText = feedback.querySelector('.feedback-text');
+
+  options.forEach(o => o.classList.remove('selected', 'correct', 'wrong'));
+  options[idx].classList.add('selected');
+
+  if (idx === correct) {
+    options[idx].classList.add('correct');
+    feedbackIcon.textContent = '✓';
+    feedbackText.textContent = 'Bonne reponse !';
+    feedback.className = 'quiz-feedback show correct';
+  } else {
+    options[idx].classList.add('wrong');
+    options[correct].classList.add('correct');
+    const correctText = question.querySelectorAll('.option-text')[correct].textContent;
+    feedbackIcon.textContent = '✗';
+    feedbackText.textContent = 'Reponse : ' + correctText;
+    feedback.className = 'quiz-feedback show wrong';
+  }
+
+  const allAnswered = Array.from(document.querySelectorAll('.quiz-question')).every(q =>
+    q.querySelector('input[type=radio]:checked')
+  );
+  if (allAnswered) showResults();
+}
+
+function quizNext() {
+  const container = document.querySelector('.quiz-container');
+  const total = parseInt(container.dataset.total);
+  if (quizCurrent < total - 1) {
+    quizCurrent++;
+    showQuestion(quizCurrent);
   }
 }
 
-function showQuizCorrection(button) {
-  const container = button.closest('.lesson-block');
-  container.querySelectorAll('.radio-input').forEach(card => {
-    const correctVal = "value-2";
-    const correctInput = card.querySelector(`input[value="${correctVal}"]`);
-    if (correctInput) {
-      correctInput.style.outline = '2px solid #16a34a';
-      correctInput.style.outlineOffset = '2px';
-    }
-  });
-  button.textContent = 'Correction affichee';
-  button.disabled = true;
+function quizPrev() {
+  if (quizCurrent > 0) {
+    quizCurrent--;
+    showQuestion(quizCurrent);
+  }
 }
 
-function resetQuiz(event, link) {
-  event.preventDefault();
-  const container = link.closest('.lesson-block');
-  container.querySelectorAll('.radio-input').forEach(card => {
-    card.querySelectorAll('input[type=radio]').forEach(inp => {
-      inp.checked = false;
-      inp.style.outline = '';
-      inp.style.outlineOffset = '';
-    });
-    delete card.dataset.userAnswer;
+function showQuestion(index) {
+  const container = document.querySelector('.quiz-container');
+  container.querySelectorAll('.quiz-question').forEach((q, i) => {
+    q.classList.toggle('active', i === index);
   });
-  const actions = container.querySelector('.quiz-actions');
-  actions.style.display = 'none';
-  const corrBtn = actions.querySelector('.correction-btn');
-  corrBtn.textContent = 'Voir correction';
-  corrBtn.disabled = false;
+  updateProgress();
+  updateDots();
+  updateNav();
+}
+
+function updateProgress() {
+  const container = document.querySelector('.quiz-container');
+  const total = parseInt(container.dataset.total);
+  const answered = container.querySelectorAll('.quiz-question input[type=radio]:checked').length;
+  const pct = (answered / total) * 100;
+  const bar = container.querySelector('.quiz-progress-bar');
+  bar.style.width = pct + '%';
+  const counter = container.querySelector('.quiz-counter');
+  counter.textContent = 'Question ' + (quizCurrent + 1) + '/' + total;
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('.quiz-dot');
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === quizCurrent);
+    const q = document.querySelectorAll('.quiz-question')[i];
+    const checked = q && q.querySelector('input[type=radio]:checked');
+    d.classList.toggle('done', !!checked);
+  });
+}
+
+function updateNav() {
+  const container = document.querySelector('.quiz-container');
+  const total = parseInt(container.dataset.total);
+  const prev = container.querySelector('.quiz-nav-btn.prev');
+  const next = container.querySelector('.quiz-nav-btn.next');
+  prev.disabled = quizCurrent === 0;
+  const isLast = quizCurrent === total - 1;
+  const answered = container.querySelectorAll('.quiz-question input[type=radio]:checked').length;
+  const allDone = answered === total;
+  if (isLast && allDone) {
+    next.textContent = 'Voir les resultats';
+    next.onclick = showResults;
+  } else if (isLast) {
+    next.innerHTML = 'Terminer <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>';
+    next.onclick = null;
+    next.disabled = !container.querySelectorAll('.quiz-question')[quizCurrent].querySelector('input[type=radio]:checked');
+  } else {
+    next.innerHTML = 'Suivant <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>';
+    next.onclick = quizNext;
+    next.disabled = false;
+  }
+}
+
+function showResults() {
+  const container = document.querySelector('.quiz-container');
+  const questions = container.querySelectorAll('.quiz-question');
+  let correctCount = 0;
+  questions.forEach(q => {
+    const checked = q.querySelector('input[type=radio]:checked');
+    if (checked && parseInt(checked.value) === parseInt(q.dataset.answer)) correctCount++;
+  });
+  const total = questions.length;
+  const pct = Math.round(correctCount / total * 100);
+
+  container.querySelector('.quiz-progress').style.display = 'none';
+  container.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+  container.querySelector('.quiz-nav').style.display = 'none';
   const result = container.querySelector('.quiz-result');
-  result.style.display = 'none';
-  result.textContent = '';
+  result.style.display = 'flex';
+
+  const numEl = result.querySelector('.result-score-num');
+  animateCounter(numEl, 0, correctCount, 800);
+
+  const stars = result.querySelector('.result-stars');
+  const starCount = pct >= 90 ? 3 : pct >= 60 ? 2 : pct >= 30 ? 1 : 0;
+  stars.textContent = '⭐'.repeat(starCount) + '☆'.repeat(3 - starCount);
+
+  const msg = result.querySelector('.result-message');
+  if (pct === 100) msg.textContent = 'Parfait ! Tu es un expert !';
+  else if (pct >= 80) msg.textContent = 'Tres bien ! Continue comme ca.';
+  else if (pct >= 60) msg.textContent = 'Pas mal ! Revois tes connaissances.';
+  else if (pct >= 40) msg.textContent = 'Peut mieux faire. Entraine-toi encore.';
+  else msg.textContent = 'Continue d apprendre, tu vas y arriver !';
+}
+
+function animateCounter(el, from, to, duration) {
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function quizRetry() {
+  const container = document.querySelector('.quiz-container');
+  container.querySelector('.quiz-result').style.display = 'none';
+  container.querySelector('.quiz-progress').style.display = '';
+  container.querySelector('.quiz-nav').style.display = '';
+  document.querySelectorAll('.quiz-question').forEach(q => {
+    const checked = q.querySelector('input[type=radio]:checked');
+    if (checked) checked.checked = false;
+    q.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected', 'correct', 'wrong'));
+    q.querySelector('.quiz-feedback').className = 'quiz-feedback';
+    q.querySelector('.feedback-text').textContent = '';
+  });
+  quizCurrent = 0;
+  showQuestion(0);
+}
+
+function quizReview() {
+  const container = document.querySelector('.quiz-container');
+  container.querySelector('.quiz-result').style.display = 'none';
+  container.querySelector('.quiz-progress').style.display = '';
+  container.querySelector('.quiz-nav').style.display = '';
+  quizCurrent = 0;
+  showQuestion(0);
+  // Already showing feedback on answered questions from quizSelect
 }
 
 const observer = new IntersectionObserver(
