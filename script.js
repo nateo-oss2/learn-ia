@@ -29,11 +29,11 @@ const languages = [
     ],
     project: {desc: 'Cree une petite page de presentation personnelle avec un titre, une photo, une description et un lien.', steps: ['Ajoute un titre principal avec ton prenom', 'Ecris un paragraphe de presentation', 'Ajoute une image (balise img)', 'Ajoute un lien cliquable', 'Teste la page dans ton navigateur']},
     quiz: [
-      {q: 'Que signifie HTML ?', options: ['HyperText Markup Language|High Tech Modern Language|Home Tool Markup Language|Hyper Transfer Markup Language'], answer: 0},
-      {q: 'Quelle balise sert a creer un lien ?', options: ['<link>|<a>|<href>|<url>'], answer: 1},
-      {q: 'Quelle balise affiche un titre de niveau 1 ?', options: ['<heading>|<h1>|<head>|<title>'], answer: 1},
-      {q: 'Quel attribut definit l\'URL d\'un lien ?', options: ['src|link|href|url'], answer: 2},
-      {q: 'Comment ecrit un commentaire en HTML ?', options: ['// commentaire|/* commentaire */|<!-- commentaire -->|# commentaire'], answer: 2}
+      {q: 'Que signifie HTML ?', options: ['HyperText Markup Language','High Tech Modern Language','Home Tool Markup Language'], answer: 0},
+      {q: 'Quelle balise sert a creer un lien ?', options: ['<link>','<a>','<href>'], answer: 1},
+      {q: 'Quelle balise affiche un titre de niveau 1 ?', options: ['<heading>','<h1>','<head>'], answer: 1},
+      {q: 'Quel attribut definit l\'URL d\'un lien ?', options: ['src','link','href'], answer: 2},
+      {q: 'Comment ecrit un commentaire en HTML ?', options: ['// commentaire','/* commentaire */','<!-- commentaire -->'], answer: 2}
     ],
   },
   {
@@ -66,11 +66,11 @@ const languages = [
     ],
     project: {desc: 'Concois une page d\'accueil simple avec une barre de navigation, une section hero et des cartes. Utilise Flexbox pour la mise en page et ajoute une transition au survol.', steps: ['Cree la structure HTML', 'Stylise la barre de navigation', 'Cree la section hero avec un fond colore', 'Ajoute des cartes avec Flexbox', 'Ajoute des animations au survol']},
     quiz: [
-      {q: 'Comment applique une classe CSS ?', options: ['.maClasse|#maClasse|maClasse|<maClasse>'], answer: 0},
-      {q: 'Quelle propriete change la couleur du texte ?', options: ['background-color|color|text-color|font-color'], answer: 1},
-      {q: 'Quelle propriete espace les elements avec Flexbox ?', options: ['margin|justify-content|gap|padding'], answer: 2},
-      {q: 'Quelle unite est relative a la taille de l\'ecran ?', options: ['px|em|vw|pt'], answer: 2},
-      {q: 'Comment appliquer un style au survol ?', options: [':click|:hover|:over|:focus'], answer: 1}
+      {q: 'Comment applique une classe CSS ?', options: ['.maClasse','#maClasse','maClasse'], answer: 0},
+      {q: 'Quelle propriete change la couleur du texte ?', options: ['background-color','color','text-color'], answer: 1},
+      {q: 'Quelle propriete espace les elements avec Flexbox ?', options: ['margin','justify-content','gap'], answer: 2},
+      {q: 'Quelle unite est relative a la taille de l\'ecran ?', options: ['px','em','vw'], answer: 2},
+      {q: 'Comment appliquer un style au survol ?', options: [':click',':hover',':over'], answer: 1}
     ],
   },
   {
@@ -103,11 +103,11 @@ const languages = [
     ],
     project: {desc: 'Cree une Todo List interactive : un champ pour entrer une tache, un bouton pour l\'ajouter, et un clic sur une tache la marque comme terminee.', steps: ['Cree l\'interface HTML', 'Ajoute un ecouteur sur le bouton', 'Cree un element pour chaque tache', 'Ajoute la fonction supprimer', 'Teste et ameliore le design']},
     quiz: [
-      {q: 'Comment declare une variable en JS ?', options: ['var x = 5|let x = 5|const x = 5|Toutes ces reponses'], answer: 3},
-      {q: 'Quelle methode ajoute un element a la fin d\'un tableau ?', options: ['push()|pop()|shift()|unshift()'], answer: 0},
-      {q: 'Comment ecrire dans la console ?', options: ['print()|echo()|console.log()|write()'], answer: 2},
-      {q: 'Quelle boucle parcourt un tableau ?', options: ['for|if|switch|while'], answer: 0},
-      {q: 'Quelle fonction convertit JSON en objet JS ?', options: ['JSON.stringify()|JSON.parse()|JSON.object()|JSON.decode()'], answer: 1}
+      {q: 'Comment declare une constante en JS ?', options: ['var x = 5','let x = 5','const x = 5'], answer: 2},
+      {q: 'Quelle methode ajoute un element a la fin d\'un tableau ?', options: ['push()','pop()','shift()'], answer: 0},
+      {q: 'Comment ecrire dans la console ?', options: ['print()','echo()','console.log()'], answer: 2},
+      {q: 'Quelle boucle parcourt un tableau ?', options: ['for','if','switch'], answer: 0},
+      {q: 'Quelle fonction convertit JSON en objet JS ?', options: ['JSON.stringify()','JSON.parse()','JSON.object()'], answer: 1}
     ],
   },
   {
@@ -140,11 +140,11 @@ const languages = [
     ],
     project: {desc: 'Cree un petit gestionnaire de taches type : chaque tache a un titre, un statut (completee ou non) et une priorite. Ajoute, supprime et filtre les taches.', steps: ['Definis les types Task et Priority', 'Cree un tableau de taches type', 'Ajoute une fonction pour ajouter une tache', 'Ajoute une fonction pour filtrer', 'Teste le tout dans la console']},
     quiz: [
-      {q: 'Quel est le type d\'une variable qui peut etre string ou number ?', options: ['any|union|string &#124; number|mixed'], answer: 2},
-      {q: 'Comment definit un type personnalise ?', options: ['class|type|interface|struct'], answer: 2},
-      {q: 'Quel symbole rend une propriete optionnelle ?', options: ['?|!|*|~'], answer: 0},
-      {q: 'Que fait le compilateur TypeScript ?', options: ['Execute du code|Traduit TS en JS|Optimise les images|Gere la memoire'], answer: 1},
-      {q: 'Quel type represente rien dans une fonction ?', options: ['null|undefined|void|never'], answer: 2}
+      {q: 'Quel est le type d\'une variable qui peut etre string ou number ?', options: ['any','union','string &#124; number'], answer: 2},
+      {q: 'Comment definit un type personnalise ?', options: ['class','type','interface'], answer: 2},
+      {q: 'Quel symbole rend une propriete optionnelle ?', options: ['?','!','*'], answer: 0},
+      {q: 'Que fait le compilateur TypeScript ?', options: ['Execute du code','Traduit TS en JS','Optimise les images'], answer: 1},
+      {q: 'Quel type represente rien dans une fonction ?', options: ['null','undefined','void'], answer: 2}
     ],
   },
   {
@@ -177,11 +177,11 @@ const languages = [
     ],
     project: {desc: 'Cree un programme qui lit un fichier CSV de notes d\'eleves et calcule la moyenne, la note la plus haute et la plus basse.', steps: ['Cree un fichier notes.csv avec des noms et notes', 'Lis le fichier avec Python', 'Calcule la moyenne de chaque eleve', 'Trouve le meilleur et le moins bon', 'Affiche les resultats dans le terminal']},
     quiz: [
-      {q: 'Comment afficher du texte en Python ?', options: ['echo|print()|console.log()|write()'], answer: 1},
-      {q: 'Comment definit une fonction ?', options: ['function|def|func|define'], answer: 1},
-      {q: 'Quel type de boucle parcourt une liste ?', options: ['for|while|do|loop'], answer: 0},
-      {q: 'Comment commenter une ligne en Python ?', options: ['//|/*|#|--'], answer: 2},
-      {q: 'Quelle structure de donnee est modifiable ?', options: ['tuple|str|list|int'], answer: 2}
+      {q: 'Comment afficher du texte en Python ?', options: ['echo','print()','console.log()'], answer: 1},
+      {q: 'Comment definit une fonction ?', options: ['function','def','func'], answer: 1},
+      {q: 'Quel type de boucle parcourt une liste ?', options: ['for','while','do'], answer: 0},
+      {q: 'Comment commenter une ligne en Python ?', options: ['//','/*','#'], answer: 2},
+      {q: 'Quelle structure de donnee est modifiable ?', options: ['tuple','str','list'], answer: 2}
     ],
   },
   {
@@ -214,11 +214,11 @@ const languages = [
     ],
     project: {desc: 'Cree une calculatrice simple en Java : demande deux nombres et un operateur, puis effectue le calcul et affiche le resultat.', steps: ['Cree la classe Calculatrice', 'Ajoute une methode pour additionner', 'Ajoute une methode pour soustraire', 'Ajoute une methode pour multiplier/diviser', 'Utilise Scanner pour lire l\'entree utilisateur', 'Affiche le resultat dans la console']},
     quiz: [
-      {q: 'Que doit contenir tout programme Java ?', options: ['function main()|void main()|public static void main(String[] args)|main(String[] args)'], answer: 2},
-      {q: 'Quel mot-cle cree un objet ?', options: ['object|new|create|make'], answer: 1},
-      {q: 'Java est un langage...', options: ['compile|interprete|compile et interprete|script'], answer: 2},
-      {q: 'Quelle structure herite d\'une classe ?', options: ['extends|implements|inherits|super'], answer: 0},
-      {q: 'Quel type est un entier en Java ?', options: ['integer|int|Int|entier'], answer: 1}
+      {q: 'Que doit contenir tout programme Java ?', options: ['function main()','void main()','public static void main(String[] args)'], answer: 2},
+      {q: 'Quel mot-cle cree un objet ?', options: ['object','new','create'], answer: 1},
+      {q: 'Java est un langage...', options: ['compile','interprete','compile et interprete'], answer: 2},
+      {q: 'Quelle structure herite d\'une classe ?', options: ['extends','implements','inherits'], answer: 0},
+      {q: 'Quel type est un entier en Java ?', options: ['integer','int','Int'], answer: 1}
     ],
   },
   {
@@ -251,11 +251,11 @@ const languages = [
     ],
     project: {desc: 'Cree un jeu du plus ou moins en C : l\'utilisateur doit deviner un nombre entre 1 et 100 genere aleatoirement.', steps: ['Genere un nombre aleatoire avec rand()', 'Boucle tant que l\'utilisateur n\'a pas trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation a la fin']},
     quiz: [
-      {q: 'Comment inclus une bibliotheque en C ?', options: ['import|#include|using|include'], answer: 1},
-      {q: 'Quel type est un caractere en C ?', options: ['string|char|str|text'], answer: 1},
-      {q: 'Que retourne main() en C ?', options: ['void|int|bool|string'], answer: 1},
-      {q: 'Quelle fonction affiche du texte ?', options: ['print|echo|printf|cout'], answer: 2},
-      {q: 'Quel operateur accede a un champ de structure ?', options: ['.|->|::|:'], answer: 0}
+      {q: 'Comment inclus une bibliotheque en C ?', options: ['import','#include','using'], answer: 1},
+      {q: 'Quel type est un caractere en C ?', options: ['string','char','str'], answer: 1},
+      {q: 'Que retourne main() en C ?', options: ['void','int','bool'], answer: 1},
+      {q: 'Quelle fonction affiche du texte ?', options: ['print','echo','printf'], answer: 2},
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0}
     ],
   },
   {
@@ -288,11 +288,11 @@ const languages = [
     ],
     project: {desc: 'Cree un programme qui demande des notes a l\'utilisateur, les stocke dans un tableau, calcule la moyenne et affiche un recapitulatif.', steps: ['Cree un tableau de notes', 'Boucle pour saisir les notes', 'Calcule la somme et la moyenne', 'Trouve la note min et max', 'Affiche les resultats']},
     quiz: [
-      {q: 'Comment inclus une bibliotheque en C ?', options: ['import|#include|using|include'], answer: 1},
-      {q: 'Quel type est un caractere en C ?', options: ['string|char|str|text'], answer: 1},
-      {q: 'Que retourne main() en C ?', options: ['void|int|bool|string'], answer: 1},
-      {q: 'Quelle fonction affiche du texte ?', options: ['print|echo|printf|cout'], answer: 2},
-      {q: 'Quel operateur accede a un champ de structure ?', options: ['.|->|::|:'], answer: 0}
+      {q: 'Comment inclus une bibliotheque en C ?', options: ['import','#include','using'], answer: 1},
+      {q: 'Quel type est un caractere en C ?', options: ['string','char','str'], answer: 1},
+      {q: 'Que retourne main() en C ?', options: ['void','int','bool'], answer: 1},
+      {q: 'Quelle fonction affiche du texte ?', options: ['print','echo','printf'], answer: 2},
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0}
     ],
   },
   {
@@ -325,11 +325,11 @@ const languages = [
     ],
     project: {desc: 'Cree une application console de gestion de bibliotheque : ajoute, supprime et recherche des livres.', steps: ['Cree une classe Livre avec Titre, Auteur, Annee', 'Cree une classe Bibliotheque avec une liste de livres', 'Ajoute des methodes Ajouter, Supprimer, Rechercher', 'Cree un menu console', 'Teste toutes les fonctionnalites']},
     quiz: [
-      {q: 'Comment inclus une bibliotheque en C ?', options: ['import|#include|using|include'], answer: 1},
-      {q: 'Quel type est un caractere en C ?', options: ['string|char|str|text'], answer: 1},
-      {q: 'Que retourne main() en C ?', options: ['void|int|bool|string'], answer: 1},
-      {q: 'Quelle fonction affiche du texte ?', options: ['print|echo|printf|cout'], answer: 2},
-      {q: 'Quel operateur accede a un champ de structure ?', options: ['.|->|::|:'], answer: 0}
+      {q: 'Comment inclus une bibliotheque en C ?', options: ['import','#include','using'], answer: 1},
+      {q: 'Quel type est un caractere en C ?', options: ['string','char','str'], answer: 1},
+      {q: 'Que retourne main() en C ?', options: ['void','int','bool'], answer: 1},
+      {q: 'Quelle fonction affiche du texte ?', options: ['print','echo','printf'], answer: 2},
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0}
     ],
   },
   {
@@ -362,11 +362,11 @@ const languages = [
     ],
     project: {desc: 'Cree un petit systeme de blog : page d\'accueil avec liste d\'articles, page article et formulaire de contact.', steps: ['Cree une page d\'accueil avec des articles simules', 'Cree une page article individuelle', 'Ajoute un formulaire de contact traite par PHP', 'Utilise $_GET ou $_POST pour les donnees', 'Teste avec le serveur integre PHP']},
     quiz: [
-      {q: 'Quel symbole precede une variable PHP ?', options: ['@|$|&|%'], answer: 1},
-      {q: 'Comment afficher du texte en PHP ?', options: ['print()|echo|write()|return'], answer: 1},
-      {q: 'Quelle superglobale contient les donnees POST ?', options: ['$_GET|$_POST|$_REQUEST|$_DATA'], answer: 1},
-      {q: 'PHP est execute...', options: ['Dans le navigateur|Sur le serveur|Les deux|Dans la base'], answer: 1},
-      {q: 'Quel symbole concatene des chaines ?', options: ['+|.|&|..'], answer: 1}
+      {q: 'Quel symbole precede une variable PHP ?', options: ['@','$','&'], answer: 1},
+      {q: 'Comment afficher du texte en PHP ?', options: ['print()','echo','write()'], answer: 1},
+      {q: 'Quelle superglobale contient les donnees POST ?', options: ['$_GET','$_POST','$_REQUEST'], answer: 1},
+      {q: 'PHP est execute...', options: ['Dans le navigateur','Sur le serveur','Les deux'], answer: 1},
+      {q: 'Quel symbole concatene des chaines ?', options: ['+','.','&'], answer: 1}
     ],
   },
   {
@@ -399,11 +399,11 @@ const languages = [
     ],
     project: {desc: 'Cree un petit annuaire en memoire : ajoute des contacts (nom, telephone), affiche la liste et permet de rechercher par nom.', steps: ['Cree une classe Contact', 'Ajoute des contacts dans un tableau', 'Affiche tous les contacts', 'Permet de rechercher par nom', 'Ajoute une interface simple dans le terminal']},
     quiz: [
-      {q: 'Comment afficher en Ruby ?', options: ['print|echo|puts|write'], answer: 2},
-      {q: 'Quel symbole termine une ligne en Ruby ?', options: [';|.|:|Rien (saut de ligne)'], answer: 3},
-      {q: 'Quelle structure de donnee utilise des paires cle-valeur ?', options: ['Array|Hash|Set|String'], answer: 1},
-      {q: 'Comment definit une methode ?', options: ['function|def|define|method'], answer: 1},
-      {q: 'Quel framework web est celebre en Ruby ?', options: ['Django|Laravel|Ruby on Rails|Express'], answer: 2}
+      {q: 'Comment afficher en Ruby ?', options: ['print','echo','puts'], answer: 2},
+      {q: 'Quel symbole termine une ligne en Ruby ?', options: [';','.','Rien (saut de ligne)'], answer: 2},
+      {q: 'Quelle structure de donnee utilise des paires cle-valeur ?', options: ['Array','Hash','Set'], answer: 1},
+      {q: 'Comment definit une methode ?', options: ['function','def','define'], answer: 1},
+      {q: 'Quel framework web est celebre en Ruby ?', options: ['Django','Laravel','Ruby on Rails'], answer: 2}
     ],
   },
   {
@@ -436,11 +436,11 @@ const languages = [
     ],
     project: {desc: 'Cree un programme qui lit un fichier texte et compte le nombre de mots.', steps: ['Cree un fichier texte d\'exemple', 'Lis le fichier avec ioutil.ReadFile', 'Decoupe le texte en mots avec strings.Split', 'Compte les mots avec len', 'Affiche le resultat']},
     quiz: [
-      {q: 'Quel mot-cle declare une variable en Go ?', options: ['var|let|const|def'], answer: 0},
-      {q: 'Quel type est un entier 32 bits en Go ?', options: ['int|int32|integer|short'], answer: 1},
-      {q: 'Comment importe un package ?', options: ['#include|using|import|include'], answer: 2},
-      {q: 'Quelle fonction est le point d\'entree ?', options: ['start()|main()|run()|begin()'], answer: 1},
-      {q: 'Quel outil telecharge des dependances Go ?', options: ['npm|pip|go mod|cargo'], answer: 2}
+      {q: 'Quel mot-cle declare une variable en Go ?', options: ['var','let','const'], answer: 0},
+      {q: 'Quel type est un entier 32 bits en Go ?', options: ['int','int32','integer'], answer: 1},
+      {q: 'Comment importe un package ?', options: ['#include','using','import'], answer: 2},
+      {q: 'Quelle fonction est le point d\'entree ?', options: ['start()','main()','run()'], answer: 1},
+      {q: 'Quel outil telecharge des dependances Go ?', options: ['npm','pip','go mod'], answer: 2}
     ],
   },
   {
@@ -473,11 +473,11 @@ const languages = [
     ],
     project: {desc: 'Cree un convertisseur temperature Celsius/Fahrenheit. Demande la valeur et l\'unite, puis affiche la conversion.', steps: ['Cree les fonctions de conversion', 'Demande la temperature a l\'utilisateur', 'Demande l\'unite de depart', 'Affiche le resultat converti', 'Teste avec differentes valeurs']},
     quiz: [
-      {q: 'Quel mot-cle declare une variable immutable ?', options: ['let|mut|var|const'], answer: 0},
-      {q: 'Quel type est un entier non-signe 32 bits ?', options: ['int|uint|u32|i32'], answer: 2},
+      {q: 'Quel mot-cle declare une variable immutable ?', options: ['let','mut','var'], answer: 0},
+      {q: 'Quel type est un entier non-signe 32 bits ?', options: ['int','uint','u32'], answer: 2},
       {q: 'Qu\'est-ce que le borrow checker ?', options: ['Un outil de debug|Un verificateur d\'emprunts memoire|Une bibliotheque|Un compilateur'], answer: 1},
-      {q: 'Quel trait affiche du texte ?', options: ['Show|Display|Debug|Print'], answer: 1},
-      {q: 'Comment cree une reference mutable ?', options: ['&|&mut|*|ref'], answer: 1}
+      {q: 'Quel trait affiche du texte ?', options: ['Show','Display','Debug'], answer: 1},
+      {q: 'Comment cree une reference mutable ?', options: ['&','&mut','*'], answer: 1}
     ],
   },
   {
@@ -510,11 +510,11 @@ const languages = [
     ],
     project: {desc: 'Cree une app SwiftUI simple qui affiche une liste de taches avec la possibilite d\'en ajouter et de les cocher.', steps: ['Cree un nouveau projet SwiftUI dans Xcode', 'Cree un modele Task avec un id et un titre', 'Affiche une liste avec ForEach', 'Ajoute un champ texte pour creer une tache', 'Ajoute la possibilite de cocher une tache terminee']},
     quiz: [
-      {q: 'Comment declare une constante en Swift ?', options: ['var|const|let|final'], answer: 2},
-      {q: 'Qu\'est-ce qu\'un Optional en Swift ?', options: ['Un type qui peut etre nil|Un parametre facultatif|Une valeur par defaut|Un type generique'], answer: 0},
-      {q: 'Quelle structure de donnee est non-ordonnee ?', options: ['Array|Set|Dictionary|String'], answer: 1},
-      {q: 'Quel mot-cle retire la valeur d\'un Optional ?', options: ['!|?|*|&'], answer: 0},
-      {q: 'SwiftUI utilise quel paradigme ?', options: ['MVC|Declaratif|Imperatif|Procedural'], answer: 1}
+      {q: 'Comment declare une constante en Swift ?', options: ['var','const','let'], answer: 2},
+      {q: 'Qu\'est-ce qu\'un Optional en Swift ?', options: ['Un type qui peut etre nil','Un parametre facultatif','Une valeur par defaut'], answer: 0},
+      {q: 'Quelle structure de donnee est non-ordonnee ?', options: ['Array','Set','Dictionary'], answer: 1},
+      {q: 'Quel mot-cle retire la valeur d\'un Optional ?', options: ['!','?','*'], answer: 0},
+      {q: 'SwiftUI utilise quel paradigme ?', options: ['MVC','Declaratif','Imperatif'], answer: 1}
     ],
   },
   {
@@ -547,11 +547,11 @@ const languages = [
     ],
     project: {desc: 'Cree une application console qui permet de gerer une liste de taches (ToDo).', steps: ['Cree une data class Task', 'Cree une liste mutable de taches', 'Ajoute des fonctions ajouter, supprimer, afficher', 'Cree un menu interactif dans le terminal', 'Teste toutes les operations']},
     quiz: [
-      {q: 'Comment declare une variable en Kotlin ?', options: ['var|let|const|def'], answer: 0},
-      {q: 'Quel mot-cle utilise pour une fonction ?', options: ['function|func|fun|def'], answer: 2},
-      {q: 'Qu\'est-ce que la null safety ?', options: ['Aucun null permis|Le compilateur empeche les nulls non intendus|Les nulls sont automatiques|Une bibliotheque'], answer: 1},
-      {q: 'Quelle fonction cree une liste immuable ?', options: ['listOf()|mutableListOf()|arrayListOf()|list()'], answer: 0},
-      {q: 'Kotlin est le langage officiel de...', options: ['iOS|Android|Windows|Linux'], answer: 1}
+      {q: 'Comment declare une variable en Kotlin ?', options: ['var','let','const'], answer: 0},
+      {q: 'Quel mot-cle utilise pour une fonction ?', options: ['function','func','fun'], answer: 2},
+      {q: 'Qu\'est-ce que la null safety ?', options: ['Aucun null permis','Le compilateur empeche les nulls non intendus','Les nulls sont automatiques'], answer: 1},
+      {q: 'Quelle fonction cree une liste immuable ?', options: ['listOf()','mutableListOf()','arrayListOf()'], answer: 0},
+      {q: 'Kotlin est le langage officiel de...', options: ['iOS','Android','Windows'], answer: 1}
     ],
   },
   {
@@ -584,11 +584,11 @@ const languages = [
     ],
     project: {desc: 'Cree une base de donnees pour une bibliotheque avec des tables pour les livres, les membres et les emprunts. Ecris des requetes pour trouver les livres disponibles et les membres avec des retards.', steps: ['Cree la table livres (id, titre, auteur, disponible)', 'Cree la table membres (id, nom, email)', 'Cree la table emprunts (id, livre_id, membre_id, date)', 'Insere des donnees d\'exemple', 'Ecris des requetes SELECT avec JOIN', 'Trouve les livres actuellement empruntes']},
     quiz: [
-      {q: 'Quel mot-cle recupere des donnees ?', options: ['GET|FETCH|SELECT|RETRIEVE'], answer: 2},
-      {q: 'Quel mot-cle filtre les resultats ?', options: ['FILTER|WHERE|IF|HAVING'], answer: 1},
-      {q: 'Quel type de jointure garde toutes les lignes des deux tables ?', options: ['INNER JOIN|LEFT JOIN|FULL OUTER JOIN|RIGHT JOIN'], answer: 2},
-      {q: 'Quelle fonction compte les lignes ?', options: ['SUM()|COUNT()|TOTAL()|NB()'], answer: 1},
-      {q: 'Quel mot-cle supprime une table ?', options: ['REMOVE|DELETE|DROP|CLEAR'], answer: 2}
+      {q: 'Quel mot-cle recupere des donnees ?', options: ['GET','FETCH','SELECT'], answer: 2},
+      {q: 'Quel mot-cle filtre les resultats ?', options: ['FILTER','WHERE','IF'], answer: 1},
+      {q: 'Quel type de jointure garde toutes les lignes des deux tables ?', options: ['INNER JOIN','LEFT JOIN','FULL OUTER JOIN'], answer: 2},
+      {q: 'Quelle fonction compte les lignes ?', options: ['SUM()','COUNT()','TOTAL()'], answer: 1},
+      {q: 'Quel mot-cle supprime une table ?', options: ['REMOVE','DELETE','DROP'], answer: 2}
     ],
   },
   {
@@ -621,11 +621,11 @@ const languages = [
     ],
     project: {desc: 'Analyse un jeu de donnees integrer (iris, mtcars) et cree un rapport avec des graphiques et des statistiques descriptives.', steps: ['Charge le jeu de donnees iris', 'Affiche un resume avec summary()', 'Cree un histogramme avec hist()', 'Cree un nuage de points avec plot()', 'Calcule des correlations', 'Exporte les graphiques en PNG']},
     quiz: [
-      {q: 'Comment cree un vecteur en R ?', options: ['c()|v()|list()|array()'], answer: 0},
-      {q: 'Quelle fonction lit un fichier CSV ?', options: ['read.csv()|open.csv()|load.csv()|import.csv()'], answer: 0},
-      {q: 'Quel symbole assigne une valeur ?', options: ['=|< -|->|<<-'], answer: 1},
-      {q: 'Quelle bibliotheque cree des graphiques ?', options: ['matplotlib|ggplot2|plotly|graph'], answer: 1},
-      {q: 'Quel type stocke des donnees categoriques ?', options: ['vector|factor|list|matrix'], answer: 1}
+      {q: 'Comment cree un vecteur en R ?', options: ['c()','v()','list()'], answer: 0},
+      {q: 'Quelle fonction lit un fichier CSV ?', options: ['read.csv()','open.csv()','load.csv()'], answer: 0},
+      {q: 'Quel symbole assigne une valeur ?', options: ['=','< -','->'], answer: 1},
+      {q: 'Quelle bibliotheque cree des graphiques ?', options: ['matplotlib','ggplot2','plotly'], answer: 1},
+      {q: 'Quel type stocke des donnees categoriques ?', options: ['vector','factor','list'], answer: 1}
     ],
   },
   {
@@ -658,11 +658,11 @@ const languages = [
     ],
     project: {desc: 'Cree une calculatrice en console avec Dart : l\'utilisateur choisit une operation et entre deux nombres.', steps: ['Cree les fonctions de calcul', 'Affiche un menu a l\'utilisateur', 'Lit le choix et les nombres', 'Effectue le calcul et affiche le resultat', 'Boucle jusqu\'a ce que l\'utilisateur quitte']},
     quiz: [
-      {q: 'Quel mot-cle declare une variable immutable ?', options: ['var|final|let|const'], answer: 1},
-      {q: 'Quel type retourne une fonction asynchrone ?', options: ['async|Future|Promise|Task'], answer: 1},
-      {q: 'Quelle fonction affiche en console ?', options: ['print()|echo()|log()|write()'], answer: 0},
-      {q: 'Quel framework mobile utilise Dart ?', options: ['React Native|Flutter|Xamarin|Ionic'], answer: 1},
-      {q: 'Comment cree une liste en Dart ?', options: ['[]|{}|()|<>'], answer: 0}
+      {q: 'Quel mot-cle declare une variable immutable ?', options: ['var','final','let'], answer: 1},
+      {q: 'Quel type retourne une fonction asynchrone ?', options: ['async','Future','Promise'], answer: 1},
+      {q: 'Quelle fonction affiche en console ?', options: ['print()','echo()','log()'], answer: 0},
+      {q: 'Quel framework mobile utilise Dart ?', options: ['React Native','Flutter','Xamarin'], answer: 1},
+      {q: 'Comment cree une liste en Dart ?', options: ['[]','{}','()'], answer: 0}
     ],
   },
   {
@@ -695,11 +695,11 @@ const languages = [
     ],
     project: {desc: 'Cree un script de sauvegarde qui compresse un dossier en .tar.gz avec un nom contenant la date du jour.', steps: ['Demande le dossier a sauvegarder', 'Cree un nom de fichier avec la date', 'Utilise tar pour compresser', 'Affiche un message de confirmation', 'Teste le script sur un dossier exemple']},
     quiz: [
-      {q: 'Quel shebang pour un script Bash ?', options: ['#!/bin/bash|#!/usr/bin/python|#!bash|#/bin/bash'], answer: 0},
-      {q: 'Quelle commande affiche du texte ?', options: ['print|echo|write|show'], answer: 1},
-      {q: 'Comment commenter une ligne ?', options: ['//|/* */|#|--'], answer: 2},
-      {q: 'Quel symbole accede a une variable ?', options: ['@|$|%|&'], answer: 1},
-      {q: 'Quelle structure execute une boucle ?', options: ['for|if|case|function'], answer: 0}
+      {q: 'Quel shebang pour un script Bash ?', options: ['#!/bin/bash','#!/usr/bin/python','#!bash'], answer: 0},
+      {q: 'Quelle commande affiche du texte ?', options: ['print','echo','write'], answer: 1},
+      {q: 'Comment commenter une ligne ?', options: ['//','/* */','#'], answer: 2},
+      {q: 'Quel symbole accede a une variable ?', options: ['@','$','%'], answer: 1},
+      {q: 'Quelle structure execute une boucle ?', options: ['for','if','case'], answer: 0}
     ],
   },
   {
@@ -732,11 +732,11 @@ const languages = [
     ],
     project: {desc: 'Cree un petit jeu de devinettes : l\'ordinateur choisit un nombre aleatoire entre 1 et 100 et l\'utilisateur doit le trouver.', steps: ['Utilise math.random pour generer un nombre', 'Boucle jusqu\'a ce que l\'utilisateur trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation']},
     quiz: [
-      {q: 'Quel mot-cle cree une variable locale ?', options: ['var|let|local|private'], answer: 2},
-      {q: 'Quel operateur concatene des chaines ?', options: ['+|.|..|&'], answer: 2},
-      {q: 'Quelle fonction affiche en console ?', options: ['print()|echo()|log()|write()'], answer: 0},
-      {q: 'Quel indice commence un tableau en Lua ?', options: ['0|1|-1|nil'], answer: 1},
-      {q: 'Quelle structure de donnee est universelle en Lua ?', options: ['Array|Table|List|Set'], answer: 1}
+      {q: 'Quel mot-cle cree une variable locale ?', options: ['var','let','local'], answer: 2},
+      {q: 'Quel operateur concatene des chaines ?', options: ['+','.','..'], answer: 2},
+      {q: 'Quelle fonction affiche en console ?', options: ['print()','echo()','log()'], answer: 0},
+      {q: 'Quel indice commence un tableau en Lua ?', options: ['0','1','-1'], answer: 1},
+      {q: 'Quelle structure de donnee est universelle en Lua ?', options: ['Array','Table','List'], answer: 1}
     ],
   }
 ];
@@ -3339,18 +3339,27 @@ ${language.quiz ? `
 <section class="lesson-block full">
   <h3>Quiz</h3>
   ${language.quiz.map((q, i) => `
-  <div class="quiz-card" data-answer="${q.answer}" data-correct-text="${escapeHtml(q.options[q.answer])}">
-    <p class="quiz-question-text"><strong>${i+1}. ${escapeHtml(q.q)}</strong></p>
-    <div class="quiz-options">
-    ${q.options.map((opt, j) => `
-    <label class="quiz-option">
-      <input type="radio" name="q${i}" value="${j}">
-      <span class="quiz-option-label">${escapeHtml(opt)}</span>
-    </label>`).join("")}
+  <div class="radio-input" data-answer="${q.answer}" data-correct-text="${escapeHtml(q.options[q.answer])}">
+    <div class="info">
+      <span class="question">${i+1}. ${escapeHtml(q.q)}</span>
+      <span class="steps">${i+1}/${language.quiz.length}</span>
     </div>
-    <div class="quiz-feedback"></div>
+    ${(() => {
+      let wrongIdx = 1;
+      return q.options.map((opt, j) => {
+        const val = j === q.answer ? "value-2" : "value-" + (wrongIdx++ === 1 ? "1" : "3");
+        return `
+    <input type="radio" id="q${i}-${j}" name="q${i}" value="${val}" onchange="checkQuiz(this)">
+    <label for="q${i}-${j}">${escapeHtml(opt)}</label>`;
+      }).join("");
+    })()}
+    <span class="quiz-feedback success">Bonne reponse !</span>
+    <span class="quiz-feedback error">Mauvaise reponse</span>
   </div>`).join("")}
-  <button class="correction-btn" onclick="checkQuiz(this)">Corriger le quiz</button>
+  <div class="quiz-actions">
+    <button class="correction-btn" onclick="showQuizCorrection(this)">Voir correction</button>
+    <a href="#" onclick="resetQuiz(event, this)">Recommencer</a>
+  </div>
   <div class="quiz-result"></div>
 </section>` : ""}
   `;
@@ -3411,48 +3420,66 @@ renderCards();
 handleRoute();
 
 window.addEventListener("hashchange", handleRoute);
-function toggleCorrection(button) {
-  const correction = button.nextElementSibling;
+function checkQuiz(input) {
+  const card = input.closest('.radio-input');
+  const allInputs = card.querySelectorAll('input[type=radio]');
+  const correctVal = "value-2";
 
-  correction.classList.toggle("show");
+  // The Uiverse CSS handles color/success/error display automatically.
+  // We just need to track for the score.
+  card.dataset.userAnswer = input.value;
 
-  if (correction.classList.contains("show")) {
-    button.textContent = "Masquer la correction";
-  } else {
-    button.textContent = "Voir la correction";
+  // Show quiz actions if all questions answered
+  const container = card.closest('.lesson-block');
+  const allCards = container.querySelectorAll('.radio-input');
+  const allAnswered = Array.from(allCards).every(c => c.querySelector('input[type=radio]:checked'));
+  if (allAnswered) {
+    const actions = container.querySelector('.quiz-actions');
+    actions.style.display = 'flex';
+    const result = container.querySelector('.quiz-result');
+    const total = allCards.length;
+    const correctCount = Array.from(allCards).filter(c => {
+      const checked = c.querySelector('input[type=radio]:checked');
+      return checked && checked.value === correctVal;
+    }).length;
+    result.textContent = 'Score : ' + correctCount + '/' + total + ' (' + Math.round(correctCount/total*100) + '%)';
+    result.style.display = 'block';
   }
 }
 
-function checkQuiz(button) {
+function showQuizCorrection(button) {
   const container = button.closest('.lesson-block');
-  const questions = container.querySelectorAll('.quiz-question');
-  let score = 0;
-  questions.forEach((q, i) => {
-    const selected = q.querySelector('input[type=radio]:checked');
-    const feedback = q.querySelector('.quiz-feedback');
-    if (selected) {
-      const idx = parseInt(selected.value);
-      const correct = parseInt(q.dataset.answer);
-      if (idx === correct) {
-        score++;
-        feedback.textContent = '✓ Correct !';
-        feedback.style.color = '#16a34a';
-      } else {
-        feedback.textContent = '✗ Faux. La bonne reponse etait : ' + q.dataset.correctText;
-        feedback.style.color = '#dc2626';
-      }
-    } else {
-      feedback.textContent = '✗ Pas de reponse. La bonne reponse etait : ' + q.dataset.correctText;
-      feedback.style.color = '#dc2626';
+  container.querySelectorAll('.radio-input').forEach(card => {
+    const correctVal = "value-2";
+    const correctInput = card.querySelector(`input[value="${correctVal}"]`);
+    if (correctInput) {
+      correctInput.style.outline = '2px solid #16a34a';
+      correctInput.style.outlineOffset = '2px';
     }
-    feedback.classList.add('show');
   });
-  const total = questions.length;
-  const result = container.querySelector('.quiz-result');
-  result.textContent = 'Score : ' + score + '/' + total + ' (' + Math.round(score/total*100) + '%)';
-  result.style.display = 'block';
+  button.textContent = 'Correction affichee';
   button.disabled = true;
-  button.textContent = 'Deja corrige';
+}
+
+function resetQuiz(event, link) {
+  event.preventDefault();
+  const container = link.closest('.lesson-block');
+  container.querySelectorAll('.radio-input').forEach(card => {
+    card.querySelectorAll('input[type=radio]').forEach(inp => {
+      inp.checked = false;
+      inp.style.outline = '';
+      inp.style.outlineOffset = '';
+    });
+    delete card.dataset.userAnswer;
+  });
+  const actions = container.querySelector('.quiz-actions');
+  actions.style.display = 'none';
+  const corrBtn = actions.querySelector('.correction-btn');
+  corrBtn.textContent = 'Voir correction';
+  corrBtn.disabled = false;
+  const result = container.querySelector('.quiz-result');
+  result.style.display = 'none';
+  result.textContent = '';
 }
 
 const observer = new IntersectionObserver(
