@@ -1605,6 +1605,10 @@ pre {
   opacity: 0.4;
   cursor: default;
 }
+.quiz-nav-btn.retry {
+  padding: 10px 12px;
+  margin-left: auto;
+}
 
 .quiz-dots {
   display: flex;
