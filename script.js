@@ -3497,6 +3497,9 @@ function quizSelect(input) {
     feedback.className = 'quiz-feedback show wrong';
   }
 
+  // Bloquer le changement de reponse
+  question.querySelectorAll('input[type=radio]').forEach(inp => inp.disabled = true);
+
   const allAnswered = Array.from(document.querySelectorAll('.quiz-question')).every(q =>
     q.querySelector('input[type=radio]:checked')
   );
@@ -3623,8 +3626,10 @@ function quizRetry() {
   container.querySelector('.quiz-progress').style.display = '';
   container.querySelector('.quiz-nav').style.display = '';
   document.querySelectorAll('.quiz-question').forEach(q => {
-    const checked = q.querySelector('input[type=radio]:checked');
-    if (checked) checked.checked = false;
+    q.querySelectorAll('input[type=radio]').forEach(inp => {
+      inp.checked = false;
+      inp.disabled = false;
+    });
     q.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected', 'correct', 'wrong'));
     q.querySelector('.quiz-feedback').className = 'quiz-feedback';
     q.querySelector('.feedback-text').textContent = '';
