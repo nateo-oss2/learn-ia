@@ -3362,7 +3362,13 @@ ${language.quiz ? `
     if (match) {
       html = html.slice(0, match.index) + helpRunHtml + html.slice(match.index);
     } else {
-      html += helpRunHtml;
+      const quizMarker = /<section class="lesson-block full">\s*<h3>Quiz<\/h3>/;
+      const quizMatch = html.match(quizMarker);
+      if (quizMatch) {
+        html = html.slice(0, quizMatch.index) + helpRunHtml + html.slice(quizMatch.index);
+      } else {
+        html += helpRunHtml;
+      }
     }
   }
 
