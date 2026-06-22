@@ -1317,23 +1317,6 @@ function renderLesson(language) {
           </div>`).join("")}
         </section>
 
-        ${language.quiz ? `
-        <section class="lesson-block full">
-          <h3>Quiz</h3>
-          ${language.quiz.map((q, i) => `
-          <div class="quiz-question" data-answer="${q.answer}" data-correct-text="${escapeHtml(q.options[q.answer])}">
-            <p><strong>${i+1}. ${escapeHtml(q.q)}</strong></p>
-            ${q.options.map((opt, j) => `
-            <label>
-              <input type="radio" name="q${i}" value="${j}">
-              ${escapeHtml(opt)}
-            </label><br>`).join("")}
-            <div class="quiz-feedback"></div>
-          </div>`).join("")}
-          <button class="correction-btn" onclick="checkQuiz(this)">Corriger le quiz</button>
-          <div class="quiz-result"></div>
-        </section>` : ""}
-
       </div>
     </div>
 
@@ -3352,6 +3335,24 @@ button:hover{
   </div>
 </section>
 ` : ""}
+${language.quiz ? `
+<section class="lesson-block full">
+  <h3>Quiz</h3>
+  ${language.quiz.map((q, i) => `
+  <div class="quiz-card" data-answer="${q.answer}" data-correct-text="${escapeHtml(q.options[q.answer])}">
+    <p class="quiz-question-text"><strong>${i+1}. ${escapeHtml(q.q)}</strong></p>
+    <div class="quiz-options">
+    ${q.options.map((opt, j) => `
+    <label class="quiz-option">
+      <input type="radio" name="q${i}" value="${j}">
+      <span class="quiz-option-label">${escapeHtml(opt)}</span>
+    </label>`).join("")}
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>`).join("")}
+  <button class="correction-btn" onclick="checkQuiz(this)">Corriger le quiz</button>
+  <div class="quiz-result"></div>
+</section>` : ""}
   `;
 
   const helpRunHtml = renderHelpRunSection(language);
