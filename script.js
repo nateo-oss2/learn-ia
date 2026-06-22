@@ -1317,6 +1317,23 @@ function renderLesson(language) {
           </div>`).join("")}
         </section>
 
+        ${language.quiz ? `
+        <section class="lesson-block full">
+          <h3>Quiz</h3>
+          ${language.quiz.map((q, i) => `
+          <div class="quiz-question" data-answer="${q.answer}" data-correct-text="${escapeHtml(q.options[q.answer])}">
+            <p><strong>${i+1}. ${escapeHtml(q.q)}</strong></p>
+            ${q.options.map((opt, j) => `
+            <label>
+              <input type="radio" name="q${i}" value="${j}">
+              ${escapeHtml(opt)}
+            </label><br>`).join("")}
+            <div class="quiz-feedback"></div>
+          </div>`).join("")}
+          <button class="correction-btn" onclick="checkQuiz(this)">Corriger le quiz</button>
+          <div class="quiz-result"></div>
+        </section>` : ""}
+
       </div>
     </div>
 
@@ -3397,6 +3414,38 @@ function toggleCorrection(button) {
   } else {
     button.textContent = "Voir la correction";
   }
+}
+
+function checkQuiz(button) {
+  const container = button.closest('.lesson-block');
+  const questions = container.querySelectorAll('.quiz-question');
+  let score = 0;
+  questions.forEach((q, i) => {
+    const selected = q.querySelector('input[type=radio]:checked');
+    const feedback = q.querySelector('.quiz-feedback');
+    if (selected) {
+      const idx = parseInt(selected.value);
+      const correct = parseInt(q.dataset.answer);
+      if (idx === correct) {
+        score++;
+        feedback.textContent = '✓ Correct !';
+        feedback.style.color = '#16a34a';
+      } else {
+        feedback.textContent = '✗ Faux. La bonne reponse etait : ' + q.dataset.correctText;
+        feedback.style.color = '#dc2626';
+      }
+    } else {
+      feedback.textContent = '✗ Pas de reponse. La bonne reponse etait : ' + q.dataset.correctText;
+      feedback.style.color = '#dc2626';
+    }
+    feedback.classList.add('show');
+  });
+  const total = questions.length;
+  const result = container.querySelector('.quiz-result');
+  result.textContent = 'Score : ' + score + '/' + total + ' (' + Math.round(score/total*100) + '%)';
+  result.style.display = 'block';
+  button.disabled = true;
+  button.textContent = 'Deja corrige';
 }
 
 const observer = new IntersectionObserver(
