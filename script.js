@@ -27,7 +27,14 @@ const languages = [
       {title: 'Formulaire de contact', desc: 'Cree un formulaire complet avec des champs nom, email, message et un bouton d envoi. Ajoute les attributs required et placeholder.', hint: 'Utilise <form>, <input>, <textarea> et <button>. Ajoute l attribut required sur les champs obligatoires.', correction: '<!DOCTYPE html>\n<html>\n<body>\n  <form>\n    <label>Nom: <input type=\"text\" name=\"nom\" required></label>\n    <label>Email: <input type=\"email\" name=\"email\" placeholder=\"exemple@mail.com\" required></label>\n    <label>Message: <textarea name=\"message\" rows=\"4\" required></textarea></label>\n    <button type=\"submit\">Envoyer</button>\n  </form>\n</body>\n</html>'},
       {title: 'Liste a puces organisee', desc: 'Cree une liste de tes langages preferes avec des liens.', hint: 'Utilise <ul>, <li> et <a> dans chaque <li>.', correction: '<!DOCTYPE html>\n<html>\n<body>\n  <h1>Mes langages preferes</h1>\n  <ul>\n    <li><a href="https://python.org">Python</a></li>\n    <li><a href="https://javascript.com">JavaScript</a></li>\n    <li><a href="https://ruby-lang.org">Ruby</a></li>\n  </ul>\n</body>\n</html>'}
     ],
-    project: {desc: 'Cree une petite page de presentation personnelle avec un titre, une photo, une description et un lien.', steps: ['Ajoute un titre principal avec ton prenom', 'Ecris un paragraphe de presentation', 'Ajoute une image (balise img)', 'Ajoute un lien cliquable', 'Teste la page dans ton navigateur']}
+    project: {desc: 'Cree une petite page de presentation personnelle avec un titre, une photo, une description et un lien.', steps: ['Ajoute un titre principal avec ton prenom', 'Ecris un paragraphe de presentation', 'Ajoute une image (balise img)', 'Ajoute un lien cliquable', 'Teste la page dans ton navigateur']},
+    quiz: [
+      {q: 'Que signifie HTML ?', options: ['HyperText Markup Language|High Tech Modern Language|Home Tool Markup Language|Hyper Transfer Markup Language'], answer: 0},
+      {q: 'Quelle balise sert a creer un lien ?', options: ['<link>|<a>|<href>|<url>'], answer: 1},
+      {q: 'Quelle balise affiche un titre de niveau 1 ?', options: ['<heading>|<h1>|<head>|<title>'], answer: 1},
+      {q: 'Quel attribut definit l\'URL d\'un lien ?', options: ['src|link|href|url'], answer: 2},
+      {q: 'Comment ecrit un commentaire en HTML ?', options: ['// commentaire|/* commentaire */|<!-- commentaire -->|# commentaire'], answer: 2}
+    ],
   },
   {
     name: 'CSS',
@@ -57,7 +64,14 @@ const languages = [
       {title: 'Grille responsive avec Grid', desc: 'Cree une grille d images qui s adapte au nombre de colonnes selon la largeur de l ecran. Utilise CSS Grid avec auto-fill et minmax.', hint: 'Utilise display: grid, grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) et gap.', correction: '.grille {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 16px;\n}\n.grille img {\n  width: 100%;\n  border-radius: 8px;\n  transition: transform 0.3s;\n}\n.grille img:hover {\n  transform: scale(1.05);\n}'},
       {title: 'Carte avec ombre et animation', desc: 'Cree une carte qui se souleve au survol.', hint: 'Utilise box-shadow et transform: translateY(-5px).', correction: '.carte {\n  background: white;\n  padding: 24px;\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.15);\n  transition: all 0.3s ease;\n}\n.carte:hover {\n  transform: translateY(-5px);\n  box-shadow: 0 8px 24px rgba(0,0,0,0.2);\n}'}
     ],
-    project: {desc: 'Concois une page d\'accueil simple avec une barre de navigation, une section hero et des cartes. Utilise Flexbox pour la mise en page et ajoute une transition au survol.', steps: ['Cree la structure HTML', 'Stylise la barre de navigation', 'Cree la section hero avec un fond colore', 'Ajoute des cartes avec Flexbox', 'Ajoute des animations au survol']}
+    project: {desc: 'Concois une page d\'accueil simple avec une barre de navigation, une section hero et des cartes. Utilise Flexbox pour la mise en page et ajoute une transition au survol.', steps: ['Cree la structure HTML', 'Stylise la barre de navigation', 'Cree la section hero avec un fond colore', 'Ajoute des cartes avec Flexbox', 'Ajoute des animations au survol']},
+    quiz: [
+      {q: 'Comment applique une classe CSS ?', options: ['.maClasse|#maClasse|maClasse|<maClasse>'], answer: 0},
+      {q: 'Quelle propriete change la couleur du texte ?', options: ['background-color|color|text-color|font-color'], answer: 1},
+      {q: 'Quelle propriete espace les elements avec Flexbox ?', options: ['margin|justify-content|gap|padding'], answer: 2},
+      {q: 'Quelle unite est relative a la taille de l\'ecran ?', options: ['px|em|vw|pt'], answer: 2},
+      {q: 'Comment appliquer un style au survol ?', options: [':click|:hover|:over|:focus'], answer: 1}
+    ],
   },
   {
     name: 'JavaScript',
@@ -87,7 +101,14 @@ const languages = [
       {title: 'Mini jeu de devinettes', desc: 'Cree un jeu ou l ordinateur choisit un nombre aleatoire entre 1 et 100 et l utilisateur doit le deviner avec des indices.', hint: 'Utilise Math.random(), Math.floor(), une boucle while ou une fonction recursive et prompt() ou un champ input.', correction: 'let nombre = Math.floor(Math.random() * 100) + 1;\nlet tentative;\nlet essais = 0;\nwhile (tentative !== nombre) {\n  tentative = parseInt(prompt(\"Devine le nombre (1-100) :\"));\n  essais++;\n  if (tentative < nombre) alert(\"Plus grand !\");\n  else if (tentative > nombre) alert(\"Plus petit !\");\n}\nalert(\"Bravo ! Tu as trouve en \" + essais + \" essais.\");'},
       {title: 'Filtrer un tableau', desc: 'Garde les nombres superieurs a 10 avec filter().', hint: 'Utilise nombres.filter(n => n > 10).', correction: 'const nombres = [5, 12, 8, 15, 3, 20];\nconst grands = nombres.filter(n => n > 10);\nconsole.log("Nombres > 10:", grands);'}
     ],
-    project: {desc: 'Cree une Todo List interactive : un champ pour entrer une tache, un bouton pour l\'ajouter, et un clic sur une tache la marque comme terminee.', steps: ['Cree l\'interface HTML', 'Ajoute un ecouteur sur le bouton', 'Cree un element pour chaque tache', 'Ajoute la fonction supprimer', 'Teste et ameliore le design']}
+    project: {desc: 'Cree une Todo List interactive : un champ pour entrer une tache, un bouton pour l\'ajouter, et un clic sur une tache la marque comme terminee.', steps: ['Cree l\'interface HTML', 'Ajoute un ecouteur sur le bouton', 'Cree un element pour chaque tache', 'Ajoute la fonction supprimer', 'Teste et ameliore le design']},
+    quiz: [
+      {q: 'Comment declare une variable en JS ?', options: ['var x = 5|let x = 5|const x = 5|Toutes ces reponses'], answer: 3},
+      {q: 'Quelle methode ajoute un element a la fin d\'un tableau ?', options: ['push()|pop()|shift()|unshift()'], answer: 0},
+      {q: 'Comment ecrire dans la console ?', options: ['print()|echo()|console.log()|write()'], answer: 2},
+      {q: 'Quelle boucle parcourt un tableau ?', options: ['for|if|switch|while'], answer: 0},
+      {q: 'Quelle fonction convertit JSON en objet JS ?', options: ['JSON.stringify()|JSON.parse()|JSON.object()|JSON.decode()'], answer: 1}
+    ],
   },
   {
     name: 'TypeScript',
@@ -117,7 +138,14 @@ const languages = [
       {title: 'Generique de fonction', desc: 'Cree une fonction generique qui prend un tableau d elements et retourne le premier element. Utilise les generiques TypeScript pour que le type de retour corresponde au type d entree.', hint: 'Utilise <T> avant les parentheses de la fonction et le type T pour le parametre et le retour.', correction: 'function premier<T>(tableau: T[]): T | undefined {\n  return tableau[0];\n}\n\nconst premierNombre = premier([1, 2, 3]);\nconst premierMot = premier([\"a\", \"b\", \"c\"]);\nconsole.log(premierNombre, premierMot);'},
       {title: 'Enum et switch', desc: 'Cree un enum des jours et une fonction qui retourne weekend ou travaille.', hint: 'Utilise enum Day puis switch.', correction: 'enum Day { Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche }\n\nfunction typeDeJour(day: Day): string {\n  switch (day) {\n    case Day.Samedi: case Day.Dimanche: return "Weekend";\n    default: return "Jour travaille";\n  }\n}\nconsole.log(typeDeJour(Day.Lundi));'}
     ],
-    project: {desc: 'Cree un petit gestionnaire de taches type : chaque tache a un titre, un statut (completee ou non) et une priorite. Ajoute, supprime et filtre les taches.', steps: ['Definis les types Task et Priority', 'Cree un tableau de taches type', 'Ajoute une fonction pour ajouter une tache', 'Ajoute une fonction pour filtrer', 'Teste le tout dans la console']}
+    project: {desc: 'Cree un petit gestionnaire de taches type : chaque tache a un titre, un statut (completee ou non) et une priorite. Ajoute, supprime et filtre les taches.', steps: ['Definis les types Task et Priority', 'Cree un tableau de taches type', 'Ajoute une fonction pour ajouter une tache', 'Ajoute une fonction pour filtrer', 'Teste le tout dans la console']},
+    quiz: [
+      {q: 'Quel est le type d\'une variable qui peut etre string ou number ?', options: ['any|union|string &#124; number|mixed'], answer: 2},
+      {q: 'Comment definit un type personnalise ?', options: ['class|type|interface|struct'], answer: 2},
+      {q: 'Quel symbole rend une propriete optionnelle ?', options: ['?|!|*|~'], answer: 0},
+      {q: 'Que fait le compilateur TypeScript ?', options: ['Execute du code|Traduit TS en JS|Optimise les images|Gere la memoire'], answer: 1},
+      {q: 'Quel type represente rien dans une fonction ?', options: ['null|undefined|void|never'], answer: 2}
+    ],
   },
   {
     name: 'Python',
@@ -147,7 +175,14 @@ const languages = [
       {title: 'Gestionnaire de taches JSON', desc: 'Cree un programme qui lit une liste de taches depuis un fichier JSON, permet d en ajouter une, et sauvegarde le fichier. Les taches ont un titre et un statut (faire ou terminee).', hint: 'Utilise les modules json et os. json.load() lit, json.dump() ecrit. Une tache est un dictionnaire.', correction: 'import json\nimport os\n\nfichier = \"taches.json\"\nif os.path.exists(fichier):\n    with open(fichier) as f:\n        taches = json.load(f)\nelse:\n    taches = []\n\ntaches.append({"titre": "Apprendre Python", "statut": "faire"})\n\nwith open(fichier, "w") as f:\n    json.dump(taches, f, indent=2)\n\nprint("Tache ajoutee !")'},
       {title: 'Compteur de mots', desc: 'Compte le nombre de mots dans une phrase.', hint: 'Utilise split() et len().', correction: 'phrase = input("Ecris une phrase: ")\nmots = phrase.split()\nprint(f"Nombre de mots: {len(mots)}")\nfor mot in mots:\n    print("-", mot)'}
     ],
-    project: {desc: 'Cree un programme qui lit un fichier CSV de notes d\'eleves et calcule la moyenne, la note la plus haute et la plus basse.', steps: ['Cree un fichier notes.csv avec des noms et notes', 'Lis le fichier avec Python', 'Calcule la moyenne de chaque eleve', 'Trouve le meilleur et le moins bon', 'Affiche les resultats dans le terminal']}
+    project: {desc: 'Cree un programme qui lit un fichier CSV de notes d\'eleves et calcule la moyenne, la note la plus haute et la plus basse.', steps: ['Cree un fichier notes.csv avec des noms et notes', 'Lis le fichier avec Python', 'Calcule la moyenne de chaque eleve', 'Trouve le meilleur et le moins bon', 'Affiche les resultats dans le terminal']},
+    quiz: [
+      {q: 'Comment afficher du texte en Python ?', options: ['echo|print()|console.log()|write()'], answer: 1},
+      {q: 'Comment definit une fonction ?', options: ['function|def|func|define'], answer: 1},
+      {q: 'Quel type de boucle parcourt une liste ?', options: ['for|while|do|loop'], answer: 0},
+      {q: 'Comment commenter une ligne en Python ?', options: ['//|/*|#|--'], answer: 2},
+      {q: 'Quelle structure de donnee est modifiable ?', options: ['tuple|str|list|int'], answer: 2}
+    ],
   },
   {
     name: 'Java',
@@ -177,7 +212,14 @@ const languages = [
       {title: 'Classe Personne orientee objet', desc: 'Cree une classe Personne avec un nom et un age. Ajoute un constructeur, des getters, et une methode afficher(). Dans le main, cree un tableau de personnes et affiche-les.', hint: 'Utilise une class, un constructeur public Personne(String nom, int age), et une boucle for pour parcourir le tableau.', correction: 'class Personne {\n  private String nom;\n  private int age;\n\n  public Personne(String nom, int age) {\n    this.nom = nom;\n    this.age = age;\n  }\n\n  public void afficher() {\n    System.out.println(nom + " a " + age + " ans");\n  }\n\n  public static void main(String[] args) {\n    Personne[] gens = {new Personne("Alice", 17), new Personne("Bob", 22)};\n    for (Personne p : gens) p.afficher();\n  }\n}'},
       {title: 'Recherche dans un tableau', desc: 'Trouve l index d un nombre dans un tableau.', hint: 'Boucle for avec if.', correction: 'public class Main {\n  public static void main(String[] args) {\n    int[] nombres = {5, 12, 8, 15, 3};\n    int cible = 8;\n    int index = -1;\n    for (int i = 0; i < nombres.length; i++) {\n      if (nombres[i] == cible) { index = i; break; }\n    }\n    System.out.println("Index: " + index);\n  }\n}'}
     ],
-    project: {desc: 'Cree une calculatrice simple en Java : demande deux nombres et un operateur, puis effectue le calcul et affiche le resultat.', steps: ['Cree la classe Calculatrice', 'Ajoute une methode pour additionner', 'Ajoute une methode pour soustraire', 'Ajoute une methode pour multiplier/diviser', 'Utilise Scanner pour lire l\'entree utilisateur', 'Affiche le resultat dans la console']}
+    project: {desc: 'Cree une calculatrice simple en Java : demande deux nombres et un operateur, puis effectue le calcul et affiche le resultat.', steps: ['Cree la classe Calculatrice', 'Ajoute une methode pour additionner', 'Ajoute une methode pour soustraire', 'Ajoute une methode pour multiplier/diviser', 'Utilise Scanner pour lire l\'entree utilisateur', 'Affiche le resultat dans la console']},
+    quiz: [
+      {q: 'Que doit contenir tout programme Java ?', options: ['function main()|void main()|public static void main(String[] args)|main(String[] args)'], answer: 2},
+      {q: 'Quel mot-cle cree un objet ?', options: ['object|new|create|make'], answer: 1},
+      {q: 'Java est un langage...', options: ['compile|interprete|compile et interprete|script'], answer: 2},
+      {q: 'Quelle structure herite d\'une classe ?', options: ['extends|implements|inherits|super'], answer: 0},
+      {q: 'Quel type est un entier en Java ?', options: ['integer|int|Int|entier'], answer: 1}
+    ],
   },
   {
     name: 'C',
@@ -207,7 +249,14 @@ const languages = [
       {title: 'Calculer la longueur d une chaine', desc: 'Ecris un programme qui calcule la longueur d une chaine de caracteres sans utiliser strlen(). Utilise un pointeur pour parcourir la chaine.', hint: 'Parcourt la chaine avec un pointeur char* jusqu a rencontrer le caractere nul \\0.', correction: '#include <stdio.h>\n\nint longueur(char *s) {\n  int len = 0;\n  while (*s != \'\\0\') {\n    len++;\n    s++;\n  }\n  return len;\n}\n\nint main() {\n  char mot[] = "Bonjour";\n  printf("Longueur: %d\\n", longueur(mot));\n  return 0;\n}'},
       {title: 'Inverser une chaine', desc: 'Inverse une chaine caractere par caractere.', hint: 'Parcourt de la fin vers le debut.', correction: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n  char mot[] = "Bonjour";\n  int len = strlen(mot);\n  for (int i = len - 1; i >= 0; i--) {\n    printf("%c", mot[i]);\n  }\n  printf("\\n");\n  return 0;\n}'}
     ],
-    project: {desc: 'Cree un jeu du plus ou moins en C : l\'utilisateur doit deviner un nombre entre 1 et 100 genere aleatoirement.', steps: ['Genere un nombre aleatoire avec rand()', 'Boucle tant que l\'utilisateur n\'a pas trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation a la fin']}
+    project: {desc: 'Cree un jeu du plus ou moins en C : l\'utilisateur doit deviner un nombre entre 1 et 100 genere aleatoirement.', steps: ['Genere un nombre aleatoire avec rand()', 'Boucle tant que l\'utilisateur n\'a pas trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation a la fin']},
+    quiz: [
+      {q: 'Comment inclus une bibliotheque en C ?', options: ['import|#include|using|include'], answer: 1},
+      {q: 'Quel type est un caractere en C ?', options: ['string|char|str|text'], answer: 1},
+      {q: 'Que retourne main() en C ?', options: ['void|int|bool|string'], answer: 1},
+      {q: 'Quelle fonction affiche du texte ?', options: ['print|echo|printf|cout'], answer: 2},
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.|->|::|:'], answer: 0}
+    ],
   },
   {
     name: 'C++',
@@ -237,7 +286,14 @@ const languages = [
       {title: 'Classe CompteBancaire', desc: 'Cree une classe CompteBancaire avec un titulaire et un solde. Ajoute des methodes deposer(), retirer() et afficher(). Teste avec plusieurs operations.', hint: 'Utilise class, private pour les attributs, public pour les methodes. Verifie que le retrait ne depasse pas le solde.', correction: '#include <iostream>\n#include <string>\nusing namespace std;\n\nclass CompteBancaire {\nprivate:\n  string titulaire;\n  double solde;\npublic:\n  CompteBancaire(string t, double s) : titulaire(t), solde(s) {}\n  void deposer(double montant) { solde += montant; }\n  bool retirer(double montant) {\n    if (montant > solde) return false;\n    solde -= montant;\n    return true;\n  }\n  void afficher() {\n    cout << titulaire << " : " << solde << " EUR" << endl;\n  }\n};\n\nint main() {\n  CompteBancaire cb("Alice", 1000);\n  cb.deposer(500);\n  cb.retirer(200);\n  cb.afficher();\n  return 0;\n}'},
       {title: 'Fonction avec valeur par defaut', desc: 'Saluer avec un message optionnel.', hint: 'string msg = "Bonjour" en parametre.', correction: '#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid saluer(string nom, string msg = "Bonjour") {\n  cout << msg << ", " << nom << " !" << endl;\n}\n\nint main() {\n  saluer("Alice");\n  saluer("Bob", "Salut");\n  return 0;\n}'}
     ],
-    project: {desc: 'Cree un programme qui demande des notes a l\'utilisateur, les stocke dans un tableau, calcule la moyenne et affiche un recapitulatif.', steps: ['Cree un tableau de notes', 'Boucle pour saisir les notes', 'Calcule la somme et la moyenne', 'Trouve la note min et max', 'Affiche les resultats']}
+    project: {desc: 'Cree un programme qui demande des notes a l\'utilisateur, les stocke dans un tableau, calcule la moyenne et affiche un recapitulatif.', steps: ['Cree un tableau de notes', 'Boucle pour saisir les notes', 'Calcule la somme et la moyenne', 'Trouve la note min et max', 'Affiche les resultats']},
+    quiz: [
+      {q: 'Comment inclus une bibliotheque en C ?', options: ['import|#include|using|include'], answer: 1},
+      {q: 'Quel type est un caractere en C ?', options: ['string|char|str|text'], answer: 1},
+      {q: 'Que retourne main() en C ?', options: ['void|int|bool|string'], answer: 1},
+      {q: 'Quelle fonction affiche du texte ?', options: ['print|echo|printf|cout'], answer: 2},
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.|->|::|:'], answer: 0}
+    ],
   },
   {
     name: 'C#',
@@ -267,7 +323,14 @@ const languages = [
       {title: 'LINQ sur une liste d objets', desc: 'Cree une classe Etudiant avec Nom et Note. Cree une liste d etudiants et utilise LINQ pour filtrer ceux qui ont la moyenne, les trier par note et afficher le top 3.', hint: 'Utilise List<Etudiant>, Where(), OrderByDescending(), Take(). Ajoute using System.Linq;.', correction: 'using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nclass Etudiant {\n  public string Nom { get; set; }\n  public int Note { get; set; }\n}\n\nclass Program {\n  static void Main() {\n    var etudiants = new List<Etudiant> {\n      new Etudiant { Nom = "Alice", Note = 15 },\n      new Etudiant { Nom = "Bob", Note = 8 },\n      new Etudiant { Nom = "Charlie", Note = 18 }\n    };\n    var top = etudiants.Where(e => e.Note >= 10)\n                      .OrderByDescending(e => e.Note)\n                      .Take(2);\n    foreach (var e in top) Console.WriteLine(e.Nom + " : " + e.Note);\n  }\n}'},
       {title: 'Calculatrice avec switch', desc: 'Deux nombres et un operateur, retourne le resultat.', hint: 'Utilise op switch avec patterns.', correction: 'static double Calculer(double a, double b, char op) {\n  return op switch {\n    \'+\' => a + b,\n    \'-\' => a - b,\n    \'*\' => a * b,\n    \'/\' => b != 0 ? a / b : 0,\n    _ => 0\n  };\n}\nConsole.WriteLine(Calculer(10, 5, \'+\'));'}
     ],
-    project: {desc: 'Cree une application console de gestion de bibliotheque : ajoute, supprime et recherche des livres.', steps: ['Cree une classe Livre avec Titre, Auteur, Annee', 'Cree une classe Bibliotheque avec une liste de livres', 'Ajoute des methodes Ajouter, Supprimer, Rechercher', 'Cree un menu console', 'Teste toutes les fonctionnalites']}
+    project: {desc: 'Cree une application console de gestion de bibliotheque : ajoute, supprime et recherche des livres.', steps: ['Cree une classe Livre avec Titre, Auteur, Annee', 'Cree une classe Bibliotheque avec une liste de livres', 'Ajoute des methodes Ajouter, Supprimer, Rechercher', 'Cree un menu console', 'Teste toutes les fonctionnalites']},
+    quiz: [
+      {q: 'Comment inclus une bibliotheque en C ?', options: ['import|#include|using|include'], answer: 1},
+      {q: 'Quel type est un caractere en C ?', options: ['string|char|str|text'], answer: 1},
+      {q: 'Que retourne main() en C ?', options: ['void|int|bool|string'], answer: 1},
+      {q: 'Quelle fonction affiche du texte ?', options: ['print|echo|printf|cout'], answer: 2},
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.|->|::|:'], answer: 0}
+    ],
   },
   {
     name: 'PHP',
@@ -297,7 +360,14 @@ const languages = [
       {title: 'Page avec session utilisateur', desc: 'Cree une page PHP qui utilise les sessions pour stocker le prenom de l utilisateur et l afficher. Si le prenom n est pas defini, un formulaire le demande.', hint: 'Utilise session_start(), $_SESSION pour stocker, et un formulaire POST pour saisir le prenom.', correction: '<?php\nsession_start();\nif ($_POST[\"prenom\"]) {\n  $_SESSION[\"prenom\"] = $_POST[\"prenom\"];\n}\n?><form method=\"post\">\n  <input name=\"prenom\" placeholder=\"Ton prenom\">\n  <button type=\"submit\">Valider</button>\n</form>\n<p>Bonjour <?= $_SESSION[\"prenom\"] ?? "invite" ?> !</p>'},
       {title: 'Prix TTC', desc: 'Calcule le prix TTC avec TVA optionnelle (20% par defaut).', hint: 'function prixTTC($ht, $tva = 20).', correction: '<?php\nfunction prixTTC($ht, $tva = 20) {\n  return $ht * (1 + $tva / 100);\n}\necho "Prix TTC: " . prixTTC(100) . " EUR";\n?>'}
     ],
-    project: {desc: 'Cree un petit systeme de blog : page d\'accueil avec liste d\'articles, page article et formulaire de contact.', steps: ['Cree une page d\'accueil avec des articles simules', 'Cree une page article individuelle', 'Ajoute un formulaire de contact traite par PHP', 'Utilise $_GET ou $_POST pour les donnees', 'Teste avec le serveur integre PHP']}
+    project: {desc: 'Cree un petit systeme de blog : page d\'accueil avec liste d\'articles, page article et formulaire de contact.', steps: ['Cree une page d\'accueil avec des articles simules', 'Cree une page article individuelle', 'Ajoute un formulaire de contact traite par PHP', 'Utilise $_GET ou $_POST pour les donnees', 'Teste avec le serveur integre PHP']},
+    quiz: [
+      {q: 'Quel symbole precede une variable PHP ?', options: ['@|$|&|%'], answer: 1},
+      {q: 'Comment afficher du texte en PHP ?', options: ['print()|echo|write()|return'], answer: 1},
+      {q: 'Quelle superglobale contient les donnees POST ?', options: ['$_GET|$_POST|$_REQUEST|$_DATA'], answer: 1},
+      {q: 'PHP est execute...', options: ['Dans le navigateur|Sur le serveur|Les deux|Dans la base'], answer: 1},
+      {q: 'Quel symbole concatene des chaines ?', options: ['+|.|&|..'], answer: 1}
+    ],
   },
   {
     name: 'Ruby',
@@ -327,7 +397,14 @@ const languages = [
       {title: 'Classe Livre avec module', desc: 'Cree une classe Livre avec un titre et un auteur. Ajoute un module Recherchable qui permet de chercher un livre par titre dans un tableau. Utilise include pour ajouter le module a la classe.', hint: 'Utilise module, def self.included, et une methode de classe ou d instance selon ton choix.', correction: 'module Recherchable\n  def self.chercher(titre, livres)\n    livres.select { |l| l.titre.include?(titre) }\n  end\nend\n\nclass Livre\n  attr_accessor :titre, :auteur\n  def initialize(titre, auteur)\n    @titre = titre\n    @auteur = auteur\n  end\nend\n\ninclude Recherchable\nlivres = [Livre.new("Ruby Facile", "Alice"), Livre.new("POO Avancee", "Bob")]\nputs chercher("Ruby", livres).map(&:titre)'},
       {title: 'Compter les mots', desc: 'Compte les occurrences de chaque mot dans une phrase.', hint: 'Hash.new(0) pour valeur par defaut.', correction: 'phrase = "le chat et le chien et le lapin"\nmots = phrase.split\ncompteur = Hash.new(0)\nmots.each { |mot| compteur[mot] += 1 }\ncompteur.each { |mot, n| puts "#{mot}: #{n}" }'}
     ],
-    project: {desc: 'Cree un petit annuaire en memoire : ajoute des contacts (nom, telephone), affiche la liste et permet de rechercher par nom.', steps: ['Cree une classe Contact', 'Ajoute des contacts dans un tableau', 'Affiche tous les contacts', 'Permet de rechercher par nom', 'Ajoute une interface simple dans le terminal']}
+    project: {desc: 'Cree un petit annuaire en memoire : ajoute des contacts (nom, telephone), affiche la liste et permet de rechercher par nom.', steps: ['Cree une classe Contact', 'Ajoute des contacts dans un tableau', 'Affiche tous les contacts', 'Permet de rechercher par nom', 'Ajoute une interface simple dans le terminal']},
+    quiz: [
+      {q: 'Comment afficher en Ruby ?', options: ['print|echo|puts|write'], answer: 2},
+      {q: 'Quel symbole termine une ligne en Ruby ?', options: [';|.|:|Rien (saut de ligne)'], answer: 3},
+      {q: 'Quelle structure de donnee utilise des paires cle-valeur ?', options: ['Array|Hash|Set|String'], answer: 1},
+      {q: 'Comment definit une methode ?', options: ['function|def|define|method'], answer: 1},
+      {q: 'Quel framework web est celebre en Ruby ?', options: ['Django|Laravel|Ruby on Rails|Express'], answer: 2}
+    ],
   },
   {
     name: 'Go',
@@ -357,7 +434,14 @@ const languages = [
       {title: 'Compteur concurrent avec goroutines', desc: 'Cree un programme qui lance 5 goroutines. Chaque goroutine incremente un compteur partage 10 fois. Utilise un mutex pour proteger l acces au compteur et eviter les conditions de course.', hint: 'Utilise sync.Mutex, Lock() et Unlock(). Les goroutines se lancent avec go. Utilise sync.WaitGroup pour attendre la fin.', correction: 'package main\n\nimport (\n  "fmt"\n  "sync"\n)\n\nfunc main() {\n  var mu sync.Mutex\n  var wg sync.WaitGroup\n  compteur := 0\n  for i := 0; i < 5; i++ {\n    wg.Add(1)\n    go func() {\n      defer wg.Done()\n      for j := 0; j < 10; j++ {\n        mu.Lock()\n        compteur++\n        mu.Unlock()\n      }\n    }()\n  }\n  wg.Wait()\n  fmt.Println("Compteur:", compteur)\n}'},
       {title: 'Map avec verification', desc: 'Verifie si un eleve existe dans une map avant d afficher sa note.', hint: 'note, existe := notes[nom].', correction: 'package main\nimport "fmt"\nfunc main() {\n  notes := map[string]int{"Alice": 15, "Bob": 12}\n  if note, existe := notes["Alice"]; existe {\n    fmt.Printf("Alice a %d/20\\n", note)\n  } else {\n    fmt.Println("Inconnu")\n  }\n}'}
     ],
-    project: {desc: 'Cree un programme qui lit un fichier texte et compte le nombre de mots.', steps: ['Cree un fichier texte d\'exemple', 'Lis le fichier avec ioutil.ReadFile', 'Decoupe le texte en mots avec strings.Split', 'Compte les mots avec len', 'Affiche le resultat']}
+    project: {desc: 'Cree un programme qui lit un fichier texte et compte le nombre de mots.', steps: ['Cree un fichier texte d\'exemple', 'Lis le fichier avec ioutil.ReadFile', 'Decoupe le texte en mots avec strings.Split', 'Compte les mots avec len', 'Affiche le resultat']},
+    quiz: [
+      {q: 'Quel mot-cle declare une variable en Go ?', options: ['var|let|const|def'], answer: 0},
+      {q: 'Quel type est un entier 32 bits en Go ?', options: ['int|int32|integer|short'], answer: 1},
+      {q: 'Comment importe un package ?', options: ['#include|using|import|include'], answer: 2},
+      {q: 'Quelle fonction est le point d\'entree ?', options: ['start()|main()|run()|begin()'], answer: 1},
+      {q: 'Quel outil telecharge des dependances Go ?', options: ['npm|pip|go mod|cargo'], answer: 2}
+    ],
   },
   {
     name: 'Rust',
@@ -387,7 +471,14 @@ const languages = [
       {title: 'Ownership et emprunt', desc: 'Cree une fonction qui prend une String en parametre, calcule sa longueur, et retourne la longueur sans prendre possession de la chaine. Dans main, affiche la chaine originale et sa longueur.', hint: 'Utilise une reference &String en parametre. La fonction retourne usize. La chaine originale reste accessible dans main.', correction: 'fn longueur(s: &String) -> usize {\n  s.len()\n}\n\nfn main() {\n  let mot = String::from("Bonjour Rust");\n  let len = longueur(&mot);\n  println!("\\"{}\\" fait {} caracteres", mot, len);\n}'},
       {title: 'Expression match', desc: 'Convertit un chiffre en toutes lettres avec match.', hint: 'match n { 1 => "un", _ => "inconnu" }.', correction: 'fn en_toutes_lettres(n: u32) -> &\'static str {\n  match n {\n    1 => "un", 2 => "deux", 3 => "trois",\n    4 => "quatre", 5 => "cinq",\n    _ => "inconnu"\n  }\n}\nfn main() {\n  println!("{}", en_toutes_lettres(3));\n}'}
     ],
-    project: {desc: 'Cree un convertisseur temperature Celsius/Fahrenheit. Demande la valeur et l\'unite, puis affiche la conversion.', steps: ['Cree les fonctions de conversion', 'Demande la temperature a l\'utilisateur', 'Demande l\'unite de depart', 'Affiche le resultat converti', 'Teste avec differentes valeurs']}
+    project: {desc: 'Cree un convertisseur temperature Celsius/Fahrenheit. Demande la valeur et l\'unite, puis affiche la conversion.', steps: ['Cree les fonctions de conversion', 'Demande la temperature a l\'utilisateur', 'Demande l\'unite de depart', 'Affiche le resultat converti', 'Teste avec differentes valeurs']},
+    quiz: [
+      {q: 'Quel mot-cle declare une variable immutable ?', options: ['let|mut|var|const'], answer: 0},
+      {q: 'Quel type est un entier non-signe 32 bits ?', options: ['int|uint|u32|i32'], answer: 2},
+      {q: 'Qu\'est-ce que le borrow checker ?', options: ['Un outil de debug|Un verificateur d\'emprunts memoire|Une bibliotheque|Un compilateur'], answer: 1},
+      {q: 'Quel trait affiche du texte ?', options: ['Show|Display|Debug|Print'], answer: 1},
+      {q: 'Comment cree une reference mutable ?', options: ['&|&mut|*|ref'], answer: 1}
+    ],
   },
   {
     name: 'Swift',
@@ -417,7 +508,14 @@ const languages = [
       {title: 'Closure et tri personnalise', desc: 'Cree un tableau de dictionnaires contenant des noms et ages. Utilise la methode sorted() avec une closure pour trier par age decroissant. Affiche le resultat.', hint: 'Utilise sorted(by: { $0.age > $1.age }). Les closures en Swift s ecrivent entre accolades.', correction: 'struct Personne {\n  let nom: String\n  let age: Int\n}\n\nlet gens = [\n  Personne(nom: "Alice", age: 17),\n  Personne(nom: "Bob", age: 22),\n  Personne(nom: "Charlie", age: 19)\n]\nlet tries = gens.sorted { $0.age > $1.age }\nfor p in tries {\n  print("\(p.nom) a \(p.age) ans")\n}'},
       {title: 'Guard let avec optionals', desc: 'Verifie la majorite avec un age optional.', hint: 'guard let age = age else { return }.', correction: 'func verifierAge(_ age: Int?) {\n  guard let age = age else { print("Invalide"); return }\n  if age >= 18 { print("Majeur") } else { print("Mineur") }\n}\nverifierAge(17)\nverifierAge(22)'}
     ],
-    project: {desc: 'Cree une app SwiftUI simple qui affiche une liste de taches avec la possibilite d\'en ajouter et de les cocher.', steps: ['Cree un nouveau projet SwiftUI dans Xcode', 'Cree un modele Task avec un id et un titre', 'Affiche une liste avec ForEach', 'Ajoute un champ texte pour creer une tache', 'Ajoute la possibilite de cocher une tache terminee']}
+    project: {desc: 'Cree une app SwiftUI simple qui affiche une liste de taches avec la possibilite d\'en ajouter et de les cocher.', steps: ['Cree un nouveau projet SwiftUI dans Xcode', 'Cree un modele Task avec un id et un titre', 'Affiche une liste avec ForEach', 'Ajoute un champ texte pour creer une tache', 'Ajoute la possibilite de cocher une tache terminee']},
+    quiz: [
+      {q: 'Comment declare une constante en Swift ?', options: ['var|const|let|final'], answer: 2},
+      {q: 'Qu\'est-ce qu\'un Optional en Swift ?', options: ['Un type qui peut etre nil|Un parametre facultatif|Une valeur par defaut|Un type generique'], answer: 0},
+      {q: 'Quelle structure de donnee est non-ordonnee ?', options: ['Array|Set|Dictionary|String'], answer: 1},
+      {q: 'Quel mot-cle retire la valeur d\'un Optional ?', options: ['!|?|*|&'], answer: 0},
+      {q: 'SwiftUI utilise quel paradigme ?', options: ['MVC|Declaratif|Imperatif|Procedural'], answer: 1}
+    ],
   },
   {
     name: 'Kotlin',
@@ -447,7 +545,14 @@ const languages = [
       {title: 'Data class avec filtrage', desc: 'Cree une data class Produit avec un nom, un prix et une categorie. Cree une liste de produits et utilise filter et map pour afficher les noms des produits de la categorie "alimentaire" a moins de 5 euros.', hint: 'Utilise data class, filter { } et map { }. La syntaxe Kotlin permet de chainer les operations sur les collections.', correction: 'data class Produit(val nom: String, val prix: Double, val categorie: String)\n\nfun main() {\n  val produits = listOf(\n    Produit("Pain", 1.2, "alimentaire"),\n    Produit("Stylo", 2.5, "fourniture"),\n    Produit("Lait", 3.8, "alimentaire")\n  )\n  val resultats = produits\n    .filter { it.categorie == "alimentaire" && it.prix < 5.0 }\n    .map { it.nom }\n  println(resultats)\n}'},
       {title: 'When avec conditions', desc: 'Appreciation selon une note avec when.', hint: 'note >= 17 -> Excellent', correction: 'fun apprecier(note: Int): String {\n  return when {\n    note >= 17 -> "Excellent"\n    note >= 14 -> "Tres bien"\n    note >= 10 -> "Passable"\n    else -> "Insuffisant"\n  }\n}\nfun main() {\n  println(apprecier(15))\n  println(apprecier(8))\n}'}
     ],
-    project: {desc: 'Cree une application console qui permet de gerer une liste de taches (ToDo).', steps: ['Cree une data class Task', 'Cree une liste mutable de taches', 'Ajoute des fonctions ajouter, supprimer, afficher', 'Cree un menu interactif dans le terminal', 'Teste toutes les operations']}
+    project: {desc: 'Cree une application console qui permet de gerer une liste de taches (ToDo).', steps: ['Cree une data class Task', 'Cree une liste mutable de taches', 'Ajoute des fonctions ajouter, supprimer, afficher', 'Cree un menu interactif dans le terminal', 'Teste toutes les operations']},
+    quiz: [
+      {q: 'Comment declare une variable en Kotlin ?', options: ['var|let|const|def'], answer: 0},
+      {q: 'Quel mot-cle utilise pour une fonction ?', options: ['function|func|fun|def'], answer: 2},
+      {q: 'Qu\'est-ce que la null safety ?', options: ['Aucun null permis|Le compilateur empeche les nulls non intendus|Les nulls sont automatiques|Une bibliotheque'], answer: 1},
+      {q: 'Quelle fonction cree une liste immuable ?', options: ['listOf()|mutableListOf()|arrayListOf()|list()'], answer: 0},
+      {q: 'Kotlin est le langage officiel de...', options: ['iOS|Android|Windows|Linux'], answer: 1}
+    ],
   },
   {
     name: 'SQL',
@@ -477,7 +582,14 @@ const languages = [
       {title: 'Jointure et sous-requete', desc: 'Cree deux tables : etudiants (id, nom, classe_id) et classes (id, nom). Ecris une requete qui affiche le nom de chaque etudiant avec sa classe, puis une sous-requete qui trouve les etudiants dont la classe a plus de 3 etudiants.', hint: 'Utilise SELECT avec JOIN, puis une sous-requete avec GROUP BY et HAVING COUNT(*) > 3.', correction: '-- Table etudiants\nCREATE TABLE etudiants (id INT, nom TEXT, classe_id INT);\n-- Table classes\nCREATE TABLE classes (id INT, nom TEXT);\n\n-- Jointure\nSELECT e.nom, c.nom AS classe\nFROM etudiants e\nJOIN classes c ON e.classe_id = c.id;\n\n-- Sous-requete\nSELECT * FROM etudiants\nWHERE classe_id IN (\n  SELECT classe_id FROM etudiants\n  GROUP BY classe_id\n  HAVING COUNT(*) > 3\n);'},
       {title: 'Mettre a jour des donnees', desc: 'Ajoute une colonne email et met a jour un enregistrement.', hint: 'ALTER TABLE puis UPDATE ... SET ... WHERE ...', correction: 'ALTER TABLE etudiants ADD COLUMN email TEXT;\nUPDATE etudiants SET email = \'alice@mail.com\' WHERE nom = \'Alice\';\nSELECT * FROM etudiants;'}
     ],
-    project: {desc: 'Cree une base de donnees pour une bibliotheque avec des tables pour les livres, les membres et les emprunts. Ecris des requetes pour trouver les livres disponibles et les membres avec des retards.', steps: ['Cree la table livres (id, titre, auteur, disponible)', 'Cree la table membres (id, nom, email)', 'Cree la table emprunts (id, livre_id, membre_id, date)', 'Insere des donnees d\'exemple', 'Ecris des requetes SELECT avec JOIN', 'Trouve les livres actuellement empruntes']}
+    project: {desc: 'Cree une base de donnees pour une bibliotheque avec des tables pour les livres, les membres et les emprunts. Ecris des requetes pour trouver les livres disponibles et les membres avec des retards.', steps: ['Cree la table livres (id, titre, auteur, disponible)', 'Cree la table membres (id, nom, email)', 'Cree la table emprunts (id, livre_id, membre_id, date)', 'Insere des donnees d\'exemple', 'Ecris des requetes SELECT avec JOIN', 'Trouve les livres actuellement empruntes']},
+    quiz: [
+      {q: 'Quel mot-cle recupere des donnees ?', options: ['GET|FETCH|SELECT|RETRIEVE'], answer: 2},
+      {q: 'Quel mot-cle filtre les resultats ?', options: ['FILTER|WHERE|IF|HAVING'], answer: 1},
+      {q: 'Quel type de jointure garde toutes les lignes des deux tables ?', options: ['INNER JOIN|LEFT JOIN|FULL OUTER JOIN|RIGHT JOIN'], answer: 2},
+      {q: 'Quelle fonction compte les lignes ?', options: ['SUM()|COUNT()|TOTAL()|NB()'], answer: 1},
+      {q: 'Quel mot-cle supprime une table ?', options: ['REMOVE|DELETE|DROP|CLEAR'], answer: 2}
+    ],
   },
   {
     name: 'R',
@@ -507,7 +619,14 @@ const languages = [
       {title: 'Analyse statistique d un data frame', desc: 'Utilise le jeu de donnees iris integre. Calcule la moyenne, mediane et ecart-type de la longueur des petales par espece. Cree un boxplot pour visualiser la distribution.', hint: 'Utilise aggregate() ou group_by() avec summarise(). Pour le graphique, utilise boxplot(Petal.Length ~ Species, data = iris).', correction: 'data(iris)\n\nstats <- aggregate(Petal.Length ~ Species, data = iris,\n  FUN = function(x) c(moyenne = mean(x), mediane = median(x), sd = sd(x)))\nprint(stats)\n\nboxplot(Petal.Length ~ Species, data = iris,\n  main = "Longueur des petales par espece",\n  col = c("lightblue", "lightgreen", "lightpink"))'},
       {title: 'Fonction personnalisee', desc: 'Retourne moyenne, mediane et ecart-type d un vecteur.', hint: 'function(x) { return(list(...)) }', correction: 'statistiques <- function(x) {\n  return(list(\n    moyenne = mean(x),\n    mediane = median(x),\n    ecart_type = sd(x)\n  ))\n}\nv <- c(10, 12, 15, 18, 20)\nresultat <- statistiques(v)\nprint(resultat)'}
     ],
-    project: {desc: 'Analyse un jeu de donnees integrer (iris, mtcars) et cree un rapport avec des graphiques et des statistiques descriptives.', steps: ['Charge le jeu de donnees iris', 'Affiche un resume avec summary()', 'Cree un histogramme avec hist()', 'Cree un nuage de points avec plot()', 'Calcule des correlations', 'Exporte les graphiques en PNG']}
+    project: {desc: 'Analyse un jeu de donnees integrer (iris, mtcars) et cree un rapport avec des graphiques et des statistiques descriptives.', steps: ['Charge le jeu de donnees iris', 'Affiche un resume avec summary()', 'Cree un histogramme avec hist()', 'Cree un nuage de points avec plot()', 'Calcule des correlations', 'Exporte les graphiques en PNG']},
+    quiz: [
+      {q: 'Comment cree un vecteur en R ?', options: ['c()|v()|list()|array()'], answer: 0},
+      {q: 'Quelle fonction lit un fichier CSV ?', options: ['read.csv()|open.csv()|load.csv()|import.csv()'], answer: 0},
+      {q: 'Quel symbole assigne une valeur ?', options: ['=|< -|->|<<-'], answer: 1},
+      {q: 'Quelle bibliotheque cree des graphiques ?', options: ['matplotlib|ggplot2|plotly|graph'], answer: 1},
+      {q: 'Quel type stocke des donnees categoriques ?', options: ['vector|factor|list|matrix'], answer: 1}
+    ],
   },
   {
     name: 'Dart',
@@ -537,7 +656,14 @@ const languages = [
       {title: 'Classe avec async/await', desc: 'Cree une classe Utilisateur avec un nom et un email. Ajoute une methode asynchrone fetchDonnees() qui simule un appel API avec Future.delayed(). Dans main, cree un utilisateur, appelle la methode avec await et affiche les donnees.', hint: 'Utilise Future<void> et async/await. Future.delayed(Duration(seconds: 2), () { ... }) simule un delai.', correction: 'class Utilisateur {\n  String nom;\n  String email;\n  Utilisateur(this.nom, this.email);\n\n  Future<void> fetchDonnees() async {\n    print("Chargement des donnees de $nom...");\n    await Future.delayed(Duration(seconds: 2));\n    print("Donnees chargees pour $nom ($email)");\n  }\n}\n\nFuture<void> main() async {\n  var user = Utilisateur("Alice", "alice@mail.com");\n  await user.fetchDonnees();\n}'},
       {title: 'Convertir euros en dollars', desc: 'Convertit une liste de prix avec map().', hint: 'euros.map((e) => e * 1.10).toList().', correction: 'void main() {\n  var euros = [10.0, 25.0, 50.0];\n  var dollars = euros.map((e) => e * 1.10).toList();\n  print("EUR: $euros");\n  print("USD: $dollars");\n}'}
     ],
-    project: {desc: 'Cree une calculatrice en console avec Dart : l\'utilisateur choisit une operation et entre deux nombres.', steps: ['Cree les fonctions de calcul', 'Affiche un menu a l\'utilisateur', 'Lit le choix et les nombres', 'Effectue le calcul et affiche le resultat', 'Boucle jusqu\'a ce que l\'utilisateur quitte']}
+    project: {desc: 'Cree une calculatrice en console avec Dart : l\'utilisateur choisit une operation et entre deux nombres.', steps: ['Cree les fonctions de calcul', 'Affiche un menu a l\'utilisateur', 'Lit le choix et les nombres', 'Effectue le calcul et affiche le resultat', 'Boucle jusqu\'a ce que l\'utilisateur quitte']},
+    quiz: [
+      {q: 'Quel mot-cle declare une variable immutable ?', options: ['var|final|let|const'], answer: 1},
+      {q: 'Quel type retourne une fonction asynchrone ?', options: ['async|Future|Promise|Task'], answer: 1},
+      {q: 'Quelle fonction affiche en console ?', options: ['print()|echo()|log()|write()'], answer: 0},
+      {q: 'Quel framework mobile utilise Dart ?', options: ['React Native|Flutter|Xamarin|Ionic'], answer: 1},
+      {q: 'Comment cree une liste en Dart ?', options: ['[]|{}|()|<>'], answer: 0}
+    ],
   },
   {
     name: 'Bash',
@@ -567,7 +693,14 @@ const languages = [
       {title: 'Script de sauvegarde avec fonctions', desc: 'Cree un script qui prend un dossier en argument et cree une archive .tar.gz horodatee. Ajoute trois fonctions : usage() qui affiche l aide, verifier_dossier() qui verifie que le dossier existe, et sauvegarder() qui compresse.', hint: 'Utilise $1 pour l argument, [[ -d $1 ]] pour verifier, et tar -czf pour compresser. La date avec date +%Y%m%d_%H%M%S.', correction: '#!/usr/bin/env bash\n\nusage() {\n  echo "Usage: $0 <dossier>"\n  exit 1\n}\n\nverifier_dossier() {\n  if [[ ! -d "$1" ]]; then\n    echo "Erreur: $1 n existe pas"\n    exit 1\n  fi\n}\n\nsauvegarder() {\n  local nom="backup_$(date +%Y%m%d_%H%M%S).tar.gz"\n  tar -czf "$nom" "$1"\n  echo "Sauvegarde creee : $nom"\n}\n\n[[ $# -eq 0 ]] && usage\nverifier_dossier "$1"\nsauvegarder "$1"'},
       {title: 'Verifier si un fichier existe', desc: 'Verifie l existence d un fichier et affiche sa taille.', hint: '[[ -f "$1" ]] et stat.', correction: '#!/usr/bin/env bash\nif [[ -z "$1" ]]; then echo "Usage: $0 <fichier>"; exit 1; fi\nif [[ ! -f "$1" ]]; then echo "Inexistant"; exit 1; fi\ntaille=$(stat -f%z "$1" 2>/dev/null)\necho "Taille: $taille octets"'}
     ],
-    project: {desc: 'Cree un script de sauvegarde qui compresse un dossier en .tar.gz avec un nom contenant la date du jour.', steps: ['Demande le dossier a sauvegarder', 'Cree un nom de fichier avec la date', 'Utilise tar pour compresser', 'Affiche un message de confirmation', 'Teste le script sur un dossier exemple']}
+    project: {desc: 'Cree un script de sauvegarde qui compresse un dossier en .tar.gz avec un nom contenant la date du jour.', steps: ['Demande le dossier a sauvegarder', 'Cree un nom de fichier avec la date', 'Utilise tar pour compresser', 'Affiche un message de confirmation', 'Teste le script sur un dossier exemple']},
+    quiz: [
+      {q: 'Quel shebang pour un script Bash ?', options: ['#!/bin/bash|#!/usr/bin/python|#!bash|#/bin/bash'], answer: 0},
+      {q: 'Quelle commande affiche du texte ?', options: ['print|echo|write|show'], answer: 1},
+      {q: 'Comment commenter une ligne ?', options: ['//|/* */|#|--'], answer: 2},
+      {q: 'Quel symbole accede a une variable ?', options: ['@|$|%|&'], answer: 1},
+      {q: 'Quelle structure execute une boucle ?', options: ['for|if|case|function'], answer: 0}
+    ],
   },
   {
     name: 'Lua',
@@ -597,7 +730,14 @@ const languages = [
       {title: 'Metatables : operateurs personnalises', desc: 'Cree une table qui represente un vecteur 2D (x, y). Ajoute une metatable qui permet d additionner deux vecteurs avec l operateur + et de les afficher avec tostring().', hint: 'Utilise setmetatable(), __add pour l addition et __tostring pour l affichage. Chaque vecteur est une table {x = ..., y = ...}.', correction: 'local Vector = {}\nVector.__index = Vector\n\nfunction Vector:new(x, y)\n  return setmetatable({x = x, y = y}, self)\nend\n\nVector.__add = function(a, b)\n  return Vector:new(a.x + b.x, a.y + b.y)\nend\n\nVector.__tostring = function(v)\n  return "(" .. v.x .. ", " .. v.y .. ")"\nend\n\nlocal v1 = Vector:new(1, 2)\nlocal v2 = Vector:new(3, 4)\nlocal v3 = v1 + v2\nprint(v1 .. " + " .. v2 .. " = " .. v3)'},
       {title: 'Mots uniques', desc: 'Filtre les doublons d une liste.', hint: 'Table comme ensemble: vu[mot] = true.', correction: 'local function mots_uniques(liste)\n  local vu, res = {}, {}\n  for _, mot in ipairs(liste) do\n    if not vu[mot] then vu[mot] = true; table.insert(res, mot) end\n  end\n  return res\nend\nlocal mots = {"a", "b", "a", "c"}\nfor _, m in ipairs(mots_uniques(mots)) do print(m) end'}
     ],
-    project: {desc: 'Cree un petit jeu de devinettes : l\'ordinateur choisit un nombre aleatoire entre 1 et 100 et l\'utilisateur doit le trouver.', steps: ['Utilise math.random pour generer un nombre', 'Boucle jusqu\'a ce que l\'utilisateur trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation']}
+    project: {desc: 'Cree un petit jeu de devinettes : l\'ordinateur choisit un nombre aleatoire entre 1 et 100 et l\'utilisateur doit le trouver.', steps: ['Utilise math.random pour generer un nombre', 'Boucle jusqu\'a ce que l\'utilisateur trouve', 'Compare la proposition et donne un indice', 'Compte le nombre de tentatives', 'Affiche un message de felicitation']},
+    quiz: [
+      {q: 'Quel mot-cle cree une variable locale ?', options: ['var|let|local|private'], answer: 2},
+      {q: 'Quel operateur concatene des chaines ?', options: ['+|.|..|&'], answer: 2},
+      {q: 'Quelle fonction affiche en console ?', options: ['print()|echo()|log()|write()'], answer: 0},
+      {q: 'Quel indice commence un tableau en Lua ?', options: ['0|1|-1|nil'], answer: 1},
+      {q: 'Quelle structure de donnee est universelle en Lua ?', options: ['Array|Table|List|Set'], answer: 1}
+    ],
   }
 ];
 
