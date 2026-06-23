@@ -1423,38 +1423,46 @@ pre {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
   width: 44px;
   height: 44px;
-  padding: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: transparent;
   cursor: pointer;
   z-index: 20;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+
+.hamburger:active {
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
 }
 
 .hamburger span {
   display: block;
   width: 100%;
-  height: 2.5px;
+  height: 2px;
   border-radius: 2px;
   background: var(--ink);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 0.25s ease;
   transform-origin: center;
 }
 
 .hamburger.is-active span:nth-child(1) {
-  transform: translateY(7.5px) rotate(45deg);
+  transform: translateY(7px) rotate(45deg);
 }
 
 .hamburger.is-active span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .hamburger.is-active span:nth-child(3) {
-  transform: translateY(-7.5px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .mobile-overlay {
@@ -1462,10 +1470,11 @@ pre {
   position: fixed;
   inset: 0;
   z-index: 15;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease;
 }
 
 .mobile-overlay.is-open {
@@ -1475,17 +1484,20 @@ pre {
 .mobile-menu {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   position: fixed;
   top: 0;
   right: 0;
   width: min(72vw, 300px);
   height: 100%;
-  padding: 80px 24px 24px;
-  background: var(--paper);
-  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.1);
+  padding: 88px 20px 24px;
+  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.08);
   transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .is-open .mobile-menu {
@@ -1495,14 +1507,19 @@ pre {
 .mobile-link {
   display: block;
   padding: 14px 16px;
-  border-radius: 8px;
-  font-weight: 800;
-  font-size: 1.1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
   transition: background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-link:hover {
   background: var(--wash);
+}
+
+.mobile-link:active {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
 }
 
 @media (max-width: 768px) {
@@ -1527,15 +1544,24 @@ pre {
     grid-template-columns: 1fr;
     gap: 32px;
     min-height: auto;
-    padding: 40px 18px;
+    padding: 48px 24px;
+    text-align: center;
   }
 
   .hero-copy {
     margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   h1 {
-    font-size: clamp(2.4rem, 10vw, 3.6rem);
+    font-size: clamp(2.6rem, 10vw, 3.6rem);
+    max-width: 100%;
+  }
+
+  .hero-text {
+    max-width: 48ch;
   }
 
   .hero-panel {
@@ -1548,12 +1574,13 @@ pre {
 
   .language-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 16px;
   }
 
   .language-card {
-    min-height: 160px;
-    padding: 14px;
+    min-height: 170px;
+    padding: 20px 18px;
+    border-radius: 16px;
   }
 
   .language-card h3 {
@@ -1561,14 +1588,19 @@ pre {
     margin: 14px 0 6px;
   }
 
+  .language-meta {
+    margin-top: 14px;
+    font-size: 0.8rem;
+  }
+
   .lesson-hero {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 20px;
   }
 
   .lesson-content {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   .example-grid {
@@ -1580,16 +1612,20 @@ pre {
   }
 
   .section-heading h2 {
-    font-size: clamp(1.6rem, 6vw, 2.4rem);
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+  }
+
+  .section-heading p:last-child {
+    font-size: 0.95rem;
   }
 
   .topbar {
-    padding: 14px 18px;
+    padding: 14px 20px;
   }
 
   .explorer,
   .lesson-page {
-    padding: 48px 14px;
+    padding: 52px 20px;
   }
 }
 
@@ -1963,7 +1999,7 @@ pre {
 @media (max-width: 480px) {
   .language-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
 
   .panel-grid {
@@ -1980,16 +2016,28 @@ pre {
   }
 
   .topbar {
-    padding: 10px 14px;
+    padding: 10px 16px;
+  }
+
+  .hero {
+    padding: 40px 18px;
+    gap: 24px;
   }
 
   h1 {
-    font-size: clamp(2rem, 12vw, 2.8rem);
+    font-size: clamp(2.2rem, 12vw, 2.8rem);
   }
 
   .hero-text {
     font-size: 0.95rem;
-    margin: 18px 0 22px;
+    margin: 16px 0 20px;
+  }
+
+  .button {
+    min-height: 44px;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    border-radius: 10px;
   }
 
   .lesson-title {
@@ -2004,6 +2052,19 @@ pre {
     font-size: 1.2rem;
   }
 
+  .quiz-question-text {
+    font-size: 1.05rem;
+  }
+
+  .quiz-option {
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+
+  .option-text {
+    font-size: 0.9rem;
+  }
+
   .toolbar {
     gap: 6px;
     justify-content: flex-start;
@@ -2011,6 +2072,7 @@ pre {
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    padding-bottom: 4px;
   }
 
   .toolbar::-webkit-scrollbar {
@@ -2019,9 +2081,10 @@ pre {
 
   .filter {
     flex: 0 0 auto;
-    padding: 10px 12px;
-    font-size: 0.82rem;
+    padding: 10px 14px;
+    font-size: 0.85rem;
     white-space: nowrap;
+    min-height: 38px;
   }
 
   .pill-list li {
@@ -2031,26 +2094,54 @@ pre {
 
   .explorer,
   .lesson-page {
-    padding: 36px 10px;
+    padding: 36px 16px;
   }
 
   .language-card {
-    padding: 12px;
+    padding: 18px 16px;
+    min-height: 150px;
+    border-radius: 14px;
+  }
+
+  .language-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .language-card p {
+    font-size: 0.88rem;
   }
 
   .run-card {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .mobile-menu {
+    width: min(80vw, 300px);
+    padding: 76px 20px 20px;
+  }
+
+  .mobile-link {
+    padding: 14px 14px;
+    font-size: 1rem;
+  }
+
+  .cookie-bar {
+    padding: 12px 16px;
+  }
 }
 
 @media (max-width: 380px) {
   .hero {
-    padding: 28px 14px;
+    padding: 32px 16px;
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
+  }
+
+  .hero-text {
+    font-size: 0.9rem;
   }
 
   .eyebrow {
@@ -2058,8 +2149,8 @@ pre {
   }
 
   .filter {
-    font-size: 0.75rem;
-    padding: 8px 10px;
+    font-size: 0.78rem;
+    padding: 8px 12px;
   }
 
   .brand {
@@ -2071,18 +2162,24 @@ pre {
     height: 32px;
     font-size: 0.85rem;
   }
+
+  .explorer,
+  .lesson-page {
+    padding: 28px 14px;
+  }
 }
 
 @media (hover: none) and (pointer: coarse) {
   .language-card:hover {
     transform: none;
     border-color: var(--line);
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    box-shadow: var(--shadow);
   }
 
   .language-card:active {
-    transform: translateY(-4px) scale(1.01);
-    border-color: var(--accent);
+    transform: scale(0.97);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--ink) 4%, transparent);
   }
 
   .button:hover::before {
@@ -2091,6 +2188,40 @@ pre {
 
   .button:active::before {
     opacity: 1;
+  }
+
+  .button:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .button:active {
+    transform: scale(0.97);
+  }
+
+  .filter:hover {
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--line);
+  }
+
+  .filter:active {
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
+  }
+
+  .filter.is-active:active {
+    background: var(--ink);
+  }
+
+  .quiz-option:hover {
+    border-color: var(--line);
+    background: var(--wash);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .quiz-option:active {
+    transform: scale(0.98);
   }
 
   .nav-actions a:hover::after {
