@@ -33,7 +33,12 @@ const languages = [
       {q: 'Quelle balise sert a creer un lien ?', options: ['<link>','<a>','<href>'], answer: 1},
       {q: 'Quelle balise affiche un titre de niveau 1 ?', options: ['<heading>','<h1>','<head>'], answer: 1},
       {q: 'Quel attribut definit l\'URL d\'un lien ?', options: ['src','link','href'], answer: 2},
-      {q: 'Comment ecrit un commentaire en HTML ?', options: ['// commentaire','/* commentaire */','<!-- commentaire -->'], answer: 2}
+      {q: 'Comment ecrit un commentaire en HTML ?', options: ['// commentaire','/* commentaire */','<!-- commentaire -->'], answer: 2},
+      {q: 'Quelle balise cree un paragraphe ?', options: ['<p>','<par>','<text>'], answer: 0},
+      {q: 'Quel attribut rend une image accessible ?', options: ['src','alt','title'], answer: 1},
+      {q: 'Quelle balise est auto-fermante ?', options: ['<div>','<img>','<span>'], answer: 1},
+      {q: 'Combien de niveaux de titres HTML ?', options: ['3','5','6'], answer: 2},
+      {q: 'Quelle balise cree une liste numerotee ?', options: ['<ul>','<ol>','<li>'], answer: 1},
     ],
   },
   {
@@ -70,7 +75,12 @@ const languages = [
       {q: 'Quelle propriete change la couleur du texte ?', options: ['background-color','color','text-color'], answer: 1},
       {q: 'Quelle propriete espace les elements avec Flexbox ?', options: ['margin','justify-content','gap'], answer: 2},
       {q: 'Quelle unite est relative a la taille de l\'ecran ?', options: ['px','em','vw'], answer: 2},
-      {q: 'Comment appliquer un style au survol ?', options: [':click',':hover',':over'], answer: 1}
+      {q: 'Comment appliquer un style au survol ?', options: [':click',':hover',':over'], answer: 1},
+      {q: 'Quelle propriete change la taille du texte ?', options: ['font-size','text-size','size'], answer: 0},
+      {q: 'Quelle valeur rend un element flexible ?', options: ['block','flex','grid'], answer: 1},
+      {q: 'Quelle propriete ajoute un espace interieur ?', options: ['margin','padding','gap'], answer: 1},
+      {q: 'Comment cible un ID en CSS ?', options: ['#id','.id','id'], answer: 0},
+      {q: 'Quelle unite est relative a la police ?', options: ['px','em','vw'], answer: 1},
     ],
   },
   {
@@ -107,7 +117,12 @@ const languages = [
       {q: 'Quelle methode ajoute un element a la fin d\'un tableau ?', options: ['push()','pop()','shift()'], answer: 0},
       {q: 'Comment ecrire dans la console ?', options: ['print()','echo()','console.log()'], answer: 2},
       {q: 'Quelle boucle parcourt un tableau ?', options: ['for','if','switch'], answer: 0},
-      {q: 'Quelle fonction convertit JSON en objet JS ?', options: ['JSON.stringify()','JSON.parse()','JSON.object()'], answer: 1}
+      {q: 'Quelle fonction convertit JSON en objet JS ?', options: ['JSON.stringify()','JSON.parse()','JSON.object()'], answer: 1},
+      {q: 'Quelle methode supprime le dernier element ?', options: ['push()','pop()','shift()'], answer: 1},
+      {q: 'Comment ecrire une condition ?', options: ['if','when','for'], answer: 0},
+      {q: 'Quel mot-cle cree une fonction ?', options: ['func','function','def'], answer: 1},
+      {q: 'Quelle methode convertit en JSON ?', options: ['parse()','stringify()','toString()'], answer: 1},
+      {q: 'Quel operateur compare valeur ET type ?', options: ['==','===','='], answer: 1},
     ],
   },
   {
@@ -144,7 +159,12 @@ const languages = [
       {q: 'Comment definit un type personnalise ?', options: ['class','type','interface'], answer: 2},
       {q: 'Quel symbole rend une propriete optionnelle ?', options: ['?','!','*'], answer: 0},
       {q: 'Que fait le compilateur TypeScript ?', options: ['Execute du code','Traduit TS en JS','Optimise les images'], answer: 1},
-      {q: 'Quel type represente rien dans une fonction ?', options: ['null','undefined','void'], answer: 2}
+      {q: 'Quel type represente rien dans une fonction ?', options: ['null','undefined','void'], answer: 2},
+      {q: 'Quel type est un nombre ?', options: ['num','number','int'], answer: 1},
+      {q: 'Quel mot-cle empeche la reassignation ?', options: ['const','let','var'], answer: 0},
+      {q: 'Quel type prend true/false ?', options: ['bit','boolean','bool'], answer: 1},
+      {q: 'Quelle syntaxe est un generique ?', options: ['<T>','T[]','T?'], answer: 0},
+      {q: 'Quel type est un tableau ?', options: ['array','[]','Array<T>'], answer: 2},
     ],
   },
   {
@@ -181,7 +201,12 @@ const languages = [
       {q: 'Comment definit une fonction ?', options: ['function','def','func'], answer: 1},
       {q: 'Quel type de boucle parcourt une liste ?', options: ['for','while','do'], answer: 0},
       {q: 'Comment commenter une ligne en Python ?', options: ['//','/*','#'], answer: 2},
-      {q: 'Quelle structure de donnee est modifiable ?', options: ['tuple','str','list'], answer: 2}
+      {q: 'Quelle structure de donnee est modifiable ?', options: ['tuple','str','list'], answer: 2},
+      {q: 'Quel type est 3.14 ?', options: ['int','float','decimal'], answer: 1},
+      {q: 'Quel mot-cle cree une boucle conditionnelle ?', options: ['for','while','loop'], answer: 1},
+      {q: 'Quelle structure stocke des paires cle-valeur ?', options: ['list','tuple','dict'], answer: 2},
+      {q: 'Quel symbole cree une liste en compréhension ?', options: ['[]','{}','()'], answer: 0},
+      {q: 'Quelle fonction donne la longueur ?', options: ['size()','len()','length()'], answer: 1},
     ],
   },
   {
@@ -218,7 +243,12 @@ const languages = [
       {q: 'Quel mot-cle cree un objet ?', options: ['object','new','create'], answer: 1},
       {q: 'Java est un langage...', options: ['compile','interprete','compile et interprete'], answer: 2},
       {q: 'Quelle structure herite d\'une classe ?', options: ['extends','implements','inherits'], answer: 0},
-      {q: 'Quel type est un entier en Java ?', options: ['integer','int','Int'], answer: 1}
+      {q: 'Quel type est un entier en Java ?', options: ['integer','int','Int'], answer: 1},
+      {q: 'Quel mot-cle cree une classe ?', options: ['class','struct','type'], answer: 0},
+      {q: 'Quel type est un decimal en Java ?', options: ['float','double','decimal'], answer: 1},
+      {q: 'Quelle collection est une liste ordonnee ?', options: ['Set','Map','ArrayList'], answer: 2},
+      {q: 'Quel modificateur rend une methode accessible partout ?', options: ['private','protected','public'], answer: 2},
+      {q: 'Que signifie JVM ?', options: ['Java Virtual Machine','Java Visual Model','Java Version Manager'], answer: 0},
     ],
   },
   {
@@ -255,7 +285,12 @@ const languages = [
       {q: 'Quel type est un caractere en C ?', options: ['string','char','str'], answer: 1},
       {q: 'Que retourne main() en C ?', options: ['void','int','bool'], answer: 1},
       {q: 'Quelle fonction affiche du texte ?', options: ['print','echo','printf'], answer: 2},
-      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0}
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0},
+      {q: 'Quel type est 5 (entier) ?', options: ['float','int','char'], answer: 1},
+      {q: 'Quelle fonction lit une entree clavier ?', options: ['scanf()','input()','read()'], answer: 0},
+      {q: 'Quel symbole prend l\'adresse d\'une variable ?', options: ['*','&','@'], answer: 1},
+      {q: 'Quel header pour les fonctions mathematiques ?', options: ['math.h','stdlib.h','stdio.h'], answer: 0},
+      {q: 'Quel type retourne main() ?', options: ['void','int','bool'], answer: 1},
     ],
   },
   {
@@ -292,7 +327,12 @@ const languages = [
       {q: 'Quel type est un caractere en C ?', options: ['string','char','str'], answer: 1},
       {q: 'Que retourne main() en C ?', options: ['void','int','bool'], answer: 1},
       {q: 'Quelle fonction affiche du texte ?', options: ['print','echo','printf'], answer: 2},
-      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0}
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0},
+      {q: 'Quel type est 5 (entier) ?', options: ['float','int','char'], answer: 1},
+      {q: 'Quelle fonction lit une entree clavier ?', options: ['scanf()','input()','read()'], answer: 0},
+      {q: 'Quel symbole prend l\'adresse d\'une variable ?', options: ['*','&','@'], answer: 1},
+      {q: 'Quel header pour les fonctions mathematiques ?', options: ['math.h','stdlib.h','stdio.h'], answer: 0},
+      {q: 'Quel type retourne main() ?', options: ['void','int','bool'], answer: 1},
     ],
   },
   {
@@ -329,7 +369,12 @@ const languages = [
       {q: 'Quel type est un caractere en C ?', options: ['string','char','str'], answer: 1},
       {q: 'Que retourne main() en C ?', options: ['void','int','bool'], answer: 1},
       {q: 'Quelle fonction affiche du texte ?', options: ['print','echo','printf'], answer: 2},
-      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0}
+      {q: 'Quel operateur accede a un champ de structure ?', options: ['.','->','::'], answer: 0},
+      {q: 'Quel type est 5 (entier) ?', options: ['float','int','char'], answer: 1},
+      {q: 'Quelle fonction lit une entree clavier ?', options: ['scanf()','input()','read()'], answer: 0},
+      {q: 'Quel symbole prend l\'adresse d\'une variable ?', options: ['*','&','@'], answer: 1},
+      {q: 'Quel header pour les fonctions mathematiques ?', options: ['math.h','stdlib.h','stdio.h'], answer: 0},
+      {q: 'Quel type retourne main() ?', options: ['void','int','bool'], answer: 1},
     ],
   },
   {
@@ -366,7 +411,12 @@ const languages = [
       {q: 'Comment afficher du texte en PHP ?', options: ['print()','echo','write()'], answer: 1},
       {q: 'Quelle superglobale contient les donnees POST ?', options: ['$_GET','$_POST','$_REQUEST'], answer: 1},
       {q: 'PHP est execute...', options: ['Dans le navigateur','Sur le serveur','Les deux'], answer: 1},
-      {q: 'Quel symbole concatene des chaines ?', options: ['+','.','&'], answer: 1}
+      {q: 'Quel symbole concatene des chaines ?', options: ['+','.','&'], answer: 1},
+      {q: 'Quel tableau stocke des sessions ?', options: ['$_SESSION','$_COOKIE','$_SERVER'], answer: 0},
+      {q: 'Quelle boucle parcourt un tableau ?', options: ['for','while','foreach'], answer: 2},
+      {q: 'Quel symbole precede un nom de classe ?', options: ['$','::','->'], answer: 1},
+      {q: 'Quelle fonction inclut un fichier ?', options: ['include','import','require_once'], answer: 2},
+      {q: 'PHP est un langage cote ?', options: ['Client','Serveur','Les deux'], answer: 1},
     ],
   },
   {
@@ -403,7 +453,12 @@ const languages = [
       {q: 'Quel symbole termine une ligne en Ruby ?', options: [';','.','Rien (saut de ligne)'], answer: 2},
       {q: 'Quelle structure de donnee utilise des paires cle-valeur ?', options: ['Array','Hash','Set'], answer: 1},
       {q: 'Comment definit une methode ?', options: ['function','def','define'], answer: 1},
-      {q: 'Quel framework web est celebre en Ruby ?', options: ['Django','Laravel','Ruby on Rails'], answer: 2}
+      {q: 'Quel framework web est celebre en Ruby ?', options: ['Django','Laravel','Ruby on Rails'], answer: 2},
+      {q: 'Quel type est un symbole en Ruby ?', options: [':symbole','symbole','\'symbole\''], answer: 0},
+      {q: 'Quelle structure est une condition ?', options: ['if/else','when','switch'], answer: 0},
+      {q: 'Quel operateur concatene ?', options: ['+','.','<<'], answer: 1},
+      {q: 'Quel framework web Ruby famous ?', options: ['Django','Rails','Sinatra'], answer: 1},
+      {q: 'Quel mot-cle cree une classe ?', options: ['function','class','module'], answer: 1},
     ],
   },
   {
@@ -440,7 +495,12 @@ const languages = [
       {q: 'Quel type est un entier 32 bits en Go ?', options: ['int','int32','integer'], answer: 1},
       {q: 'Comment importe un package ?', options: ['#include','using','import'], answer: 2},
       {q: 'Quelle fonction est le point d\'entree ?', options: ['start()','main()','run()'], answer: 1},
-      {q: 'Quel outil telecharge des dependances Go ?', options: ['npm','pip','go mod'], answer: 2}
+      {q: 'Quel outil telecharge des dependances Go ?', options: ['npm','pip','go mod'], answer: 2},
+      {q: 'Quel type est un entier 64 bits ?', options: ['int','int64','long'], answer: 1},
+      {q: 'Quelle boucle existe en Go ?', options: ['for','while','do'], answer: 0},
+      {q: 'Quel mot-cle cree une interface ?', options: ['type','interface','impl'], answer: 1},
+      {q: 'Quel outil formate le code ?', options: ['gofmt','format','go clean'], answer: 0},
+      {q: 'Go a ete cree par ?', options: ['Google','Microsoft','Apple'], answer: 0},
     ],
   },
   {
@@ -477,7 +537,12 @@ const languages = [
       {q: 'Quel type est un entier non-signe 32 bits ?', options: ['int','uint','u32'], answer: 2},
       {q: 'Qu\'est-ce que le borrow checker ?', options: ['Un outil de debug|Un verificateur d\'emprunts memoire|Une bibliotheque|Un compilateur'], answer: 1},
       {q: 'Quel trait affiche du texte ?', options: ['Show','Display','Debug'], answer: 1},
-      {q: 'Comment cree une reference mutable ?', options: ['&','&mut','*'], answer: 1}
+      {q: 'Comment cree une reference mutable ?', options: ['&','&mut','*'], answer: 1},
+      {q: 'Quel type entier signe 32 bits ?', options: ['i32','u32','int'], answer: 0},
+      {q: 'Quel mot-cle cree une structure ?', options: ['class','struct','type'], answer: 1},
+      {q: 'Quelle macro affiche du texte ?', options: ['print!','println!','log!'], answer: 1},
+      {q: 'Quel operateur donne une reference immuable ?', options: ['&mut','&','*'], answer: 1},
+      {q: 'Rust est connu pour sa gestion ?', options: ['Memoire','Reseau','UI'], answer: 0},
     ],
   },
   {
@@ -514,7 +579,12 @@ const languages = [
       {q: 'Qu\'est-ce qu\'un Optional en Swift ?', options: ['Un type qui peut etre nil','Un parametre facultatif','Une valeur par defaut'], answer: 0},
       {q: 'Quelle structure de donnee est non-ordonnee ?', options: ['Array','Set','Dictionary'], answer: 1},
       {q: 'Quel mot-cle retire la valeur d\'un Optional ?', options: ['!','?','*'], answer: 0},
-      {q: 'SwiftUI utilise quel paradigme ?', options: ['MVC','Declaratif','Imperatif'], answer: 1}
+      {q: 'SwiftUI utilise quel paradigme ?', options: ['MVC','Declaratif','Imperatif'], answer: 1},
+      {q: 'Quel type est un entier ?', options: ['Int','integer','num'], answer: 0},
+      {q: 'Quelle boucle existe en Swift ?', options: ['for-in','foreach','each'], answer: 0},
+      {q: 'Quel mot-cle cree une classe ?', options: ['class','struct','type'], answer: 0},
+      {q: 'Qu\'est-ce qu\'un closure ?', options: ['Une fonction anonyme','Une classe','Un type'], answer: 0},
+      {q: 'Swift est utilise pour les apps ?', options: ['Android','Apple','Windows'], answer: 1},
     ],
   },
   {
@@ -551,7 +621,12 @@ const languages = [
       {q: 'Quel mot-cle utilise pour une fonction ?', options: ['function','func','fun'], answer: 2},
       {q: 'Qu\'est-ce que la null safety ?', options: ['Aucun null permis','Le compilateur empeche les nulls non intendus','Les nulls sont automatiques'], answer: 1},
       {q: 'Quelle fonction cree une liste immuable ?', options: ['listOf()','mutableListOf()','arrayListOf()'], answer: 0},
-      {q: 'Kotlin est le langage officiel de...', options: ['iOS','Android','Windows'], answer: 1}
+      {q: 'Kotlin est le langage officiel de...', options: ['iOS','Android','Windows'], answer: 1},
+      {q: 'Quel mot-cle cree une classe ?', options: ['class','object','data class'], answer: 0},
+      {q: 'Quelle expression remplace switch ?', options: ['if','when','match'], answer: 1},
+      {q: 'Quel type est null-safe ?', options: ['String','String?','String!'], answer: 1},
+      {q: 'Quel mot-cle cree un singleton ?', options: ['static','object','companion'], answer: 1},
+      {q: 'Kotlin est cree par ?', options: ['Google','JetBrains','Oracle'], answer: 1},
     ],
   },
   {
@@ -588,7 +663,12 @@ const languages = [
       {q: 'Quel mot-cle filtre les resultats ?', options: ['FILTER','WHERE','IF'], answer: 1},
       {q: 'Quel type de jointure garde toutes les lignes des deux tables ?', options: ['INNER JOIN','LEFT JOIN','FULL OUTER JOIN'], answer: 2},
       {q: 'Quelle fonction compte les lignes ?', options: ['SUM()','COUNT()','TOTAL()'], answer: 1},
-      {q: 'Quel mot-cle supprime une table ?', options: ['REMOVE','DELETE','DROP'], answer: 2}
+      {q: 'Quel mot-cle supprime une table ?', options: ['REMOVE','DELETE','DROP'], answer: 2},
+      {q: 'Quel mot-cle ajoute des donnees ?', options: ['INSERT','ADD','PUT'], answer: 0},
+      {q: 'Quel mot-cle modifie des donnees ?', options: ['UPDATE','CHANGE','MODIFY'], answer: 0},
+      {q: 'Quel mot-cle supprime des donnees ?', options: ['REMOVE','DELETE','DROP'], answer: 1},
+      {q: 'Quelle fonction donne le max ?', options: ['MAX()','HIGH()','TOP()'], answer: 0},
+      {q: 'Quel mot-cle trie les resultats ?', options: ['SORT','ORDER BY','GROUP BY'], answer: 1},
     ],
   },
   {
@@ -625,7 +705,12 @@ const languages = [
       {q: 'Quelle fonction lit un fichier CSV ?', options: ['read.csv()','open.csv()','load.csv()'], answer: 0},
       {q: 'Quel symbole assigne une valeur ?', options: ['=','< -','->'], answer: 1},
       {q: 'Quelle bibliotheque cree des graphiques ?', options: ['matplotlib','ggplot2','plotly'], answer: 1},
-      {q: 'Quel type stocke des donnees categoriques ?', options: ['vector','factor','list'], answer: 1}
+      {q: 'Quel type stocke des donnees categoriques ?', options: ['vector','factor','list'], answer: 1},
+      {q: 'Quelle fonction cree un vecteur ?', options: ['vector()','c()','list()'], answer: 1},
+      {q: 'Quel symbole commente ?', options: ['//','#','/*'], answer: 1},
+      {q: 'Quelle fonction cree un graphique ?', options: ['plot()','chart()','graph()'], answer: 0},
+      {q: 'Quel type stocke des categories ?', options: ['factor','vector','list'], answer: 0},
+      {q: 'Quel symbole d\'acces aux colonnes ?', options: ['.','$','->'], answer: 1},
     ],
   },
   {
@@ -662,7 +747,12 @@ const languages = [
       {q: 'Quel type retourne une fonction asynchrone ?', options: ['async','Future','Promise'], answer: 1},
       {q: 'Quelle fonction affiche en console ?', options: ['print()','echo()','log()'], answer: 0},
       {q: 'Quel framework mobile utilise Dart ?', options: ['React Native','Flutter','Xamarin'], answer: 1},
-      {q: 'Comment cree une liste en Dart ?', options: ['[]','{}','()'], answer: 0}
+      {q: 'Comment cree une liste en Dart ?', options: ['[]','{}','()'], answer: 0},
+      {q: 'Quel mot-cle cree une classe ?', options: ['class','type','object'], answer: 0},
+      {q: 'Quel type accepte tout ?', options: ['any','dynamic','Object'], answer: 1},
+      {q: 'Quelle fonction est le point d\'entree ?', options: ['start()','init()','main()'], answer: 2},
+      {q: 'Quel framework mobile pour Dart ?', options: ['Flutter','React Native','Ionic'], answer: 0},
+      {q: 'Quel operateur est null-safe ?', options: ['?.','??','!.'], answer: 0},
     ],
   },
   {
@@ -699,7 +789,12 @@ const languages = [
       {q: 'Quelle commande affiche du texte ?', options: ['print','echo','write'], answer: 1},
       {q: 'Comment commenter une ligne ?', options: ['//','/* */','#'], answer: 2},
       {q: 'Quel symbole accede a une variable ?', options: ['@','$','%'], answer: 1},
-      {q: 'Quelle structure execute une boucle ?', options: ['for','if','case'], answer: 0}
+      {q: 'Quelle structure execute une boucle ?', options: ['for','if','case'], answer: 0},
+      {q: 'Quelle commande liste les fichiers ?', options: ['dir','ls','list'], answer: 1},
+      {q: 'Quelle commande change de dossier ?', options: ['cd','chdir','move'], answer: 0},
+      {q: 'Quel symbole execute en fond ?', options: ['&','%','@'], answer: 0},
+      {q: 'Quelle commande cherche un mot ?', options: ['find','grep','search'], answer: 1},
+      {q: 'Quel fichier contient les alias ?', options: ['.bashrc','.profile','.env'], answer: 0},
     ],
   },
   {
@@ -736,7 +831,12 @@ const languages = [
       {q: 'Quel operateur concatene des chaines ?', options: ['+','.','..'], answer: 2},
       {q: 'Quelle fonction affiche en console ?', options: ['print()','echo()','log()'], answer: 0},
       {q: 'Quel indice commence un tableau en Lua ?', options: ['0','1','-1'], answer: 1},
-      {q: 'Quelle structure de donnee est universelle en Lua ?', options: ['Array','Table','List'], answer: 1}
+      {q: 'Quelle structure de donnee est universelle en Lua ?', options: ['Array','Table','List'], answer: 1},
+      {q: 'Quel type est un nombre en Lua ?', options: ['int','number','float'], answer: 1},
+      {q: 'Quel indice commence une table ?', options: ['0','1','-1'], answer: 1},
+      {q: 'Quelle structure est conditionnelle ?', options: ['if','when','switch'], answer: 0},
+      {q: 'Quel operateur concatene ?', options: ['+','..','.'], answer: 1},
+      {q: 'Lua est souvent utilise dans ?', options: ['Les jeux','Le web','Les apps'], answer: 0},
     ],
   }
 ];
@@ -1230,10 +1330,21 @@ function renderCards(filter = "Tous") {
   `).join("");
 }
 
+function shufflePick(arr, n) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy.slice(0, n);
+}
+
 function renderLesson(language) {
   document.title = `${escapeHtml(language.name)} - CodeLab`;
   homePage.classList.add("is-hidden");
   lessonPage.classList.remove("is-hidden");
+  window._quizPool = language.quiz;
+  window._quizQuestions = null; // force fresh pick
 
   let html = `
     <div class="lesson-inner page-enter" style="--accent: ${escapeHtml(language.accent)}">
@@ -3335,15 +3446,20 @@ button:hover{
   </div>
 </section>
 ` : ""}
-${language.quiz ? `
+${(() => {
+  if (!language.quiz) return '';
+  const quizQuestions = window._quizQuestions || shufflePick(language.quiz, 5);
+  window._quizQuestions = quizQuestions;
+  const total = quizQuestions.length;
+  return `
 <section class="lesson-block full">
   <h3>Quiz</h3>
-  <div class="quiz-container" data-total="${language.quiz.length}">
+  <div class="quiz-container" data-total="${total}">
     <div class="quiz-progress">
       <div class="quiz-progress-bar"></div>
-      <span class="quiz-counter">Question 1/${language.quiz.length}</span>
+      <span class="quiz-counter">Question 1/${total}</span>
     </div>
-    ${language.quiz.map((q, i) => `
+    ${quizQuestions.map((q, i) => `
     <div class="quiz-question ${i === 0 ? 'active' : ''}" data-index="${i}" data-answer="${q.answer}">
       <p class="quiz-question-text">${escapeHtml(q.q)}</p>
       <div class="quiz-options">
@@ -3369,7 +3485,7 @@ ${language.quiz ? `
         Precedent
       </button>
       <div class="quiz-dots">
-        ${language.quiz.map((_, i) => `<span class="quiz-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join("")}
+        ${quizQuestions.map((_, i) => `<span class="quiz-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join("")}
       </div>
       <button class="quiz-nav-btn next" onclick="quizNext()">Suivant
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
@@ -3383,7 +3499,7 @@ ${language.quiz ? `
       <div class="result-score">
         <span class="result-score-num">0</span>
         <span class="result-score-sep">/</span>
-        <span class="result-score-total">${language.quiz.length}</span>
+        <span class="result-score-total">${total}</span>
       </div>
       <p class="result-message"></p>
       <div class="result-actions">
@@ -3392,7 +3508,8 @@ ${language.quiz ? `
       </div>
     </div>
   </div>
-</section>` : ""}
+</section>`;
+})()}
   `;
 
   const helpRunHtml = renderHelpRunSection(language);
@@ -3621,21 +3738,72 @@ function animateCounter(el, from, to, duration) {
 }
 
 function quizRetry() {
-  const container = document.querySelector('.quiz-container');
-  container.querySelector('.quiz-result').style.display = 'none';
-  container.querySelector('.quiz-progress').style.display = '';
-  container.querySelector('.quiz-nav').style.display = '';
-  document.querySelectorAll('.quiz-question').forEach(q => {
-    q.querySelectorAll('input[type=radio]').forEach(inp => {
-      inp.checked = false;
-      inp.disabled = false;
-    });
-    q.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected', 'correct', 'wrong'));
-    q.querySelector('.quiz-feedback').className = 'quiz-feedback';
-    q.querySelector('.feedback-text').textContent = '';
-  });
-  quizCurrent = 0;
-  showQuestion(0);
+  if (!window._quizPool) return;
+  // Pick 5 new random questions
+  const newQuestions = shufflePick(window._quizPool, 5);
+  window._quizQuestions = newQuestions;
+  // Find the quiz section and replace its content
+  const section = document.querySelector('.lesson-block.full:has(.quiz-container)');
+  if (!section) return;
+  const total = newQuestions.length;
+  let quizHTML = `
+  <h3>Quiz</h3>
+  <div class="quiz-container" data-total="${total}">
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"></div>
+      <span class="quiz-counter">Question 1/${total}</span>
+    </div>
+    ${newQuestions.map((q, i) => `
+    <div class="quiz-question ${i === 0 ? 'active' : ''}" data-index="${i}" data-answer="${q.answer}">
+      <p class="quiz-question-text">${escapeHtml(q.q)}</p>
+      <div class="quiz-options">
+        ${q.options.map((opt, j) => {
+          const letter = String.fromCharCode(65 + j);
+          return `
+        <label class="quiz-option" data-index="${j}">
+          <input type="radio" name="q${i}" value="${j}">
+          <span class="option-badge">${letter}</span>
+          <span class="option-text">${escapeHtml(opt)}</span>
+          <span class="option-check"></span>
+        </label>`;
+        }).join("")}
+      </div>
+      <div class="quiz-feedback">
+        <span class="feedback-icon"></span>
+        <span class="feedback-text"></span>
+      </div>
+    </div>`).join("")}
+    <div class="quiz-nav">
+      <button class="quiz-nav-btn prev" onclick="quizPrev()" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+        Precedent
+      </button>
+      <div class="quiz-dots">
+        ${newQuestions.map((_, i) => `<span class="quiz-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join("")}
+      </div>
+      <button class="quiz-nav-btn next" onclick="quizNext()">Suivant
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+      </button>
+      <button class="quiz-nav-btn retry" onclick="quizRetry()" title="Recommencer le quiz">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6m16 0v-6h-6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      </button>
+    </div>
+    <div class="quiz-result">
+      <div class="result-stars"></div>
+      <div class="result-score">
+        <span class="result-score-num">0</span>
+        <span class="result-score-sep">/</span>
+        <span class="result-score-total">${total}</span>
+      </div>
+      <p class="result-message"></p>
+      <div class="result-actions">
+        <button class="result-btn retry" onclick="quizRetry()">Recommencer</button>
+        <button class="result-btn review" onclick="quizReview()">Voir les reponses</button>
+      </div>
+    </div>
+  </div>`;
+  section.innerHTML = quizHTML;
+  quizInit();
 }
 
 function quizReview() {
