@@ -3914,6 +3914,14 @@ handleRoute();
 window.addEventListener("hashchange", handleRoute);
 let quizCurrent = 0;
 
+function toggleCorrection(btn) {
+  const content = btn.nextElementSibling;
+  if (content && content.classList.contains("correction-content")) {
+    content.classList.toggle("show");
+    btn.textContent = content.classList.contains("show") ? "Masquer la correction" : "Voir la correction";
+  }
+}
+
 function quizInit() {
   const container = document.querySelector('.quiz-container');
   if (!container) return;
@@ -4158,19 +4166,6 @@ function quizReview() {
   // Already showing feedback on answered questions from quizSelect
 }
 
-const observer = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-
-document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
 /* ── Tracking ── */
 
 let trackingStart = Date.now();
@@ -4259,6 +4254,201 @@ setInterval(() => {
   navigator.sendBeacon("/api/track", JSON.stringify(data));
 }, 5000);
 
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page Load Animation ── */
+function initPageLoad() {
+  document.body.classList.remove("page-loading");
+  document.body.classList.add("page-loaded");
+}
+if (document.readyState === "complete") {
+  initPageLoad();
+} else {
+  window.addEventListener("load", initPageLoad);
+}
+
+/* ── Custom Cursor Glow ── */
+function initCursorGlow() {
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+  const glow = document.createElement("div");
+  glow.className = "cursor-glow";
+  document.body.appendChild(glow);
+  let timer;
+  document.addEventListener("mousemove", e => {
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+    glow.classList.add("visible");
+    clearTimeout(timer);
+    timer = setTimeout(() => glow.classList.remove("visible"), 500);
+  });
+  document.querySelectorAll("a, button, .language-card, .filter, .quiz-option, .theme-toggle")
+    .forEach(el => {
+      el.addEventListener("mouseenter", () => glow.classList.add("hovering"));
+      el.addEventListener("mouseleave", () => glow.classList.remove("hovering"));
+    });
+}
+initCursorGlow();
+
+/* ── Button Ripple Effect ── */
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".button, .filter, .quiz-nav-btn, .result-btn, .correction-btn, .btn-logout, .auth-close");
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const ripple = document.createElement("span");
+  ripple.className = "ripple";
+  const size = Math.max(rect.width, rect.height);
+  ripple.style.width = ripple.style.height = size + "px";
+  ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+  ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+  btn.appendChild(ripple);
+  ripple.addEventListener("animationend", () => ripple.remove());
+});
+
+/* ── Language Cards — 3D Tilt ── */
+function initCardTilt() {
+  const grid = document.getElementById("languageGrid");
+  if (!grid) return;
+  grid.addEventListener("mousemove", e => {
+    const card = e.target.closest(".language-card");
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    const rotY = x * 12;
+    const rotX = y * -8;
+    card.style.transform =
+      `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-8px) scale(1.03)`;
+  });
+  grid.addEventListener("mouseleave", () => {
+    grid.querySelectorAll(".language-card").forEach(card => {
+      card.style.transform = "";
+    });
+  });
+}
+initCardTilt();
+
+/* ── Theme Toggle — Magnetic Hover ── */
+function initMagneticToggle() {
+  const toggle = document.getElementById("themeToggle");
+  if (!toggle) return;
+  toggle.addEventListener("mousemove", e => {
+    const rect = toggle.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    toggle.style.transform = `translate(${x * 6}px, ${y * 4}px)`;
+  });
+  toggle.addEventListener("mouseleave", () => {
+    toggle.style.transform = "";
+  });
+}
+initMagneticToggle();
+
+/* ── Scroll Reveal — Enhanced with stagger ── */
+function initScrollReveal() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains("reveal-stagger")) {
+          entry.target.classList.add("visible");
+        } else {
+          entry.target.classList.add("visible");
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".reveal, .reveal-stagger").forEach(el => observer.observe(el));
+}
+initScrollReveal();
+
+/* ── Navigation Active Indicator ── */
+function updateNavIndicator() {
+  const hash = window.location.hash || "#accueil";
+  document.querySelectorAll(".nav-actions a").forEach(a => {
+    a.classList.toggle("is-current", a.getAttribute("href") === hash);
+  });
+}
+window.addEventListener("hashchange", updateNavIndicator);
+updateNavIndicator();
+
+/* ── Confetti — Lightweight CSS Confetti ── */
+function fireConfetti(count = 24) {
+  const colors = ["var(--accent)", "var(--teal)", "var(--green)", "var(--yellow)", "var(--red)"];
+  const container = document.createElement("div");
+  container.className = "confetti-container";
+  document.body.appendChild(container);
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (4 + Math.random() * 8) + "px";
+    piece.style.height = (4 + Math.random() * 8) + "px";
+    piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    piece.style.setProperty("--fall-duration", (1.5 + Math.random() * 1.5) + "s");
+    piece.style.animationDelay = (Math.random() * 0.8) + "s";
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 4000);
+}
+window.fireConfetti = fireConfetti;
+
+/* ── Toast Notification ── */
+function showToast(msg, duration = 3000) {
+  let toast = document.querySelector(".toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.className = "toast";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add("show");
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => toast.classList.remove("show"), duration);
+}
+window.showToast = showToast;
+
+/* ── Quiz — Slide direction ── */
+function showQuestionWithDirection(index, direction) {
+  const qs = document.querySelectorAll(".quiz-question");
+  qs.forEach(q => q.classList.remove("active", "slide-in-right", "slide-in-left"));
+  const q = qs[index];
+  if (q) {
+    q.classList.add("active", direction === "next" ? "slide-in-right" : "slide-in-left");
+  }
+}
+window.showQuestionWithDirection = showQuestionWithDirection;
+
+/* ── Modal — Premium animations ── */
+function openAuth() {
+  authOverlay.classList.remove("is-hidden");
+  requestAnimationFrame(() => {
+    authOverlay.classList.add("is-open");
+  });
+  document.body.style.overflow = "hidden";
+}
+
+function closeAuth() {
+  authOverlay.classList.remove("is-open");
+  setTimeout(() => {
+    authOverlay.classList.add("is-hidden");
+    document.body.style.overflow = "";
+    loginError.classList.add("is-hidden");
+    registerError.classList.add("is-hidden");
+    loginForm.reset();
+    registerForm.reset();
+  }, 350);
+}
+
+/* ── Keyboard — Escape closes modals ── */
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    if (authOverlay.classList.contains("is-open")) closeAuth();
+  }
+});
+
 const hamburger = document.querySelector("#hamburger");
 const overlay = document.querySelector("#mobileOverlay");
 
@@ -4293,20 +4483,6 @@ const loginError = document.querySelector("#loginError");
 const registerError = document.querySelector("#registerError");
 const showRegister = document.querySelector("#showRegister");
 const showLogin = document.querySelector("#showLogin");
-
-function openAuth() {
-  authOverlay.classList.remove("is-hidden");
-  document.body.style.overflow = "hidden";
-}
-
-function closeAuth() {
-  authOverlay.classList.add("is-hidden");
-  document.body.style.overflow = "";
-  loginError.classList.add("is-hidden");
-  registerError.classList.add("is-hidden");
-  loginForm.reset();
-  registerForm.reset();
-}
 
 function showLoginForm() {
   loginForm.classList.remove("is-hidden");
