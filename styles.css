@@ -1,17 +1,17 @@
 :root {
-  --ink: #111827;
-  --muted: #6b7280;
-  --line: #e5e7eb;
-  --paper: #fafbfc;
-  --wash: #f0f4f8;
-  --teal: #0891b2;
-  --red: #ef4444;
-  --yellow: #eab308;
-  --green: #22c55e;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 18px 45px rgba(0, 0, 0, 0.06);
-  --surface: #fafbfc;
-  --accent: #3b82f6;
-  --bg: #f8fafc;
+  --ink: #1e1e24;
+  --muted: #7e8494;
+  --line: #e2e4ea;
+  --paper: #f6f7fb;
+  --wash: #eef0f5;
+  --teal: #0d9488;
+  --red: #e74c3c;
+  --yellow: #d4a017;
+  --green: #2b9d5e;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.03), 0 12px 32px rgba(0, 0, 0, 0.04);
+  --surface: #f6f7fb;
+  --accent: #5b7ef4;
+  --bg: #f3f4f8;
 }
 
 [data-theme="dark"] {
@@ -2190,13 +2190,13 @@ pre {
     border-color 0.4s ease,
     box-shadow 0.5s ease;
   position: relative;
-  background: color-mix(in srgb, var(--paper) 80%, transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--line));
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid color-mix(in srgb, var(--accent) 10%, var(--line));
   box-shadow:
-    0 2px 8px rgba(0,0,0,0.02),
-    0 8px 24px rgba(0,0,0,0.04);
+    0 1px 3px rgba(0,0,0,0.02),
+    0 4px 12px rgba(0,0,0,0.03);
 }
 
 [data-theme="dark"] .language-card {
