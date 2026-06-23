@@ -357,7 +357,7 @@ a {
   padding: 54px clamp(18px, 4vw, 64px);
   background:
     radial-gradient(circle at 8% 18%, color-mix(in srgb, var(--teal) 14%, transparent) 0%, transparent 26%),
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 4%, var(--wash)) 0%, color-mix(in srgb, var(--teal) 3%, var(--wash)) 48%, var(--wash) 100%);
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 4%, var(--wash)) 0%, color-mix(in srgb, var(--teal) 3%, var(--wash)) 48%, var(--bg) 100%);
   border-bottom: 1px solid var(--line);
 }
 
