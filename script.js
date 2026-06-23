@@ -4306,6 +4306,19 @@ document.addEventListener("click", e => {
   ripple.addEventListener("animationend", () => ripple.remove());
 });
 
+/* ── Hero — Micro parallax on mouse move ── */
+function initHeroParallax() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+  hero.addEventListener("mousemove", e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+    hero.style.setProperty("--mouse-x", x);
+    hero.style.setProperty("--mouse-y", y);
+  });
+}
+initHeroParallax();
+
 /* ── Language Cards — 3D Tilt ── */
 function initCardTilt() {
   const grid = document.getElementById("languageGrid");
@@ -4372,6 +4385,20 @@ function updateNavIndicator() {
 }
 window.addEventListener("hashchange", updateNavIndicator);
 updateNavIndicator();
+
+/* ── Navbar Scroll Effect ── */
+function initNavbarScroll() {
+  const topbar = document.querySelector(".topbar");
+  if (!topbar) return;
+  const observer = new IntersectionObserver(([entry]) => {
+    topbar.classList.toggle("scrolled", !entry.isIntersecting);
+  }, { threshold: 0 });
+  const sentinel = document.createElement("div");
+  sentinel.style.cssText = "position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none";
+  document.body.prepend(sentinel);
+  observer.observe(sentinel);
+}
+initNavbarScroll();
 
 /* ── Confetti — Lightweight CSS Confetti ── */
 function fireConfetti(count = 24) {

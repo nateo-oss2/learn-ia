@@ -1,17 +1,17 @@
 :root {
-  --ink: #101820;
-  --muted: #5b6573;
-  --line: #d9dee7;
-  --paper: #ffffff;
-  --wash: #f4f7fb;
-  --teal: #0f766e;
-  --red: #e5484d;
-  --yellow: #f5b700;
-  --green: #16a34a;
-  --shadow: 0 18px 45px rgba(16, 24, 32, 0.13);
-  --surface: #ffffff;
-  --accent: #2563eb;
-  --bg: #ffffff;
+  --ink: #111827;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --paper: #fafbfc;
+  --wash: #f0f4f8;
+  --teal: #0891b2;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --green: #22c55e;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 18px 45px rgba(0, 0, 0, 0.06);
+  --surface: #fafbfc;
+  --accent: #3b82f6;
+  --bg: #f8fafc;
 }
 
 [data-theme="dark"] {
@@ -24,7 +24,7 @@
   --red: #f87171;
   --yellow: #fbbf24;
   --green: #4ade80;
-  --shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 18px 45px rgba(0, 0, 0, 0.4);
   --surface: #111;
   --accent: #60a5fa;
   --bg: #000;
@@ -48,6 +48,17 @@
 * { transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease; }
 
 body { background: var(--bg); }
+
+/* Add subtle noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
 
 @keyframes fadeUp {
   from {
@@ -167,10 +178,28 @@ a {
   justify-content: space-between;
   gap: 18px;
   padding: 18px clamp(18px, 4vw, 64px);
-  background: color-mix(in srgb, var(--wash) 92%, transparent);
-  border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  transition:
+    background 0.4s ease,
+    box-shadow 0.4s ease,
+    padding 0.4s ease;
+}
+
+.topbar.scrolled {
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+[data-theme="dark"] .topbar {
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  border-bottom-color: var(--line);
+}
+[data-theme="dark"] .topbar.scrolled {
+  box-shadow: 0 1px 8px rgba(0,0,0,0.3);
 }
 
 .brand,
@@ -406,6 +435,7 @@ h1 {
   max-width: 640px;
   font-size: clamp(3rem, 6.2vw, 5.8rem);
   line-height: 0.94;
+  letter-spacing: -0.03em;
 }
 
 .hero-text {
@@ -421,28 +451,53 @@ h1 {
   justify-content: center;
   align-items: center;
   min-height: 48px;
-  padding: 14px 18px;
-  border-radius: 8px;
-  font-weight: 900;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 800;
   border: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .button.primary {
-  color: var(--paper);
-  background: var(--ink);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
+
+.button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.button.primary:active {
+  transform: scale(0.98);
+}
+
 [data-theme="dark"] .button.primary {
   background: var(--accent);
   color: #fff;
+  border-color: var(--accent);
 }
 
 .button.secondary {
   background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
-.button {
-  position: relative;
-  overflow: hidden;
+.button.secondary:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 4%, var(--paper));
+  transform: translateY(-1px);
 }
 
 .button::before {
@@ -549,6 +604,7 @@ pre {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.9rem);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .section-heading p:last-child {
@@ -2084,11 +2140,16 @@ pre {
   width: 140%;
   height: 140%;
   background:
-    radial-gradient(ellipse at 20% 50%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--teal) 10%, transparent) 0%, transparent 50%);
-  animation: heroLightDrift 12s ease-in-out infinite;
+    radial-gradient(ellipse at 20% 50%, color-mix(in srgb, var(--accent) 15%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--teal) 12%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 40%);
+  animation: heroLightDrift 15s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
+}
+
+[data-theme="dark"] .hero::before {
+  opacity: 0.4;
 }
 
 @keyframes heroLightDrift {
@@ -2107,6 +2168,15 @@ pre {
   will-change: transform;
 }
 
+.hero:hover .hero-copy {
+  transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -4px));
+  transition: transform 0.15s ease-out;
+}
+.hero:hover .hero-panel {
+  transform: translate(calc(var(--mouse-x, 0) * 6px), calc(var(--mouse-y, 0) * 3px));
+  transition: transform 0.15s ease-out;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    Language Cards — 3D tilt & premium hover
    ═══════════════════════════════════════════════════════════════ */
@@ -2120,6 +2190,20 @@ pre {
     border-color 0.4s ease,
     box-shadow 0.5s ease;
   position: relative;
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--line));
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.02),
+    0 8px 24px rgba(0,0,0,0.04);
+}
+
+[data-theme="dark"] .language-card {
+  background: var(--paper);
+  backdrop-filter: none;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
 }
 
 .language-card::after {
