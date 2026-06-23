@@ -1625,8 +1625,8 @@ function toggleTheme() {
   setTimeout(() => {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
-    setTimeout(() => overlay.classList.remove("active"), 400);
-  }, 300);
+    overlay.classList.remove("active");
+  }, 350);
 }
 
 function renderCards(filter = "Tous") {

@@ -15,22 +15,22 @@
 }
 
 [data-theme="dark"] {
-  --ink: #e4e6eb;
-  --muted: #9ca3af;
-  --line: #3f3f46;
-  --paper: #18181b;
-  --wash: #27272a;
-  --teal: #14b8a6;
+  --ink: #f0f0f0;
+  --muted: #aaa;
+  --line: #333;
+  --paper: #111;
+  --wash: #1a1a1a;
+  --teal: #2dd4bf;
   --red: #f87171;
   --yellow: #fbbf24;
-  --green: #34d399;
-  --shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
-  --surface: #18181b;
+  --green: #4ade80;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+  --surface: #111;
   --accent: #60a5fa;
-  --bg: #09090b;
+  --bg: #000;
 }
 
-* { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+* { transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
 
 body { background: var(--bg); }
 
@@ -287,9 +287,9 @@ a {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  background: var(--bg);
+  background: #000;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
 }
 #themeOverlay.active {
   opacity: 1;
