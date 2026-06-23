@@ -1614,9 +1614,13 @@ function renderHelpRunSection(language) {
 
 // Theme toggle
 const toggle = document.getElementById("themeToggle");
+const toggleIcon = toggle.querySelector(".toggle-icon");
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
-if (savedTheme === "dark") toggle.classList.add("dark");
+if (savedTheme === "dark") {
+  toggle.classList.add("dark");
+  toggleIcon.textContent = "🌙";
+}
 
 toggle.addEventListener("click", () => {
   toggle.classList.add("pressed");
@@ -1628,6 +1632,7 @@ toggle.addEventListener("click", () => {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
     toggle.classList.toggle("dark");
+    toggleIcon.textContent = isDark ? "☀️" : "🌙";
     overlay.classList.remove("active");
     setTimeout(() => toggle.classList.remove("pressed"), 200);
   }, 450);
