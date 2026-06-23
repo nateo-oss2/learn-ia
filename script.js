@@ -1639,12 +1639,35 @@ function shufflePick(arr, n) {
   return copy.slice(0, n);
 }
 
+function pickNewQuestions() {
+  const pool = window._quizPool;
+  if (!pool) return [];
+  if (!window._quizUsed) window._quizUsed = [];
+  // Filter out already used questions
+  const available = pool.filter((_, idx) => !window._quizUsed.includes(idx));
+  // If not enough available, reset the tracker
+  const availablePool = available.length >= 5 ? available : pool;
+  if (available.length < 5) window._quizUsed = [];
+  // Pick 5 random from available pool
+  const picked = shufflePick(availablePool, 5);
+  // Mark picked indices as used
+  picked.forEach(q => {
+    const idx = pool.indexOf(q);
+    if (idx !== -1 && !window._quizUsed.includes(idx)) {
+      window._quizUsed.push(idx);
+    }
+  });
+  window._quizQuestions = picked;
+  return picked;
+}
+
 function renderLesson(language) {
   document.title = `${escapeHtml(language.name)} - CodeLab`;
   homePage.classList.add("is-hidden");
   lessonPage.classList.remove("is-hidden");
   window._quizPool = language.quiz;
-  window._quizQuestions = null; // force fresh pick
+  window._quizUsed = []; // reset tracker for new lesson
+  window._quizQuestions = null;
 
   let html = `
     <div class="lesson-inner page-enter" style="--accent: ${escapeHtml(language.accent)}">
@@ -3748,8 +3771,7 @@ button:hover{
 ` : ""}
 ${(() => {
   if (!language.quiz) return '';
-  const quizQuestions = window._quizQuestions || shufflePick(language.quiz, 5);
-  window._quizQuestions = quizQuestions;
+  const quizQuestions = window._quizQuestions || pickNewQuestions();
   const total = quizQuestions.length;
   return `
 <section class="lesson-block full">
@@ -4039,9 +4061,8 @@ function animateCounter(el, from, to, duration) {
 
 function quizRetry() {
   if (!window._quizPool) return;
-  // Pick 5 new random questions
-  const newQuestions = shufflePick(window._quizPool, 5);
-  window._quizQuestions = newQuestions;
+  // Pick 5 new random questions (never seen before)
+  const newQuestions = pickNewQuestions();
   // Find the quiz section and replace its content
   const section = document.querySelector('.lesson-block.full:has(.quiz-container)');
   if (!section) return;
