@@ -286,7 +286,7 @@ const languages = [
   },
   {
     name: 'Java',
-    category: 'Back-end',
+    category: 'Applications',
     accent: '#ed8b00',
     level: 'Essentiel',
     intro: 'Java est un langage robuste utilise dans les entreprises, Android et les serveurs.',
@@ -457,7 +457,7 @@ const languages = [
   },
   {
     name: 'C#',
-    category: 'Back-end',
+    category: 'Applications',
     accent: '#9b4f96',
     level: 'Essentiel',
     intro: 'C# est le langage principal de l\'ecosysteme .NET, utilise pour le web, les jeux Unity et les apps Windows.',
@@ -514,7 +514,7 @@ const languages = [
   },
   {
     name: 'PHP',
-    category: 'Back-end',
+    category: 'Applications',
     accent: '#777bb3',
     level: 'Essentiel',
     intro: 'PHP est un langage serveur utilise par WordPress, Facebook et la majorite des sites web dynamiques.',
@@ -571,7 +571,7 @@ const languages = [
   },
   {
     name: 'Ruby',
-    category: 'Back-end',
+    category: 'Applications',
     accent: '#cc342d',
     level: 'Essentiel',
     intro: 'Ruby est un langage elegant et expressif, connu pour le framework web Ruby on Rails.',
@@ -742,7 +742,7 @@ const languages = [
   },
   {
     name: 'Swift',
-    category: 'Mobile',
+    category: 'Applications',
     accent: '#f05138',
     level: 'Essentiel',
     intro: 'Swift est le langage d\'Apple pour les apps iOS, macOS, watchOS et tvOS.',
@@ -799,7 +799,7 @@ const languages = [
   },
   {
     name: 'Kotlin',
-    category: 'Mobile',
+    category: 'Applications',
     accent: '#7f52ff',
     level: 'Essentiel',
     intro: 'Kotlin est le langage officiel pour Android, concis et interoperable avec Java.',
@@ -970,7 +970,7 @@ const languages = [
   },
   {
     name: 'Dart',
-    category: 'Mobile',
+    category: 'Applications',
     accent: '#0175c2',
     level: 'Essentiel',
     intro: 'Dart est le langage de Flutter pour creer des apps mobiles, web et desktop avec une seule base de code.',
