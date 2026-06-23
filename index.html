@@ -57,6 +57,12 @@
     <div class="nav-actions">
       <a href="#accueil">Accueil</a>
       <a href="#explorer">Langages</a>
+      <div class="toggle-switch">
+        <label class="switch-label">
+          <input type="checkbox" class="checkbox" id="themeToggle" onchange="toggleTheme()">
+          <span class="slider"></span>
+        </label>
+      </div>
     </div>
 
     <div class="user-area">
@@ -87,6 +93,7 @@
     </div>
   </div>
 
+  <div id="themeOverlay"></div>
   <main>
     <section class="page home-page" id="homePage">
       <header class="hero" id="accueil">

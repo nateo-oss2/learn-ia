@@ -1612,6 +1612,23 @@ function renderHelpRunSection(language) {
 `;
 }
 
+// Theme toggle
+const savedTheme = localStorage.getItem("theme") || "light";
+document.documentElement.setAttribute("data-theme", savedTheme);
+if (savedTheme === "dark") document.getElementById("themeToggle").checked = true;
+
+function toggleTheme() {
+  const isDark = document.getElementById("themeToggle").checked;
+  const newTheme = isDark ? "dark" : "light";
+  const overlay = document.getElementById("themeOverlay");
+  overlay.classList.add("active");
+  setTimeout(() => {
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    setTimeout(() => overlay.classList.remove("active"), 400);
+  }, 300);
+}
+
 function renderCards(filter = "Tous") {
   const visibleLanguages =
     filter === "Tous"
