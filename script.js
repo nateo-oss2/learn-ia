@@ -1613,21 +1613,25 @@ function renderHelpRunSection(language) {
 }
 
 // Theme toggle
+const toggle = document.getElementById("themeToggle");
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
-if (savedTheme === "dark") document.getElementById("themeToggle").checked = true;
+if (savedTheme === "dark") toggle.classList.add("dark");
 
-function toggleTheme() {
-  const isDark = document.getElementById("themeToggle").checked;
-  const newTheme = isDark ? "dark" : "light";
+toggle.addEventListener("click", () => {
+  toggle.classList.add("pressed");
+  const isDark = toggle.classList.contains("dark");
+  const newTheme = isDark ? "light" : "dark";
   const overlay = document.getElementById("themeOverlay");
   overlay.classList.add("active");
   setTimeout(() => {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
+    toggle.classList.toggle("dark");
     overlay.classList.remove("active");
-  }, 350);
-}
+    setTimeout(() => toggle.classList.remove("pressed"), 200);
+  }, 450);
+});
 
 function renderCards(filter = "Tous") {
   const visibleLanguages =
