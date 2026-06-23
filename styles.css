@@ -363,7 +363,6 @@ a {
 
 .hero-copy,
 .hero-panel,
-.explorer,
 .lesson-inner {
   max-width: 1180px;
 }
@@ -520,9 +519,9 @@ pre {
 }
 
 .explorer {
-  margin: 0 auto;
   padding: 72px clamp(18px, 4vw, 64px);
   background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 
 .section-heading {
