@@ -1638,13 +1638,23 @@ toggle.addEventListener("click", () => {
   }, 450);
 });
 
-function renderCards(filter = "Tous") {
-  const visibleLanguages =
+function renderCards(filter = "Tous", searchTerm = "") {
+  let visibleLanguages =
     filter === "Tous"
       ? languages
       : languages.filter(language => language.category === filter);
 
-  grid.innerHTML = visibleLanguages.map(language => `
+  if (searchTerm.trim()) {
+    const term = searchTerm.trim().toLowerCase();
+    visibleLanguages = visibleLanguages.filter(language =>
+      language.name.toLowerCase().includes(term) ||
+      language.category.toLowerCase().includes(term) ||
+      language.intro.toLowerCase().includes(term)
+    );
+  }
+
+  grid.innerHTML = visibleLanguages.length
+    ? visibleLanguages.map(language => `
     <a class="language-card" style="--accent: ${language.accent}" href="#langage/${slugify(language.name)}">
       <h3>${language.name}</h3>
       <p>${language.intro}</p>
@@ -1653,7 +1663,8 @@ function renderCards(filter = "Tous") {
         <span>${language.level}</span>
       </span>
     </a>
-  `).join("");
+  `).join("")
+    : `<p class="search-empty">Aucun langage trouvé pour "<strong>${escapeHtml(searchTerm.trim())}</strong>"</p>`;
 }
 
 function shufflePick(arr, n) {
@@ -3909,12 +3920,37 @@ filters.forEach(button => {
   button.addEventListener("click", () => {
     filters.forEach(filter => filter.classList.remove("is-active"));
     button.classList.add("is-active");
-    renderCards(button.dataset.filter);
+    renderCards(button.dataset.filter, searchInput.value);
   });
 });
 
 renderCards();
 handleRoute();
+
+const searchInput = document.getElementById("searchInput");
+const searchClear = document.getElementById("searchClear");
+
+searchInput.addEventListener("input", () => {
+  const activeFilter = document.querySelector(".filter.is-active");
+  const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
+  renderCards(filter, searchInput.value);
+  searchClear.classList.toggle("is-visible", searchInput.value.length > 0);
+});
+
+searchClear.addEventListener("click", () => {
+  searchInput.value = "";
+  searchInput.focus();
+  const activeFilter = document.querySelector(".filter.is-active");
+  const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
+  renderCards(filter, "");
+  searchClear.classList.remove("is-visible");
+});
+
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    searchInput.blur();
+  }
+});
 
 window.addEventListener("hashchange", handleRoute);
 let quizCurrent = 0;

@@ -617,6 +617,112 @@ pre {
   line-height: 1.65;
 }
 
+.search-wrapper {
+  max-width: 480px;
+  margin: 0 auto 28px;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent),
+    var(--shadow-sm);
+}
+
+.search-icon {
+  flex-shrink: 0;
+  color: var(--muted);
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.search-bar:focus-within .search-icon {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 0.925rem;
+  color: var(--ink);
+  outline: none;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.search-clear {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  color: var(--muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  line-height: 1;
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease;
+}
+
+.search-clear:hover {
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
+  color: var(--ink);
+}
+
+.search-clear.is-visible {
+  display: flex;
+}
+
+[data-theme="dark"] .search-clear {
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+}
+[data-theme="dark"] .search-clear:hover {
+  background: color-mix(in srgb, var(--ink) 20%, transparent);
+}
+
+.search-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.search-empty strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .explorer {
   padding: 80px clamp(24px, 5vw, 72px);
   background: var(--bg);
@@ -1657,6 +1763,10 @@ pre {
   .lesson-page {
     padding: 52px 20px;
   }
+
+  .search-wrapper {
+    margin-bottom: 24px;
+  }
 }
 
 /* Quiz interactif */
@@ -2166,6 +2276,19 @@ pre {
 
   .cookie-bar {
     padding: 12px 16px;
+  }
+
+  .search-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .search-bar {
+    height: 44px;
+    padding: 0 12px;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
   }
 }
 
