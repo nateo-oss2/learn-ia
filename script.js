@@ -3924,37 +3924,43 @@ filters.forEach(button => {
   button.addEventListener("click", () => {
     filters.forEach(filter => filter.classList.remove("is-active"));
     button.classList.add("is-active");
-    renderCards(button.dataset.filter, searchInput.value);
+    renderCards(button.dataset.filter, searchInput ? searchInput.value : "");
   });
 });
 
 renderCards();
 handleRoute();
 
-const searchInput = document.getElementById("searchInput");
-const searchClear = document.getElementById("searchClear");
+let searchInput, searchClear;
 
-searchInput.addEventListener("input", () => {
-  const activeFilter = document.querySelector(".filter.is-active");
-  const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
-  renderCards(filter, searchInput.value);
-  searchClear.classList.toggle("is-visible", searchInput.value.length > 0);
-});
+function initSearch() {
+  searchInput = document.getElementById("searchInput");
+  searchClear = document.getElementById("searchClear");
+  if (!searchInput || !searchClear) return;
 
-searchClear.addEventListener("click", () => {
-  searchInput.value = "";
-  searchInput.focus();
-  const activeFilter = document.querySelector(".filter.is-active");
-  const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
-  renderCards(filter, "");
-  searchClear.classList.remove("is-visible");
-});
+  searchInput.addEventListener("input", () => {
+    const activeFilter = document.querySelector(".filter.is-active");
+    const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
+    renderCards(filter, searchInput.value);
+    searchClear.classList.toggle("is-visible", searchInput.value.length > 0);
+  });
 
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    searchInput.blur();
-  }
-});
+  searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.focus();
+    const activeFilter = document.querySelector(".filter.is-active");
+    const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
+    renderCards(filter, "");
+    searchClear.classList.remove("is-visible");
+  });
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      searchInput.blur();
+    }
+  });
+}
+initSearch();
 
 window.addEventListener("hashchange", handleRoute);
 let quizCurrent = 0;
