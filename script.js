@@ -4276,7 +4276,7 @@ function sendFinalTrack() {
     duration_seconds: duration,
     action: "page_exit",
   };
-  navigator.sendBeacon("/api/track", JSON.stringify(data));
+  navigator.sendBeacon("/api/track", new Blob([JSON.stringify(data)], { type: "application/json" }));
 }
 
 window.addEventListener("hashchange", sendTrack);
@@ -4296,7 +4296,7 @@ setInterval(() => {
     duration_seconds: duration,
     action: "heartbeat",
   };
-  navigator.sendBeacon("/api/track", JSON.stringify(data));
+  navigator.sendBeacon("/api/track", new Blob([JSON.stringify(data)], { type: "application/json" }));
 }, 5000);
 
 /* ═══════════════════════════════════════════════════════════════
