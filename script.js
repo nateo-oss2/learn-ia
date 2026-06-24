@@ -1638,6 +1638,10 @@ toggle.addEventListener("click", () => {
   }, 450);
 });
 
+function normalize(str) {
+  return str.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+}
+
 function renderCards(filter = "Tous", searchTerm = "") {
   let visibleLanguages =
     filter === "Tous"
@@ -1645,11 +1649,11 @@ function renderCards(filter = "Tous", searchTerm = "") {
       : languages.filter(language => language.category === filter);
 
   if (searchTerm.trim()) {
-    const term = searchTerm.trim().toLowerCase();
+    const term = normalize(searchTerm);
     visibleLanguages = visibleLanguages.filter(language =>
-      language.name.toLowerCase().includes(term) ||
-      language.category.toLowerCase().includes(term) ||
-      language.intro.toLowerCase().includes(term)
+      normalize(language.name).includes(term) ||
+      normalize(language.category).includes(term) ||
+      normalize(language.intro).includes(term)
     );
   }
 
