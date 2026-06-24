@@ -1639,7 +1639,11 @@ toggle.addEventListener("click", () => {
 });
 
 function normalize(str) {
-  return str.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  try {
+    return str.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  } catch {
+    return str.toLowerCase();
+  }
 }
 
 function renderCards(filter = "Tous", searchTerm = "") {
@@ -1648,8 +1652,14 @@ function renderCards(filter = "Tous", searchTerm = "") {
       ? languages
       : languages.filter(language => language.category === filter);
 
-  if (searchTerm.trim()) {
-    const term = normalize(searchTerm);
+  const trimmed = searchTerm.trim();
+  if (trimmed) {
+    let term;
+    try {
+      term = normalize(trimmed);
+    } catch {
+      term = trimmed.toLowerCase();
+    }
     visibleLanguages = visibleLanguages.filter(language =>
       normalize(language.name).includes(term) ||
       normalize(language.category).includes(term) ||
@@ -1668,7 +1678,7 @@ function renderCards(filter = "Tous", searchTerm = "") {
       </span>
     </a>
   `).join("")
-    : `<p class="search-empty">Aucun langage trouvé pour "<strong>${escapeHtml(searchTerm.trim())}</strong>"</p>`;
+    : `<p class="search-empty">Aucun langage trouvé pour "<strong>${escapeHtml(trimmed)}</strong>"</p>`;
 }
 
 function shufflePick(arr, n) {
@@ -3901,6 +3911,10 @@ function showHome() {
   document.title = "CodeLab - Apprendre 20 langages";
   lessonPage.classList.add("is-hidden");
   homePage.classList.remove("is-hidden");
+  if (searchInput && searchInput.value) {
+    searchInput.value = "";
+    searchClear.classList.remove("is-visible");
+  }
 }
 
 function handleRoute() {
@@ -3920,6 +3934,43 @@ function handleRoute() {
   }
 }
 
+let searchInput, searchClear, searchTimer;
+
+function initSearch() {
+  searchInput = document.getElementById("searchInput");
+  searchClear = document.getElementById("searchClear");
+  if (!searchInput || !searchClear) {
+    console.warn("Search elements not found — search disabled");
+    return;
+  }
+
+  const doSearch = () => {
+    const activeFilter = document.querySelector(".filter.is-active");
+    const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
+    renderCards(filter, searchInput.value);
+    searchClear.classList.toggle("is-visible", searchInput.value.length > 0);
+  };
+
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(doSearch, 100);
+  });
+
+  searchInput.addEventListener("search", doSearch);
+
+  searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.focus();
+    doSearch();
+  });
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      searchInput.blur();
+    }
+  });
+}
+
 filters.forEach(button => {
   button.addEventListener("click", () => {
     filters.forEach(filter => filter.classList.remove("is-active"));
@@ -3930,36 +3981,6 @@ filters.forEach(button => {
 
 renderCards();
 handleRoute();
-
-let searchInput, searchClear;
-
-function initSearch() {
-  searchInput = document.getElementById("searchInput");
-  searchClear = document.getElementById("searchClear");
-  if (!searchInput || !searchClear) return;
-
-  searchInput.addEventListener("input", () => {
-    const activeFilter = document.querySelector(".filter.is-active");
-    const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
-    renderCards(filter, searchInput.value);
-    searchClear.classList.toggle("is-visible", searchInput.value.length > 0);
-  });
-
-  searchClear.addEventListener("click", () => {
-    searchInput.value = "";
-    searchInput.focus();
-    const activeFilter = document.querySelector(".filter.is-active");
-    const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
-    renderCards(filter, "");
-    searchClear.classList.remove("is-visible");
-  });
-
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      searchInput.blur();
-    }
-  });
-}
 initSearch();
 
 window.addEventListener("hashchange", handleRoute);
