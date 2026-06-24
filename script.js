@@ -3934,26 +3934,181 @@ function handleRoute() {
   }
 }
 
-let searchInput, searchClear, searchTimer;
+let searchInput, searchClear, searchSuggestions, searchTimer, searchSelectedIdx;
 
 function initSearch() {
   searchInput = document.getElementById("searchInput");
   searchClear = document.getElementById("searchClear");
-  if (!searchInput || !searchClear) {
+  searchSuggestions = document.getElementById("searchSuggestions");
+  if (!searchInput || !searchClear || !searchSuggestions) {
     console.warn("Search elements not found — search disabled");
     return;
   }
 
-  const doSearch = () => {
+  /* ── Smart matching ── */
+  function score(language, query) {
+    const q = normalize(query);
+    const n = normalize(language.name);
+    if (n === q) return 100;
+    if (n.startsWith(q)) return 80;
+    if (n.includes(q)) return 60;
+    const cat = normalize(language.category);
+    if (cat.startsWith(q) || cat.includes(q)) return 40;
+    return fuzzyScore(n, q) * 30;
+  }
+
+  function fuzzyScore(a, b) {
+    const maxDist = Math.min(3, Math.floor(b.length / 2) + 1);
+    const dist = levenshtein(a.slice(0, a.length), b);
+    if (dist <= 0) return 1;
+    if (dist <= 1) return 0.8;
+    if (dist <= maxDist) return 0.4;
+    return 0;
+  }
+
+  function levenshtein(a, b) {
+    const m = a.length, n = b.length;
+    const dp = [Array(n + 1).fill(0).map((_, i) => i)];
+    for (let i = 1; i <= m; i++) {
+      dp[i] = [i];
+      for (let j = 1; j <= n; j++) {
+        dp[i][j] = a[i - 1] === b[j - 1]
+          ? dp[i - 1][j - 1]
+          : Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
+      }
+    }
+    return dp[m][n];
+  }
+
+  /* ── Highlight match ── */
+  function highlight(text, query) {
+    if (!query.trim()) return escapeHtml(text);
+    const q = normalize(query);
+    const n = normalize(text);
+    const i = n.indexOf(q);
+    if (i === -1) return escapeHtml(text);
+    const before = escapeHtml(text.slice(0, i));
+    const match = escapeHtml(text.slice(i, i + q.length));
+    const after = escapeHtml(text.slice(i + q.length));
+    return `${before}<mark>${match}</mark>${after}`;
+  }
+
+  /* ── Close dropdown ── */
+  function closeSuggestions() {
+    searchSuggestions.classList.remove("is-open");
+    searchSuggestions.innerHTML = "";
+    searchSelectedIdx = -1;
+  }
+
+  /* ── Open dropdown ── */
+  function renderSuggestions(query) {
+    const trimmed = query.trim();
+    if (!trimmed) {
+      closeSuggestions();
+      return;
+    }
+
+    const scored = languages
+      .map(lang => ({ lang, s: score(lang, trimmed) }))
+      .filter(item => item.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .slice(0, 8);
+
+    if (!scored.length) {
+      searchSuggestions.innerHTML =
+        `<div class="suggestion-noresult">Aucun langage trouvé pour "<strong>${escapeHtml(trimmed)}</strong>"</div>`;
+      searchSuggestions.classList.add("is-open");
+      searchSelectedIdx = -1;
+      return;
+    }
+
+    searchSuggestions.innerHTML = scored.map((item, idx) =>
+      `<div class="suggestion-item${idx === 0 ? " is-highlighted" : ""}" role="option" aria-selected="${idx === 0}" data-index="${idx}" data-slug="${slugify(item.lang.name)}">
+        <span class="suggestion-dot" style="background:${item.lang.accent}"></span>
+        <span class="suggestion-body">
+          <span class="suggestion-name">${highlight(item.lang.name, trimmed)}</span>
+          <span class="suggestion-meta">${escapeHtml(item.lang.category)} · ${escapeHtml(item.lang.level)}</span>
+        </span>
+      </div>`
+    ).join("");
+
+    searchSelectedIdx = 0;
+    searchSuggestions.classList.add("is-open");
+  }
+
+  /* ── Navigate to language ── */
+  function goToLanguage(name) {
+    closeSuggestions();
+    searchInput.value = "";
+    searchInput.blur();
+    searchClear.classList.remove("is-visible");
+    renderCards("Tous", "");
+    location.hash = `#langage/${slugify(name)}`;
+  }
+
+  /* ── Select highlighted ── */
+  function selectHighlighted() {
+    const highlighted = searchSuggestions.querySelector(".suggestion-item.is-highlighted");
+    if (highlighted) {
+      const name = languages.find(l => slugify(l.name) === highlighted.dataset.slug);
+      if (name) goToLanguage(name.name);
+    }
+  }
+
+  /* ── Keyboard navigation ── */
+  function onKeydown(e) {
+    const items = searchSuggestions.querySelectorAll(".suggestion-item");
+    if (!items.length) {
+      if (e.key === "Enter" && searchInput.value.trim()) {
+        closeSuggestions();
+      }
+      if (e.key === "Escape") searchInput.blur();
+      return;
+    }
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        items[searchSelectedIdx]?.classList.remove("is-highlighted");
+        items[searchSelectedIdx]?.setAttribute("aria-selected", "false");
+        searchSelectedIdx = (searchSelectedIdx + 1) % items.length;
+        items[searchSelectedIdx].classList.add("is-highlighted");
+        items[searchSelectedIdx].setAttribute("aria-selected", "true");
+        items[searchSelectedIdx].scrollIntoView({ block: "nearest" });
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        items[searchSelectedIdx]?.classList.remove("is-highlighted");
+        items[searchSelectedIdx]?.setAttribute("aria-selected", "false");
+        searchSelectedIdx = (searchSelectedIdx - 1 + items.length) % items.length;
+        items[searchSelectedIdx].classList.add("is-highlighted");
+        items[searchSelectedIdx].setAttribute("aria-selected", "true");
+        items[searchSelectedIdx].scrollIntoView({ block: "nearest" });
+        break;
+      case "Enter":
+        e.preventDefault();
+        selectHighlighted();
+        break;
+      case "Escape":
+        closeSuggestions();
+        searchInput.blur();
+        break;
+    }
+  }
+
+  /* ── DoSearch (shared between input, search, clear) ── */
+  function doSearch() {
     const activeFilter = document.querySelector(".filter.is-active");
     const filter = activeFilter ? activeFilter.dataset.filter : "Tous";
     renderCards(filter, searchInput.value);
     searchClear.classList.toggle("is-visible", searchInput.value.length > 0);
-  };
+    renderSuggestions(searchInput.value);
+  }
 
+  /* ── Bind events ── */
   searchInput.addEventListener("input", () => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(doSearch, 100);
+    searchTimer = setTimeout(doSearch, 80);
   });
 
   searchInput.addEventListener("search", doSearch);
@@ -3961,12 +4116,25 @@ function initSearch() {
   searchClear.addEventListener("click", () => {
     searchInput.value = "";
     searchInput.focus();
+    closeSuggestions();
     doSearch();
   });
 
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      searchInput.blur();
+  searchInput.addEventListener("keydown", onKeydown);
+
+  /* ── Click outside closes dropdown ── */
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#searchWrapper")) {
+      closeSuggestions();
+    }
+  });
+
+  /* ── Click suggestion via delegation ── */
+  searchSuggestions.addEventListener("click", (e) => {
+    const item = e.target.closest(".suggestion-item");
+    if (item) {
+      const name = languages.find(l => slugify(l.name) === item.dataset.slug);
+      if (name) goToLanguage(name.name);
     }
   });
 }
