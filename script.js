@@ -1734,7 +1734,7 @@ function renderLesson(language) {
         <aside class="lesson-side">
           <div class="stat" style="--i: 0">
             <strong>${escapeHtml(language.concepts.length)}</strong>
-            <span>notions cles</span>
+            <span>notions clés</span>
           </div>
           <div class="stat" style="--i: 1">
             <strong>${escapeHtml(language.level)}</strong>
