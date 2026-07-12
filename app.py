@@ -234,7 +234,7 @@ def list_users():
                 "history": u.get("history", []),
             }
         return jsonify(out)
-    return jsonify({"error": "Impossible de récupérer les utilisateurs"}), 500
+    return jsonify([])
 
 
 @app.route("/sitemap.xml")
