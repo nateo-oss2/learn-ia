@@ -214,6 +214,10 @@ def me():
     return jsonify({"username": None})
 
 
+@app.route("/admin")
+def admin_panel():
+    return serve_file("admin.html")
+
 @app.route("/api/users")
 def list_users():
     err = require_auth()
