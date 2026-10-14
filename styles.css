@@ -50,6 +50,23 @@
   background: color-mix(in srgb, var(--wash) 88%, transparent);
 }
 
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  color: #fff;
+  caret-color: #fff;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #a3a3a3;
+}
+
+[data-theme="dark"] input:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px var(--paper) inset;
+}
+
 [data-theme="dark"] .hero {
   background: none;
 }
