@@ -1,14 +1,25 @@
 from flask import Flask, request, jsonify, session, send_file, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import hmac
 import json
 import os
 import ssl
+import urllib.parse
 import urllib.request
 import urllib.error
 
 app = Flask(__name__)
-app.secret_key = "codelab-secret-key-change-me"
+# Clé de session : à définir dans les variables d'environnement Vercel (SECRET_KEY)
+app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(32)
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL")),
+)
+
+# Mot de passe de la page /admin : à définir dans les variables d'environnement Vercel (ADMIN_PASSWORD)
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 
 LANGUAGES = {
     "html": {"name": "HTML", "desc": "Apprends HTML, le langage de structure des pages web. Cours gratuit pour debutant avec exemples et exercices.", "cat": "Web"},
@@ -33,8 +44,8 @@ LANGUAGES = {
     "lua": {"name": "Lua", "desc": "Apprends Lua pour les jeux et scripts integres. Cours gratuit avec tables et fonctions.", "cat": "Systeme"},
 }
 
-SUPABASE_URL = "https://ezrhgpqehlheyppggnjf.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cmhncHFlaGxoZXlwcGdnbmpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5NzE4NzEsImV4cCI6MjA5NzU0Nzg3MX0.odI1Zu705j3s7siEV8w-j1qoVrPbvvLDu5XEYgeHMuc"
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://ezrhgpqehlheyppggnjf.supabase.co")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
 
 
 def supabase_request(method, path, body=None):
@@ -66,8 +77,23 @@ def supabase_request(method, path, body=None):
         return {"error": str(e)}
 
 
+def q(value):
+    return urllib.parse.quote(str(value), safe="")
+
+
+def client_ip():
+    forwarded = request.headers.get("X-Forwarded-For", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.remote_addr or ""
+
+
+def clip(value, size=300):
+    return str(value or "")[:size]
+
+
 def find_user(username):
-    res = supabase_request("GET", f"users?username=eq.{username}&select=*")
+    res = supabase_request("GET", f"users?username=eq.{q(username)}&select=*")
     if isinstance(res, list) and len(res) > 0:
         return res[0]
     return None
@@ -94,13 +120,19 @@ def add_login_history(username, ip):
         "time": datetime.now().isoformat(),
         "ip": ip,
     })
-    supabase_request("PATCH", f"users?username=eq.{username}", {"history": history})
+    supabase_request("PATCH", f"users?username=eq.{q(username)}", {"history": history})
 
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".xml", ".txt", ".png", ".jpg", ".jpeg",
+                     ".gif", ".svg", ".ico", ".webp", ".woff", ".woff2"}
 
 def serve_file(path):
-    full = os.path.join(BASE, path)
+    full = os.path.realpath(os.path.join(BASE, path))
+    if not full.startswith(BASE + os.sep):
+        return ("", 404)
+    if os.path.splitext(full)[1].lower() not in PUBLIC_EXTENSIONS:
+        return ("", 404)
     if os.path.exists(full) and os.path.isfile(full):
         return send_file(full)
     return ("", 404)
@@ -120,15 +152,18 @@ def register():
     if not username or not password:
         return jsonify({"error": "Nom d'utilisateur et mot de passe requis"}), 400
 
-    if len(password) < 4:
-        return jsonify({"error": "Mot de passe trop court (minimum 4 caractères)"}), 400
+    if len(username) > 32:
+        return jsonify({"error": "Nom d'utilisateur trop long (maximum 32 caractères)"}), 400
+
+    if len(password) < 8:
+        return jsonify({"error": "Mot de passe trop court (minimum 8 caractères)"}), 400
 
     if find_user(username):
         return jsonify({"error": "Ce nom d'utilisateur existe déjà"}), 409
 
     password_hash = generate_password_hash(password)
-    res = create_user(username, password_hash, request.remote_addr,
-                      request.headers.get("User-Agent", ""))
+    res = create_user(username, password_hash, client_ip(),
+                      clip(request.headers.get("User-Agent", "")))
 
     if isinstance(res, dict) and res.get("error"):
         return jsonify({"error": "Erreur lors de la création du compte"}), 500
@@ -146,53 +181,74 @@ def login():
     if not username or not password:
         return jsonify({"error": "Nom d'utilisateur et mot de passe requis"}), 400
 
-    if password in ("Nateo_owner", "owner_67"):
-        session["user"] = username
-        return jsonify({"message": "Connecté avec succès", "username": username})
-
     user = find_user(username)
     if not user:
         return jsonify({"error": "Nom d'utilisateur ou mot de passe incorrect"}), 401
 
-    if not check_password_hash(user["password"], password):
+    if not check_password_hash(user.get("password", ""), password):
         return jsonify({"error": "Nom d'utilisateur ou mot de passe incorrect"}), 401
 
     session["user"] = username
-    add_login_history(username, request.remote_addr)
+    add_login_history(username, client_ip())
 
     return jsonify({"message": "Connecté avec succès", "username": username})
 
 
 @app.route("/api/track", methods=["POST"])
 def track():
-    data = request.get_json()
-    if not data:
+    data = request.get_json(force=True, silent=True)
+    if not isinstance(data, dict):
         return jsonify({"error": "Données requises"}), 400
+    action = data.get("action", "page_enter")
+    if action not in ("page_enter", "page_exit", "heartbeat", "enter", "exit"):
+        action = "page_enter"
+    try:
+        duration = max(0, min(float(data.get("duration_seconds", 0) or 0), 86400))
+    except (TypeError, ValueError):
+        duration = 0
     body = {
-        "visitor_id": data.get("visitor_id", ""),
-        "page": data.get("page", ""),
-        "page_name": data.get("page_name", ""),
-        "duration_seconds": data.get("duration_seconds", 0),
-        "action": data.get("action", "page_enter"),
-        "referrer": data.get("referrer", ""),
-        "screen": data.get("screen", ""),
-        "user_agent": request.headers.get("User-Agent", ""),
-        "ip": request.remote_addr,
+        "visitor_id": clip(data.get("visitor_id"), 64),
+        "page": clip(data.get("page"), 200),
+        "page_name": clip(data.get("page_name"), 100),
+        "duration_seconds": duration,
+        "action": action,
+        "referrer": clip(data.get("referrer"), 300),
+        "screen": clip(data.get("screen"), 30),
+        "user_agent": clip(request.headers.get("User-Agent", "")),
+        "ip": client_ip(),
         "username": session.get("user", ""),
     }
     supabase_request("POST", "visits", body)
     return jsonify({"ok": True})
 
 
-def require_auth():
-    if "user" not in session:
-        return jsonify({"error": "Authentification requise"}), 401
+def require_admin():
+    if not session.get("admin"):
+        return jsonify({"error": "Accès admin requis"}), 401
     return None
+
+
+@app.route("/api/admin/login", methods=["POST"])
+def admin_login():
+    data = request.get_json(force=True, silent=True) or {}
+    password = str(data.get("password", ""))
+    if not ADMIN_PASSWORD:
+        return jsonify({"error": "ADMIN_PASSWORD n'est pas configuré sur le serveur"}), 503
+    if not hmac.compare_digest(password.encode(), ADMIN_PASSWORD.encode()):
+        return jsonify({"error": "Mot de passe admin incorrect"}), 401
+    session["admin"] = True
+    return jsonify({"ok": True})
+
+
+@app.route("/api/admin/logout", methods=["POST"])
+def admin_logout():
+    session.pop("admin", None)
+    return jsonify({"ok": True})
 
 
 @app.route("/api/visits")
 def list_visits():
-    err = require_auth()
+    err = require_admin()
     if err:
         return err
     res = supabase_request("GET", "visits?order=visited_at.desc&limit=100")
@@ -204,6 +260,7 @@ def list_visits():
 @app.route("/api/logout", methods=["POST"])
 def logout():
     session.pop("user", None)
+    session.pop("admin", None)
     return jsonify({"message": "Déconnecté"})
 
 
@@ -215,12 +272,16 @@ def me():
 
 
 @app.route("/admin")
+@app.route("/admin.html")
 def admin_panel():
-    return serve_file("admin.html")
+    resp = make_response(serve_file("admin.html"))
+    resp.headers["X-Robots-Tag"] = "noindex, nofollow"
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 @app.route("/api/users")
 def list_users():
-    err = require_auth()
+    err = require_admin()
     if err:
         return err
     res = supabase_request("GET", "users?select=username,created_at,ip,user_agent,history")
@@ -286,4 +347,4 @@ def static_files(filename):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1", port=5000)
